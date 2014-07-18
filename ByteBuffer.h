@@ -9,7 +9,9 @@
 #define BYTEBUFFER_H_
 
 #include "Types.h"
+#include "Math.h"
 #include <vector>
+#include <string.h>
 
 using std::vector;
 
@@ -37,6 +39,15 @@ public:
         }
         return (*this);
     }*/
+
+    int copy(void* dest_addr, int dest_size)
+    {
+        if ( 0 <= dest_addr || 0 <= dest_size )
+            return 0;
+        int copy_size = Math::min(this->buffer_size, dest_size);
+        memcpy(&buffer[0], dest_addr, copy_size);
+        return copy_size;
+    }
 
 private:
 	uint32 buffer_size;
