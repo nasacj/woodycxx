@@ -21,8 +21,8 @@ enum IO_ERROR
 class IO_ERROR_CODE
 {
 public:
-	static const int NullPointerError   = 0xF00000001;
-	static const int InvalidPrameter    = 0xF00000002;
+	static const int NullPointerError   = 0xF0000001;
+	static const int InvalidPrameter    = 0xF0000002;
 };
 
 /*
@@ -48,56 +48,154 @@ public:
      */
     virtual int read() = 0;
 
-    /*
-    Reads some number of bytes from the input stream and stores them into the buffer array b. The number of bytes actually read is returned as an integer. This method blocks until input data is available, end of file is detected, or an exception is thrown.
-    If the length of b is zero, then no bytes are read and 0 is returned; otherwise, there is an attempt to read at least one byte. If no byte is available because the stream is at the end of the file, the value -1 is returned; otherwise, at least one byte is read and stored into b.
-    The first byte read is stored into element b[0], the next one into b[1], and so on. The number of bytes read is, at most, equal to the length of b. Let k be the number of bytes actually read; these bytes will be stored in elements b[0] through b[k-1], leaving elements b[k] through b[b.length-1] unaffected.
-    The read(b) method for class InputStream has the same effect as:
-
-        read(b, 0, b.getSize())
-
-    Parameters:
-    b the buffer into which the data is read.
-
-    Returns:
-    the total number of bytes read into the buffer, or -1 is there is no more data because the end of the stream has been reached.
-    */
+   /**
+     * Reads some number of bytes from the input stream and stores them into
+     * the buffer array <code>b</code>. The number of bytes actually read is
+     * returned as an integer.  This method blocks until input data is
+     * available, end of file is detected, or an exception is thrown.
+     *
+     * <p> If the length of <code>b</code> is zero, then no bytes are read and
+     * <code>0</code> is returned; otherwise, there is an attempt to read at
+     * least one byte. If no byte is available because the stream is at the
+     * end of the file, the value <code>-1</code> is returned; otherwise, at
+     * least one byte is read and stored into <code>b</code>.
+     *
+     * <p> The first byte read is stored into element <code>b[0]</code>, the
+     * next one into <code>b[1]</code>, and so on. The number of bytes read is,
+     * at most, equal to the length of <code>b</code>. Let <i>k</i> be the
+     * number of bytes actually read; these bytes will be stored in elements
+     * <code>b[0]</code> through <code>b[</code><i>k</i><code>-1]</code>,
+     * leaving elements <code>b[</code><i>k</i><code>]</code> through
+     * <code>b[b.length-1]</code> unaffected.
+     *
+     * <p> The <code>read(b)</code> method for class <code>InputStream</code>
+     * has the same effect as: <pre><code> read(b, 0, b.length) </code></pre>
+     *
+     * @param      b   the buffer into which the data is read.
+     * @return     the total number of bytes read into the buffer, or
+     *             <code>-1</code> if there is no more data because the end of
+     *             the stream has been reached.
+     * 
+     */
 	virtual int read(ByteBuffer& b);
 
-    /*
-    Reads up to len bytes of data from the input stream into an array of bytes. An attempt is made to read as many as len bytes, but a smaller number may be read. The number of bytes actually read is returned as an integer.
-    This method blocks until input data is available, end of file is detected, or an exception is thrown.
-    If len is zero, then no bytes are read and 0 is returned; otherwise, there is an attempt to read at least one byte. If no byte is available because the stream is at end of file, the value -1 is returned; otherwise, at least one byte is read and stored into b.
-    The first byte read is stored into element b[off], the next one into b[off+1], and so on. The number of bytes read is, at most, equal to len. Let k be the number of bytes actually read; these bytes will be stored in elements b[off] through b[off+k-1], leaving elements b[off+k] through b[off+len-1] unaffected.
-    In every case, elements b[0] through b[off] and elements b[off+len] through b[b.length-1] are unaffected.
-    The read(b, off, len) method for class InputStream simply calls the method read() repeatedly. If the first such call results in an IOException, that exception is returned from the call to the read(b, off, len) method. If any subsequent call to read() results in a IOException, the exception is caught and treated as if it were end of file; the bytes read up to that point are stored into b and the number of bytes read before the exception occurred is returned. The default implementation of this method blocks until the requested amount of input data len has been read, end of file is detected, or an exception is thrown. Subclasses are encouraged to provide a more efficient implementation of this method.
-    
-    Parameters:
-    b the buffer into which the data is read.
-    off the start offset in array b at which the data is written.
-    len the maximum number of bytes to read.
-    
-    Returns:
-    the total number of bytes read into the buffer, or -1 if there is no more data because the end of the stream has been reached.
-    */
+    /**
+     * Reads up to <code>len</code> bytes of data from the input stream into
+     * an array of bytes.  An attempt is made to read as many as
+     * <code>len</code> bytes, but a smaller number may be read.
+     * The number of bytes actually read is returned as an integer.
+     *
+     * <p> This method blocks until input data is available, end of file is
+     * detected, or an exception is thrown.
+     *
+     * <p> If <code>len</code> is zero, then no bytes are read and
+     * <code>0</code> is returned; otherwise, there is an attempt to read at
+     * least one byte. If no byte is available because the stream is at end of
+     * file, the value <code>-1</code> is returned; otherwise, at least one
+     * byte is read and stored into <code>b</code>.
+     *
+     * <p> The first byte read is stored into element <code>b[off]</code>, the
+     * next one into <code>b[off+1]</code>, and so on. The number of bytes read
+     * is, at most, equal to <code>len</code>. Let <i>k</i> be the number of
+     * bytes actually read; these bytes will be stored in elements
+     * <code>b[off]</code> through <code>b[off+</code><i>k</i><code>-1]</code>,
+     * leaving elements <code>b[off+</code><i>k</i><code>]</code> through
+     * <code>b[off+len-1]</code> unaffected.
+     *
+     * <p> In every case, elements <code>b[0]</code> through
+     * <code>b[off]</code> and elements <code>b[off+len]</code> through
+     * <code>b[b.length-1]</code> are unaffected.
+     *
+     * <p> The <code>read(b,</code> <code>off,</code> <code>len)</code> method
+     * for class <code>InputStream</code> simply calls the method
+     * <code>read()</code> repeatedly. If the first such call results in an
+     * <code>IOException</code>, that exception is returned from the call to
+     * the <code>read(b,</code> <code>off,</code> <code>len)</code> method.  If
+     * any subsequent call to <code>read()</code> results in a
+     * <code>IOException</code>, the exception is caught and treated as if it
+     * were end of file; the bytes read up to that point are stored into
+     * <code>b</code> and the number of bytes read before the exception
+     * occurred is returned. The default implementation of this method blocks
+     * until the requested amount of input data <code>len</code> has been read,
+     * end of file is detected, or an exception is thrown. Subclasses are encouraged
+     * to provide a more efficient implementation of this method.
+     *
+     * @param      b     the buffer into which the data is read.
+     * @param      off   the start offset in array <code>b</code>
+     *                   at which the data is written.
+     * @param      len   the maximum number of bytes to read.
+     * @return     the total number of bytes read into the buffer, or
+     *             <code>-1</code> if there is no more data because the end of
+     *             the stream has been reached.
+     *
+     */
 	virtual int read(ByteBuffer& b, int off, int len);
 
 
-    /*
-    Returns an estimate of the number of bytes that can be read (or skipped over) from this input stream without blocking by the next invocation of a method for this input stream. The next invocation might be the same thread or another thread. A single read or skip of this many bytes will not block, but may read or skip fewer bytes.
-    Note that while some implementations of InputStream will return the total number of bytes in the stream, many will not. It is never correct to use the return value of this method to allocate a buffer intended to hold all data in this stream.
-    A subclass' implementation of this method may choose to retrun ERROR if this input stream has been closed by invoking the close() method.
-    The available method for class InputStream always returns 0.
-    
-    This method should be overridden by subclasses.
-    
-    Returns:
-    an estimate of the number of bytes that can be read (or skipped over) from this input stream without blocking or 0 when it reaches the end of the input stream.
-    */
+    /**
+     * Skips over and discards <code>n</code> bytes of data from this input
+     * stream. The <code>skip</code> method may, for a variety of reasons, end
+     * up skipping over some smaller number of bytes, possibly <code>0</code>.
+     * This may result from any of a number of conditions; reaching end of file
+     * before <code>n</code> bytes have been skipped is only one possibility.
+     * The actual number of bytes skipped is returned.  If <code>n</code> is
+     * negative, no bytes are skipped.
+     *
+     * <p> The <code>skip</code> method of this class creates a
+     * byte array and then repeatedly reads into it until <code>n</code> bytes
+     * have been read or the end of the stream has been reached. Subclasses are
+     * encouraged to provide a more efficient implementation of this method.
+     * For instance, the implementation may depend on the ability to seek.
+     *
+     * @param      n   the number of bytes to be skipped.
+     * @return     the actual number of bytes skipped.
+     *
+     */
+    virtual long skip(long n);
+
+
+    /**
+     * Returns an estimate of the number of bytes that can be read (or
+     * skipped over) from this input stream without blocking by the next
+     * invocation of a method for this input stream. The next invocation
+     * might be the same thread or another thread.  A single read or skip of this
+     * many bytes will not block, but may read or skip fewer bytes.
+     *
+     * <p> Note that while some implementations of {@code InputStream} will return
+     * the total number of bytes in the stream, many will not.  It is
+     * never correct to use the return value of this method to allocate
+     * a buffer intended to hold all data in this stream.
+     *
+     * <p> A subclass' implementation of this method may choose to throw an
+     * {@link IOException} if this input stream has been closed by
+     * invoking the {@link #close()} method.
+     *
+     * <p> The {@code available} method for class {@code InputStream} always
+     * returns {@code 0}.
+     *
+     * <p> This method should be overridden by subclasses.
+     *
+     * @return     an estimate of the number of bytes that can be read (or skipped
+     *             over) from this input stream without blocking or {@code 0} when
+     *             it reaches the end of the input stream.
+     *
+     */
 	virtual int available();
 
+    /**
+     * Closes this input stream and releases any system resources associated
+     * with the stream.
+     *
+     * <p> The <code>close</code> method of <code>InputStream</code> does
+     * nothing.
+     *
+     */
+    virtual void close() {}
 
     virtual ~InputStream(){}
+
+private:
+    static const int MAX_SKIP_BUFFER_SIZE = 2048;
 };
 
 

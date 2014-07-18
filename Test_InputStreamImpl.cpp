@@ -8,7 +8,8 @@ using namespace woodycxx::io;
 int main()
 {
     ByteBuffer buf(10);
-    InputStream& inputstream = InputStreamImpl();
+    InputStreamImpl inputstreamimpl;
+    InputStream& inputstream = inputstreamimpl;
     inputstream.read(buf);
 
     for (int i = 0; i < buf.getSize(); i++)
