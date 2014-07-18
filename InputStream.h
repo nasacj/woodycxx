@@ -13,18 +13,6 @@
 
 namespace woodycxx { namespace io {
 
-enum IO_ERROR
-{
-	BUFFER_OUT_OF_SIZE = 0xF0000001
-};
-
-class IO_ERROR_CODE
-{
-public:
-	static const int NullPointerError   = 0xF0000001;
-	static const int InvalidPrameter    = 0xF0000002;
-};
-
 /*
 * This abstract class is the superclass of all classes representing an input stream of bytes.
 * Applications that need to define a subclass of InputStream must always provide a method that returns the next byte of input.
