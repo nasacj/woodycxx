@@ -10,9 +10,10 @@
 
 #include "InputStream.h"
 #include "OutputStream.h"
-#include "InetAddress.h"
+#include "InetSocketAddress.h"
 #include <string>
 
+using namespace std;
 using namespace woodycxx::io;
 
 namespace woodycxx { namespace net {
@@ -21,7 +22,12 @@ namespace woodycxx { namespace net {
 
 class AbstractSocket
 {
-protected:
+//protected:
+public:
+
+    AbstractSocket();
+
+    AbstractSocket(string ip, int port);
 
     /**
      * Connects this socket to the specified port on the named host.
@@ -39,7 +45,7 @@ protected:
      * @param      port      the port number.
      *
      */
-    virtual void connect(InetAddress& address, int port) = 0;
+    virtual void connect(InetSocketAddress& address, int port) = 0;
 
     /**
      * Binds this socket to the specified local IP address and port number.
@@ -47,7 +53,7 @@ protected:
      * @param      host   an IP address that belongs to a local interface.
      * @param      port   the port number.
      */
-    virtual void bind(InetAddress& host, int port) = 0;
+    virtual void bind(InetSocketAddress& host, int port) = 0;
 
     /**
      * Sets the maximum queue length for incoming connection indications

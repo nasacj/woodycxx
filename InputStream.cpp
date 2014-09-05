@@ -1,5 +1,7 @@
 #include "InputStream.h"
 #include "Math.h"
+#include <iostream>
+using namespace std;
 
 namespace woodycxx { namespace io {
 
@@ -61,6 +63,13 @@ long InputStream::skip(long n)
 int InputStream::available()
 {
     return 0;
+}
+
+
+
+void InputStream::hello()
+{
+    cout << "InputStream::hello" << endl;
 }
 
 }}

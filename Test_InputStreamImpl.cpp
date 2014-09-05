@@ -16,10 +16,12 @@ int main()
     {
         std::cout << static_cast<int>(buf[i]) << " ";
     }
+    std::cout << std::endl;
 
     InputStreamImpl impl;
     impl.InputStream::read(buf);
     //impl.read(buf);
+    impl.hello();
 
     return 0;
 }

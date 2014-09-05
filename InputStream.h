@@ -182,6 +182,8 @@ public:
 
     virtual ~InputStream(){}
 
+    /*virtual */void hello();
+
 private:
     static const int MAX_SKIP_BUFFER_SIZE = 2048;
 };

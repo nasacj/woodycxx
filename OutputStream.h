@@ -41,7 +41,7 @@ public:
      * @param      b   the <code>byte</code>.
      *
      */
-    virtual void write(int b) = 0;
+    virtual void write(uint8 b) = 0;
 
     
 
