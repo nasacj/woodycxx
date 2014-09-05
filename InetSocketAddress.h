@@ -10,24 +10,36 @@
 
 #include <string>
 
-using namespace std;
+//using namespace std;
 
 namespace woodycxx { namespace net {
 
 class InetSocketAddress
 {
 private:
-    string hostName;
+    std::string hostName;
     int port;
 
 public:
-    explicit InetSocketAddress( string host, int port  )
+    InetSocketAddress( std::string host, int port  )
         : hostName(host), port(port)
     {
     }
 
-    string getHostName() { return this->hostName; }
+    InetSocketAddress( char* host, int port  )
+        : hostName(host), port(port)
+    {
+    }
+
+    std::string getHostName() { return this->hostName; }
     int getPort() { return this->port; }
+
+    InetSocketAddress& operator=(const InetSocketAddress& other)
+    {
+        this->hostName = other.hostName;
+        this->port = other.port;
+        return *this;
+    }
 
     friend bool operator==(const InetSocketAddress& p1, const InetSocketAddress& p2)
     {
