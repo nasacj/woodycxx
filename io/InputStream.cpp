@@ -1,7 +1,9 @@
 #include "InputStream.h"
 #include "Math.h"
 #include <iostream>
+
 using namespace std;
+using namespace woodycxx::base;
 
 namespace woodycxx { namespace io {
 

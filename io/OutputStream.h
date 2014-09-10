@@ -10,6 +10,7 @@
 
 #include "ByteBuffer.h"
 #include "Types.h"
+#include "IO_Error.h"
 
 namespace woodycxx { namespace io {
 
