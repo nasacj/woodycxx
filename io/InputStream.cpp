@@ -1,5 +1,5 @@
 #include "InputStream.h"
-#include "Math.h"
+#include <base/Math.h>
 #include <iostream>
 
 using namespace std;

@@ -8,12 +8,13 @@
 #ifndef BYTEBUFFER_H_
 #define BYTEBUFFER_H_
 
-#include "Types.h"
-#include "Math.h"
+#include <base/Types.h>
+#include <base/Math.h>
 #include <vector>
 #include <string.h>
 
 using std::vector;
+using woodycxx::base::Math;
 
 namespace woodycxx { namespace io {
 

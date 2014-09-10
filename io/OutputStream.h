@@ -9,7 +9,7 @@
 #define OUTPUTSTREAM_H_
 
 #include "ByteBuffer.h"
-#include "Types.h"
+#include <base/Types.h>
 #include "IO_Error.h"
 
 namespace woodycxx { namespace io {

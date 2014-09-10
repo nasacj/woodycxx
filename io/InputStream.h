@@ -8,7 +8,7 @@
 #ifndef INPUTSTREAM_H_
 #define INPUTSTREAM_H_
 
-#include "Types.h"
+#include <base/Types.h>
 #include "ByteBuffer.h"
 #include "IO_Error.h"
 

@@ -3,7 +3,7 @@
 
 using namespace woodycxx::io;
 
-#if 0
+#if 1
 
 int main()
 {

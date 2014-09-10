@@ -8,8 +8,8 @@
 #ifndef ABSTRACTSOCKET_H_
 #define ABSTRACTSOCKET_H_
 
-#include "InputStream.h"
-#include "OutputStream.h"
+#include <io/InputStream.h>
+#include <io/OutputStream.h>
 #include "InetSocketAddress.h"
 #include <string>
 

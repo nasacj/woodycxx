@@ -1,0 +1,3 @@
+bin_PROGRAMS = Test_InetSocketAddress
+
+Test_InetSocketAddress_SOURCES = Test_InetSocketAddress.cpp

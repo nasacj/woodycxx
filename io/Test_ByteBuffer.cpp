@@ -3,7 +3,7 @@
 
 using woodycxx::io::ByteBuffer;
 
-#if 0
+#if 1
 
 int main()
 {
