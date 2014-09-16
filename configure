@@ -4008,7 +4008,7 @@ AM_CPPFLAGS="$MY_CFLAGS"
 
 
 
-ac_config_files="$ac_config_files Makefile io/Makefile net/Makefile"
+ac_config_files="$ac_config_files Makefile smart_ptr/Makefile io/Makefile net/Makefile"
 
 
 cat >confcache <<\_ACEOF
@@ -4743,6 +4743,7 @@ do
     "config.h") CONFIG_HEADERS="$CONFIG_HEADERS config.h" ;;
     "depfiles") CONFIG_COMMANDS="$CONFIG_COMMANDS depfiles" ;;
     "Makefile") CONFIG_FILES="$CONFIG_FILES Makefile" ;;
+    "smart_ptr/Makefile") CONFIG_FILES="$CONFIG_FILES smart_ptr/Makefile" ;;
     "io/Makefile") CONFIG_FILES="$CONFIG_FILES io/Makefile" ;;
     "net/Makefile") CONFIG_FILES="$CONFIG_FILES net/Makefile" ;;
 

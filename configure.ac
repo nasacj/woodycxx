@@ -18,6 +18,7 @@ AC_SUBST(AM_CPPFLAGS)
 
 AC_CONFIG_FILES([
     Makefile
+    smart_ptr/Makefile
     io/Makefile
     net/Makefile
 ])
