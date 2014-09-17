@@ -12,6 +12,11 @@ int InputStream::read(ByteBuffer& b)
     return read(b, 0, b.getSize());
 }
 
+int InputStream::read(void* b, int len)
+{
+    return read(b, len, 0, len);
+}
+
 int InputStream::read(ByteBuffer& b, int off, int len)
 {
     if ( 0 == b.getSize() )
@@ -32,8 +37,35 @@ int InputStream::read(ByteBuffer& b, int off, int len)
     {
         c = read();
         if (c == -1)
-                break;
+            break;
         b[off + i] = static_cast<uint8>(c);
+    }
+    return i;
+
+}
+
+int InputStream::read(void* b, int buf_size, int off, int len)
+{
+    if ( 0 == b )
+        return IO_ERROR_CODE::NullPointerError;
+    else if (off < 0 || len < 0 || len > buf_size - off)
+        return IO_ERROR_CODE::InvalidPrameter;
+    else if (len == 0)
+        return 0;
+
+    int c = read();
+    if ( c == -1 ) {
+        return -1;
+    }
+    (static_cast<uint8*>(b))[off] = static_cast<uint8>(c);
+
+    int i = 1;
+    for (; i < len ; i++)
+    {
+        c = read();
+        if (c == -1)
+            break;
+        (static_cast<uint8*>(b))[off + i] = static_cast<uint8>(c);
     }
     return i;
 

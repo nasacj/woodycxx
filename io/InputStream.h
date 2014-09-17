@@ -68,6 +68,8 @@ public:
      */
 	virtual int read(ByteBuffer& b);
 
+    virtual int read(void* b, int len);
+
     /**
      * Reads up to <code>len</code> bytes of data from the input stream into
      * an array of bytes.  An attempt is made to read as many as
@@ -119,6 +121,8 @@ public:
      *
      */
 	virtual int read(ByteBuffer& b, int off, int len);
+
+    virtual int read(void* b, int buf_size, int off, int len);
 
 
     /**
