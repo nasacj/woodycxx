@@ -9,6 +9,7 @@
 #define INPUTSTREAM_H_
 
 #include <base/Types.h>
+#include <cstddef> //for std::size_t
 #include "ByteBuffer.h"
 #include "IO_Error.h"
 
@@ -68,7 +69,7 @@ public:
      */
 	virtual int read(ByteBuffer& b);
 
-    virtual int read(void* b, int len);
+    virtual int read(void* b, std::size_t len);
 
     /**
      * Reads up to <code>len</code> bytes of data from the input stream into
@@ -122,7 +123,7 @@ public:
      */
 	virtual int read(ByteBuffer& b, int off, int len);
 
-    virtual int read(void* b, int buf_size, int off, int len);
+    virtual int read(void* b, std::size_t buf_size, std::size_t off, std::size_t len);
 
 
     /**

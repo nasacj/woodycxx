@@ -12,7 +12,7 @@ int InputStream::read(ByteBuffer& b)
     return read(b, 0, b.getSize());
 }
 
-int InputStream::read(void* b, int len)
+int InputStream::read(void* b, std::size_t len)
 {
     return read(b, len, 0, len);
 }
@@ -44,7 +44,7 @@ int InputStream::read(ByteBuffer& b, int off, int len)
 
 }
 
-int InputStream::read(void* b, int buf_size, int off, int len)
+int InputStream::read(void* b, std::size_t buf_size, std::size_t off, std::size_t len)
 {
     if ( 0 == b )
         return IO_ERROR_CODE::NullPointerError;
