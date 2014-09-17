@@ -10,7 +10,8 @@
 
 #include "ByteBuffer.h"
 #include <base/Types.h>
-#include "IO_Error.h"
+#include "IO_Error.h
+#include <cstddef> //for std::size_t
 
 namespace woodycxx { namespace io {
 
@@ -58,6 +59,8 @@ public:
      */
     virtual void write(ByteBuffer& b);
 
+    virtual void write(const void* b, std::size_t len);
+
 
     /**
      * Writes <code>len</code> bytes from the specified byte array
@@ -86,6 +89,8 @@ public:
      *
      */
     virtual void write(ByteBuffer& b, int off, int len);
+
+    virtual void write(const void* b, std::size_t b_size, std::size_t off, std::size_t len);
 
 
     /**
