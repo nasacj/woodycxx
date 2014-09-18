@@ -10,7 +10,8 @@
 
 #include <base/Types.h>
 #include <base/Math.h>
-#include <vector>
+#include <smart_ptr/scoped_array.h>
+//#include <vector>
 #include <string.h>
 
 using std::vector;
@@ -24,7 +25,8 @@ public:
 	ByteBuffer(int size) : buffer_size(size)
 	{
 		//buffer.reserve(size);
-        buffer.resize(size);
+        //buffer.resize(size);
+        buffer.reset(new uint8[size]);
 	}
 
 	int getSize() { return this->buffer_size; }
@@ -52,7 +54,10 @@ public:
 
 private:
 	uint32 buffer_size;
-	vector<uint8> buffer;
+	//vector<uint8> buffer;
+
+    typedef woodycxx::smart_prt::scoped_array<uint8> Byte_Array;
+    Byte_Array buffer;
 	
 };
 
