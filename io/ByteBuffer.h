@@ -14,7 +14,7 @@
 //#include <vector>
 #include <string.h>
 
-using std::vector;
+//using std::vector;
 using woodycxx::base::Math;
 
 namespace woodycxx { namespace io {
