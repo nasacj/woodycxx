@@ -15,9 +15,7 @@ Woodycxx also contains some Libraries:
 
     autotool is need to configure and compile the code:
 
-
-    
-autoreconfig --instll
+    autoreconfig --instll
 
     ./configure
 
