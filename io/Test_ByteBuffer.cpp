@@ -17,6 +17,28 @@ int main()
     {
         std::cout << static_cast<int>(buf[i]) << " ";
     }
+
+    uint8 *a = new uint8[10];
+    buf.copy(a, 10);
+    std::cout << std::endl << "After buf.copy(a, 10); ===>" << std::endl;
+    for (int i = 0; i < 10; i++)
+    {
+        std::cout << static_cast<int>(a[i]) << " ";
+    }
+
+    ByteBuffer buf2(5);
+    ByteBuffer buf3(3);
+    for (int i = 0; i < buf3.getSize(); i++)
+    {
+        buf3[i] = i;
+    }
+    buf3.copy(buf2);
+    std::cout << std::endl << "After buf3.copy(buf2); ===>" << std::endl;
+    for (int i = 0; i < buf2.getSize(); i++)
+    {
+        std::cout << static_cast<int>(buf2[i]) << " ";
+    }
+
     return 0;
 }
 #endif
