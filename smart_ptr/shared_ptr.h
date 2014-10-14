@@ -127,12 +127,12 @@ namespace woodycxx { namespace smart_prt {
 
 	};
 
-	template<class T, class U> inline bool operator==(const shared_ptr<T> const & a, const shared_ptr<U> const & b)
+	template<class T, class U> inline bool operator==(const shared_ptr<T> & a, const shared_ptr<U> & b)
 	{
 		return a.get() == b.get();
 	}
 
-	template<class T, class U> inline bool operator!=(const shared_ptr<T> const & a, const shared_ptr<U> const & b)
+	template<class T, class U> inline bool operator!=(const shared_ptr<T> & a, const shared_ptr<U> & b)
 	{
 		return a.get() != b.get();
 	}
