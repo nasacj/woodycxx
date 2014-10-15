@@ -8,7 +8,7 @@
 #ifndef WOODYCXX_SMART_PTR_SHARED_ARRAY_H_
 #define WOODYCXX_SMART_PTR_SHARED_ARRAY_H_
 
-#include "shared_count.h"
+#include "detail/shared_count.h"
 #include "checked_delete.h"
 
 namespace woodycxx { namespace smart_prt {
