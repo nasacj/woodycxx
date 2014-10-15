@@ -42,21 +42,21 @@ namespace woodycxx { namespace smart_prt {
 			return *this;
 		}
 
-		void reset() BOOST_NOEXCEPT
+		void reset()
 		{
 			this_type().swap( *this );
 		}
 
 		template<class Y> void reset( Y * p ) // Y must be complete
 		{
-			BOOST_ASSERT( p == 0 || p != px ); // catch self-reset errors
+			assert( p == 0 || p != px ); // catch self-reset errors
 			this_type( p ).swap( *this );
 		}
 
 		T & operator[] (std::ptrdiff_t i) const
 		{
-			BOOST_ASSERT(px != 0);
-			BOOST_ASSERT(i >= 0);
+			assert(px != 0);
+			assert(i >= 0);
 			return px[i];
 		}
 
