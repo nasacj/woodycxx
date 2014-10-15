@@ -8,6 +8,7 @@
 #ifndef WOODYCXX_SMART_PTR_SCOPED_PTR_H_
 #define WOODYCXX_SMART_PTR_SCOPED_PTR_H_
 
+#include "checked_delete.h"
 # include <memory>          // for std::auto_ptr
 # include <assert.h>
 
@@ -48,7 +49,7 @@ namespace woodycxx { namespace smart_prt {
         {
             if (px)
             {
-                delete px;
+                checked_delete(px);
             }
         }
 

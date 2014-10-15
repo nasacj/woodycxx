@@ -8,8 +8,7 @@
 #ifndef WOODYCXX_SMART_PTR_SP_COUNTED_IMPL_H_
 #define WOODYCXX_SMART_PTR_SP_COUNTED_IMPL_H_
 
-#include <iostream>
-using namespace std;
+#include "../checked_delete.h"
 
 namespace woodycxx { namespace smart_prt { namespace detail {
 
@@ -33,8 +32,37 @@ namespace woodycxx { namespace smart_prt { namespace detail {
 
 		virtual void dispose() // nothrow
 		{
-			cout << "sp_counted_impl_p::dispose()" << endl;
-			delete px_;
+			woodycxx::smart_prt::checked_delete(px_);
+		}
+
+	};
+
+	template<class P, class D> class sp_counted_impl_pd: public sp_counted_base
+	{
+	private:
+
+		P ptr; // copy constructor must not throw
+		D del; // copy constructor must not throw
+
+		sp_counted_impl_pd( sp_counted_impl_pd const & );
+		sp_counted_impl_pd & operator= ( sp_counted_impl_pd const & );
+
+		typedef sp_counted_impl_pd<P, D> this_type;
+
+	public:
+
+		// pre: d(p) must not throw
+		sp_counted_impl_pd( P p, D & d ): ptr( p ), del( d )
+		{
+		}
+
+		sp_counted_impl_pd( P p ): ptr( p ), del()
+		{
+		}
+
+		virtual void dispose() // nothrow
+		{
+			del( ptr );
 		}
 
 	};

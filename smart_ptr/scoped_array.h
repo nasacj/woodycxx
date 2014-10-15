@@ -8,6 +8,7 @@
 #ifndef WOODYCXX_SMART_PTR_SCOPED_ARRAY_H_
 #define WOODYCXX_SMART_PTR_SCOPED_ARRAY_H_
 
+#include "checked_delete.h"
 #include <cstddef>            // for std::ptrdiff_t
 #include <assert.h>
 
@@ -41,10 +42,7 @@ namespace woodycxx { namespace smart_prt {
 
         ~scoped_array() // never throws
         {
-            if (px)
-            {
-                delete [] px;
-            }
+            checked_delete(px);
         }
 
         void reset(T * p = 0) // never throws
