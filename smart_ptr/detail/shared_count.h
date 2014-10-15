@@ -31,7 +31,7 @@ public:
 		assert(0 != pi_);
 	}
 
-	template<class Y, class D> shared_count( Y * p, D d ): pi_(0)
+	template<class P, class D> shared_count( P * p, D d ): pi_(0)
 	{
 		pi_ = new sp_counted_impl_pd<P, D>(p, d);
 		assert(0 != pi_);
