@@ -25,3 +25,5 @@ Test_InetSocketAddress
 Test_scoped_array
 Test_scoped_ptr
 Test_shared_ptr
+Test_Thread
+Test_log
