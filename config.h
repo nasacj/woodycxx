@@ -1,6 +1,9 @@
 /* config.h.  Generated from config.h.in by configure.  */
 /* config.h.in.  Generated from configure.ac by autoheader.  */
 
+/* Define to 1 if you have the `pthread' library (-lpthread). */
+#define HAVE_LIBPTHREAD 1
+
 /* Name of package */
 #define PACKAGE "woodycxx"
 

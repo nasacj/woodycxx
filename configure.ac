@@ -7,6 +7,7 @@ AC_CONFIG_HEADERS([config.h])
 
 # Checks for programs.
 AC_PROG_CC
+AC_CHECK_LIB([pthread], [pthread_mutex_init])
 AC_PROG_RANLIB
 AC_PROG_CXX
 
@@ -18,6 +19,7 @@ AC_SUBST(AM_CPPFLAGS)
 
 AC_CONFIG_FILES([
     Makefile
+    sysipc/Makefile
     smart_ptr/Makefile
     io/Makefile
     net/Makefile
