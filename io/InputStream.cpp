@@ -13,7 +13,7 @@ int InputStream::read(ByteBuffer& b)
     return read(b, 0, b.getSize());
 }
 
-int InputStream::read(void* b, std::size_t len)
+int InputStream::read(char* b, int len)
 {
     return read(b, len, 0, len);
 }
@@ -21,9 +21,9 @@ int InputStream::read(void* b, std::size_t len)
 int InputStream::read(ByteBuffer& b, int off, int len)
 {
     if ( 0 == b.getSize() )
-        return IO_ERROR_CODE::NullPointerError;
+        return woodycxx::error::NullPointerError;
     else if (off < 0 || len < 0 || len > b.getSize() - off)
-        return IO_ERROR_CODE::InvalidPrameter;
+        return woodycxx::error::InvalidPrameter;
     else if (len == 0)
         return 0;
 
@@ -45,12 +45,12 @@ int InputStream::read(ByteBuffer& b, int off, int len)
 
 }
 
-int InputStream::read(void* b, std::size_t buf_size, std::size_t off, std::size_t len)
+int InputStream::read(char* b, int buf_size, int off, int len)
 {
     if ( 0 == b )
-        return IO_ERROR_CODE::NullPointerError;
+        return woodycxx::error::NullPointerError;
     else if (off < 0 || len < 0 || len > buf_size - off)
-        return IO_ERROR_CODE::InvalidPrameter;
+        return woodycxx::error::InvalidPrameter;
     else if (len == 0)
         return 0;
 
@@ -58,7 +58,7 @@ int InputStream::read(void* b, std::size_t buf_size, std::size_t off, std::size_
     if ( c == -1 ) {
         return -1;
     }
-    (static_cast<uint8*>(b))[off] = static_cast<uint8>(c);
+    (static_cast<char*>(b))[off] = static_cast<uint8>(c);
 
     int i = 1;
     for (; i < len ; i++)
@@ -66,7 +66,7 @@ int InputStream::read(void* b, std::size_t buf_size, std::size_t off, std::size_
         c = read();
         if (c == -1)
             break;
-        (static_cast<uint8*>(b))[off + i] = static_cast<uint8>(c);
+        (static_cast<char*>(b))[off + i] = static_cast<uint8>(c);
     }
     return i;
 
@@ -83,8 +83,8 @@ long InputStream::skip(long n)
 
     int size = static_cast<int>(Math::min(static_cast<long>(MAX_SKIP_BUFFER_SIZE), remaining));
     //ByteBuffer skipBuffer(size);
-    typedef woodycxx::smart_prt::scoped_array<uint8> Byte_Array;
-    uint8* skipBuffer = Byte_Array(new uint8[size]).get();
+    typedef woodycxx::smart_prt::scoped_array<char> Byte_Array;
+    char* skipBuffer = Byte_Array(new char[size]).get();
     while (remaining > 0)
     {
         nr = read( skipBuffer, size, 0, static_cast<int>( Math::min(static_cast<long>(size), remaining) ) );

@@ -43,7 +43,7 @@ public:
      * @param      b   the <code>byte</code>.
      *
      */
-    virtual void write(uint8 b) = 0;
+    virtual int write(char b) = 0;
 
     
 
@@ -57,9 +57,9 @@ public:
      * @exception  IOException  if an I/O error occurs.
      *
      */
-    virtual void write(ByteBuffer& b);
+    virtual int write(ByteBuffer& b);
 
-    virtual void write(const void* b, std::size_t len);
+    virtual int write(const void* b, int len);
 
 
     /**
@@ -88,9 +88,9 @@ public:
      * @param      len   the number of bytes to write.
      *
      */
-    virtual void write(ByteBuffer& b, int off, int len);
+    virtual int write(ByteBuffer& b, int off, int len);
 
-    virtual void write(const void* b, std::size_t b_size, std::size_t off, std::size_t len);
+    virtual int write(const void* b, int b_size, int off, int len);
 
 
     /**

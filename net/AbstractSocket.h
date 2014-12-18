@@ -10,6 +10,7 @@
 
 #include <io/InputStream.h>
 #include <io/OutputStream.h>
+#include <io/FileDescriptor.h>
 #include "InetSocketAddress.h"
 #include <string>
 
@@ -25,9 +26,11 @@ class AbstractSocket
 //protected:
 public:
 
-    AbstractSocket();
+    AbstractSocket() {}
 
-    AbstractSocket(string ip, int port);
+    AbstractSocket(string ip, int port) : address(ip, port) {}
+
+    AbstractSocket(InetSocketAddress in_address) : address(in_address) {}
 
     /**
      * Connects this socket to the specified port on the named host.
@@ -110,10 +113,21 @@ public:
      */
     virtual void close() = 0;
 
+    InetSocketAddress& getInetSoecktAddress() { return this->address; }
 
+    FileDescriptor& getFileDescriptor() { return this->fileHandler; }
+
+    int getPort() { return this->port; }
 
     virtual ~AbstractSocket() {}
 
+protected:
+
+    InetSocketAddress address;
+    int port;
+    FileDescriptor fileHandler;
+
+};
 
 }}
 

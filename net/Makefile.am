@@ -1,3 +1,4 @@
-bin_PROGRAMS = Test_InetSocketAddress
+bin_PROGRAMS = Test_InetSocketAddress Test_AbstractSocketImpl
 
 Test_InetSocketAddress_SOURCES = Test_InetSocketAddress.cpp
+Test_AbstractSocketImpl_SOURCES = Test_AbstractSocketImpl.cpp
