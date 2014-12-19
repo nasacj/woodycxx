@@ -21,6 +21,9 @@ private:
     int port;
 
 public:
+
+    InetSocketAddress(){}
+
     InetSocketAddress( std::string host, int port  )
         : hostName(host), port(port)
     {

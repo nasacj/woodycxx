@@ -1,2 +1,2 @@
-SUBDIRS = sysipc io net smart_ptr
+SUBDIRS = smart_ptr sysipc io net
 dist_doc_DATA = README.md

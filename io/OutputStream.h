@@ -10,7 +10,6 @@
 
 #include "ByteBuffer.h"
 #include <base/Types.h>
-#include "IO_Error.h"
 #include <cstddef> //for std::size_t
 
 namespace woodycxx { namespace io {

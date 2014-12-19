@@ -11,7 +11,7 @@
 #include "AbstractSocket.h"
 #include "SocketInputStream.h"
 #include "SocketOutputStream.h"
-#include <smart_prt/shared_ptr.h>
+#include <smart_ptr/shared_ptr.h>
 
 using namespace std;
 using namespace woodycxx::io;

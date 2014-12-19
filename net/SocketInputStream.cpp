@@ -1,5 +1,5 @@
 #include "SocketInputStream.h"
-#include <smart_prt/scoped_array.h>
+#include <smart_ptr/scoped_array.h>
 #include <sys/types.h>
 #ifdef WIN32
 #include <WinSock.h>

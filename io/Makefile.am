@@ -1,4 +1,10 @@
+SHARED_LIBS = libwoodycxx_io.so
+SHARED_LIBS_CXX = yes
+
 noinst_LIBRARIES = libwoodycxx_io.a
+
+EXPORT_LIBRARY = $(SHARED_LIBS)
+EXPORTS = $(srcdir)/InputStream.h $(srcdir)/OutputStream.h
 
 bin_PROGRAMS = Test_ByteBuffer Test_InputStreamImpl
 

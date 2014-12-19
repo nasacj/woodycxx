@@ -22,7 +22,7 @@ int main()
     impl.InputStream::read(buf);
     //impl.read(buf);
 
-    uint8* bytes = new uint8[10];
+    char* bytes = new char[10];
     inputstream.read(bytes, 10);
 
     std::cout << "bytes new[10] reading..." << std::endl;
