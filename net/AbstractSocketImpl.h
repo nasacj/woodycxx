@@ -41,7 +41,7 @@ private:
     SocketOutputStreamPtr   outputStreamPtr;
 
 public:
-    AbstractSocketImpl() : shut_wr(false), shut_rd(false), closePending(false) {}
+    AbstractSocketImpl() : shut_rd(false), shut_wr(false), closePending(false) {}
     virtual ~AbstractSocketImpl() {}
 
     virtual void connect(string host, int port);

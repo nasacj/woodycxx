@@ -29,7 +29,7 @@ public:
     {
     }
 
-    InetSocketAddress( char* host, int port  )
+    InetSocketAddress( const char* host, int port  )
         : hostName(host), port(port)
     {
     }
