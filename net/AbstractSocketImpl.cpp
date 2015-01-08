@@ -5,7 +5,9 @@
 #include <WinSock.h>
 #pragma comment(lib,"ws2_32.lib")
 #else
+#include <sys/types.h>
 #include <sys/socket.h>
+#include <arpa/inet.h>
 #endif
 
 namespace woodycxx { namespace net {
