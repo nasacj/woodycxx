@@ -19,7 +19,10 @@ enum ERROR_NUM
     InvalidPrameter,
     BufferIndexOutOfBounds,
 
-    ConnectionReset           = 0xF8000001,
+    SocketError               = 0xF8000001,
+    ConnectionReset           = 0xF8000002,
+    InvalidIpAddress,
+    ConnectionError
 };
 
 class IO_ERROR_CODE

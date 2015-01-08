@@ -36,17 +36,18 @@ private:
     bool shut_wr;
     bool closePending;
     bool closed;
+    bool connected;
     
     SocketInputStreamPtr    inputStreamPtr;
     SocketOutputStreamPtr   outputStreamPtr;
 
 public:
-    AbstractSocketImpl() : shut_rd(false), shut_wr(false), closePending(false) {}
+    AbstractSocketImpl() : shut_rd(false), shut_wr(false), closePending(false), connected(false) {}
     virtual ~AbstractSocketImpl() {}
 
-    virtual void connect(string host, int port);
+    virtual int connect(string host, int port);
 
-    virtual void connect(InetSocketAddress& address, int port);
+    virtual int connect(InetSocketAddress& address, int port);
 
     virtual void bind(InetSocketAddress& host, int port);
 

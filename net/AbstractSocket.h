@@ -39,7 +39,7 @@ public:
      * @param      port   the port number.
      *
      */
-    virtual void connect(string host, int port) = 0;
+    virtual int connect(string host, int port) = 0;
 
     /**
      * Connects this socket to the specified port number on the specified host.
@@ -48,7 +48,7 @@ public:
      * @param      port      the port number.
      *
      */
-    virtual void connect(InetSocketAddress& address, int port) = 0;
+    virtual int connect(InetSocketAddress& address, int port) = 0;
 
     /**
      * Binds this socket to the specified local IP address and port number.
