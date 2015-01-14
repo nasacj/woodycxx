@@ -13,7 +13,7 @@
 #define bzero(x,y) ZeroMemory(x,y)
 typedef uint32_t in_addr_t;
 #else
-#include <netinet/in.h>
+#include <strings.h>   //bzero
 #endif
 
 using namespace woodycxx::net;

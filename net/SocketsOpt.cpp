@@ -8,6 +8,7 @@
 #include "SocketsOpt.h"
 #include <stdio.h>
 #include <assert.h>
+#include <string.h>
 #ifdef WIN32
 #include <WinSock2.h>
 #include <Ws2tcpip.h>

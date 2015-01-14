@@ -8,7 +8,7 @@ struct Foo
 {
 public:
 	explicit Foo( int _x ) : x(_x) { std::cout << "Foo(" << _x << ")" << std::endl; }
-    Foo(const Foo const & foo) : x(foo.x){std::cout << "Copy Foo()" << std::endl;}
+    Foo(const Foo & foo) : x(foo.x){std::cout << "Copy Foo()" << std::endl;}
     Foo & operator=(Foo const & foo){std::cout << "Foo::=" << std::endl; return *this;}
 	~Foo() { std::cout << "Destructing a Foo with x=" << x << "\n"; }
 	int x;
@@ -20,7 +20,7 @@ class Foo_child : public Foo
 {
 public:
     Foo_child( int _x ) : Foo(_x) { std::cout << "Foo_child(" << _x << ")" << std::endl; }
-    Foo_child(const Foo_child const & foo) : Foo(foo){std::cout << "Copy Foo_child()" << std::endl;}
+    Foo_child(const Foo_child & foo) : Foo(foo){std::cout << "Copy Foo_child()" << std::endl;}
     Foo_child & operator=(Foo_child const & foo){std::cout << "Foo_child::=" << std::endl; return *this;}
     ~Foo_child() { std::cout << "Destructing a Foo_child with x=" << x << "\n"; }
     virtual void fun(){std::cout << "Foo_child::fun()" << std::endl;}

@@ -27,7 +27,6 @@ typedef woodycxx::smart_prt::shared_ptr<SocketOutputStream> SocketOutputStreamPt
 class AbstractSocketImpl : public AbstractSocket
 {
 private:
-    string ip;
 
     enum CONNECTION_RESET_STATE {CONNECTION_NOT_RESET, CONNECTION_RESET_PENDING, CONNECTION_RESET};
     int resetState;
@@ -43,8 +42,8 @@ private:
     SocketOutputStreamPtr   outputStreamPtr;
 
 public:
-    AbstractSocketImpl( InetAddress addr) : address(addr), shut_rd(false), shut_wr(false), closePending(false), connected(false) {}
-    AbstractSocketImpl( string ip, int port): address(ip, port), shut_rd(false), shut_wr(false), closePending(false), connected(false) {}
+    AbstractSocketImpl( InetAddress addr) : shut_rd(false), shut_wr(false), closePending(false), connected(false), address(addr) {}
+    AbstractSocketImpl( string ip, int port): shut_rd(false), shut_wr(false), closePending(false), connected(false), address(ip, port) {}
     virtual ~AbstractSocketImpl() {}
 
     virtual int connect(string host, int port);

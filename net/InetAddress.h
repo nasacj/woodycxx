@@ -14,7 +14,7 @@
 #ifdef WIN32
 #include <WinSock2.h>
 #else
-#include <sys/socket.h>
+#include <netinet/in.h>
 #endif
 
 using namespace std;
