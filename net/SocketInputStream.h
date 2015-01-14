@@ -28,7 +28,7 @@ private:
 
 public:
     //SocketInputStream(){}
-    SocketInputStream(AbstractSocketImpl* impl) : socket_impl(impl)
+    SocketInputStream(AbstractSocketImpl* impl) : socket_impl(impl), eof(false)
     {
         //fd = impl->getFileDescriptor();
     }

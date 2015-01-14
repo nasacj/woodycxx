@@ -1,11 +1,5 @@
 #include "SocketOutputStream.h"
-#include <sys/types.h>
-#ifdef WIN32
-#include <WinSock.h>
-#pragma comment(lib,"ws2_32.lib")
-#else
-#include <sys/socket.h>
-#endif
+#include "SocketsOpt.h"
 
 namespace woodycxx { namespace net {
 
@@ -59,7 +53,7 @@ int SocketOutputStream::socketWrite0(FileDescriptor& fd, const void* b, int b_si
 
     int socketfd = static_cast<int>(fd.getHandler());
     const char* byte_buf = static_cast<const char*>(b);
-    int write_count = send(socketfd, &byte_buf[off], len, 0);
+    int write_count = sockets::write(socketfd, &byte_buf[off], len);
     if ( write_count != len )
     {
         //TODO Handle error?

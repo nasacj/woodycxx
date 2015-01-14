@@ -10,8 +10,8 @@
 
 #include <io/InputStream.h>
 #include <io/OutputStream.h>
-#include <io/FileDescriptor.h>
-#include "InetSocketAddress.h"
+#include "InetAddress.h"
+#include <base/noncopyable.h>
 #include <string>
 
 using namespace std;
@@ -21,16 +21,12 @@ namespace woodycxx { namespace net {
 
 
 
-class AbstractSocket
+class AbstractSocket : public woodycxx::noncopyable
 {
 //protected:
 public:
 
     AbstractSocket() {}
-
-    AbstractSocket(string ip, int port) : address(ip, port) {}
-
-    AbstractSocket(InetSocketAddress in_address) : address(in_address) {}
 
     /**
      * Connects this socket to the specified port on the named host.
@@ -44,11 +40,18 @@ public:
     /**
      * Connects this socket to the specified port number on the specified host.
      *
-     * @param      address   the IP address of the remote host.
-     * @param      port      the port number.
+     * @param      address   InetAddress.
      *
      */
-    virtual int connect(InetSocketAddress& address, int port) = 0;
+    virtual int connect(InetAddress& address) = 0;
+
+    /**
+     * Connects this socket to the specified port number on the initialized host.
+     *
+     * @param      address   InetAddress.
+     *
+     */
+    virtual int connect() = 0;
 
     /**
      * Binds this socket to the specified local IP address and port number.
@@ -56,7 +59,7 @@ public:
      * @param      host   an IP address that belongs to a local interface.
      * @param      port   the port number.
      */
-    virtual void bind(InetSocketAddress& host, int port) = 0;
+    virtual void bind(InetAddress& host) = 0;
 
     /**
      * Sets the maximum queue length for incoming connection indications
@@ -113,19 +116,7 @@ public:
      */
     virtual void close() = 0;
 
-    InetSocketAddress& getInetSoecktAddress() { return this->address; }
-
-    FileDescriptor& getFileDescriptor() { return this->fileHandler; }
-
-    int getPort() { return this->port; }
-
     virtual ~AbstractSocket() {}
-
-protected:
-
-    InetSocketAddress address;
-    int port;
-    FileDescriptor fileHandler;
 
 };
 

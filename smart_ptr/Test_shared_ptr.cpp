@@ -5,14 +5,41 @@
 #include <algorithm>
 
 struct Foo
-{ 
-	Foo( int _x ) : x(_x) {}
+{
+public:
+	explicit Foo( int _x ) : x(_x) { std::cout << "Foo(" << _x << ")" << std::endl; }
+    Foo(const Foo const & foo) : x(foo.x){std::cout << "Copy Foo()" << std::endl;}
+    Foo & operator=(Foo const & foo){std::cout << "Foo::=" << std::endl; return *this;}
 	~Foo() { std::cout << "Destructing a Foo with x=" << x << "\n"; }
 	int x;
+    virtual void fun(){std::cout << "Foo::fun()" << std::endl;}
 	/* ... */
 };
 
+class Foo_child : public Foo
+{
+public:
+    Foo_child( int _x ) : Foo(_x) { std::cout << "Foo_child(" << _x << ")" << std::endl; }
+    Foo_child(const Foo_child const & foo) : Foo(foo){std::cout << "Copy Foo_child()" << std::endl;}
+    Foo_child & operator=(Foo_child const & foo){std::cout << "Foo_child::=" << std::endl; return *this;}
+    ~Foo_child() { std::cout << "Destructing a Foo_child with x=" << x << "\n"; }
+    virtual void fun(){std::cout << "Foo_child::fun()" << std::endl;}
+};
+
+class Conta
+{
+public:
+    Foo foo;
+    Conta(int _x):foo(_x){}
+    Foo& get_foo()
+    {
+        Foo& f = foo;
+        return f;
+    }
+};
+
 typedef woodycxx::smart_prt::shared_ptr<Foo> FooPtr;
+typedef woodycxx::smart_prt::shared_ptr<Foo_child> Foo_childPtr;
 
 struct FooPtrOps
 {
@@ -21,6 +48,12 @@ struct FooPtrOps
 	void operator()( const FooPtr & a )
 	{ std::cout << a->x << "\n"; }
 };
+
+Foo ret_foo()
+{
+    Foo foo(5);
+    return foo;
+}
 
 int test_main()
 {
@@ -71,11 +104,36 @@ int test_main()
 	return 0;
 }
 
-#if 1
+void test_return_ref()
+{
+    std::cout << "--------- y --------" << std::endl;
+    Conta conta(8);
+    Foo& foo_c = conta.get_foo();
+    foo_c.fun();
+    conta.get_foo().fun();
+
+    std::cout << "---------" << std::endl;
+    Foo foo_c2(1);
+    foo_c2 = conta.get_foo();
+
+    std::cout << "---------" << std::endl;
+    Foo foo_c3 = foo_c;
+}
+
 int main()
 {
+    Foo foo = ret_foo();
+    std::cout << "foo.x=" << foo.x << std::endl;
+    
+    std::cout << "--------- x --------" << std::endl;
+    FooPtr fooptr(new Foo(6));
+    Foo_childPtr foo_childptr(new Foo_child(7));
+    //fooptr = foo_childptr;
+    //foo_childptr->fun();
+
+    test_return_ref();
+
+    std::cout << "--------- test_main --------" << std::endl;
 	test_main();
 	return 0;
 }
-
-#endif

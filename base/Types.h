@@ -11,7 +11,7 @@
 namespace woodycxx { namespace error {
 enum ERROR_NUM
 {
-    NO_ERROR                  = 0x0,
+    NO_ERROR_OK                  = 0x0,
     
     //Common Errors
     IndexOutOfBounds          = 0xF0000001,

@@ -1,12 +1,7 @@
 #include "SocketInputStream.h"
 #include <smart_ptr/scoped_array.h>
 #include <sys/types.h>
-#ifdef WIN32
-#include <WinSock.h>
-#pragma comment(lib,"ws2_32.lib")
-#else
-#include <sys/socket.h>
-#endif
+#include "SocketsOpt.h"
 
 namespace woodycxx { namespace net {
 
@@ -94,7 +89,7 @@ int SocketInputStream::socketRead0(FileDescriptor& fd, int buf_size, char* b, in
 
     int socketfd = static_cast<int>(fd.getHandler());
     int n = 0;
-    n = recv(socketfd, &b[off], len, 0);
+    n = sockets::read(socketfd, &b[off], len);
 
     //TODO Timeout handling
 

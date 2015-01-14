@@ -1,24 +1,26 @@
 #include "AbstractSocketImpl.h"
-#include "InetSocketAddress.h"
+#include "InetAddress.h"
 #include <iostream>
 
 using namespace woodycxx::net;
 using namespace std;
 
-int main()
+int Test_AbstractSocketImpl()
 {
 #define MAXLINE 10
     char    recvline[MAXLINE + 1];
     int n;
 
-    AbstractSocketImpl socketImpl;
-    InetSocketAddress address("127.0.0.1", 12345);
-    int error_no = socketImpl.connect(address, 12345);
+    InetAddress address("127.0.0.1", 12345);
+    AbstractSocketImpl socketImpl(address);
+    cout << "Connect to " << address.getIpPort() << endl;
+    int error_no = socketImpl.connect(address.getIp(), address.getPort());
     if (error_no != 0)
     {
         cout << "connect failed: error_no=" << hex << error_no << endl;
         return -1;
     }
+    cout << "Connect successfully..." << endl;
     InputStream& inputstream = socketImpl.getInputStream();
     OutputStream& outputstream = socketImpl.getOutputStream();
     while ( (n = inputstream.read(recvline, MAXLINE)) > 0 )
@@ -38,4 +40,13 @@ int main()
         return -1;
     }
     return 0;
+}
+
+
+int main()
+{
+    cout << "Test_AbstractSocketImpl Start..." << endl;
+    int ret = Test_AbstractSocketImpl();
+    cout << "Test_AbstractSocketImpl End ===> ret = " << hex << ret << endl;
+    return ret;
 }

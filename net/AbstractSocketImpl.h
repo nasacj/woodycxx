@@ -9,6 +9,7 @@
 #define ABSTRACTSOCKETIMPL_H_
 
 #include "AbstractSocket.h"
+#include <io/FileDescriptor.h>
 #include "SocketInputStream.h"
 #include "SocketOutputStream.h"
 #include <smart_ptr/shared_ptr.h>
@@ -42,14 +43,17 @@ private:
     SocketOutputStreamPtr   outputStreamPtr;
 
 public:
-    AbstractSocketImpl() : shut_rd(false), shut_wr(false), closePending(false), connected(false) {}
+    AbstractSocketImpl( InetAddress addr) : address(addr), shut_rd(false), shut_wr(false), closePending(false), connected(false) {}
+    AbstractSocketImpl( string ip, int port): address(ip, port), shut_rd(false), shut_wr(false), closePending(false), connected(false) {}
     virtual ~AbstractSocketImpl() {}
 
     virtual int connect(string host, int port);
 
-    virtual int connect(InetSocketAddress& address, int port);
+    virtual int connect(InetAddress& address);
 
-    virtual void bind(InetSocketAddress& host, int port);
+    virtual int connect();
+
+    virtual void bind(InetAddress& host);
 
     virtual void listen(int backlog);
 
@@ -62,6 +66,10 @@ public:
     virtual int available();
 
     virtual void close();
+
+    InetAddress& getInetSoecktAddress() { return this->address; }
+
+    FileDescriptor& getFileDescriptor() { return this->fileHandler; }
 
     virtual bool isClosed()
     {
@@ -114,7 +122,10 @@ public:
         }
     }
 
-    
+protected:
+
+    InetAddress address;
+    FileDescriptor fileHandler;
 
 };
 
