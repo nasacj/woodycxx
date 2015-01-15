@@ -28,3 +28,4 @@ Test_shared_ptr
 Test_Thread
 Test_log
 Test_AbstractSocketImpl
+Test_InetAddress
