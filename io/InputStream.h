@@ -11,6 +11,8 @@
 #include <base/Types.h>
 #include <cstddef> //for std::size_t
 #include "ByteBuffer.h"
+#include <smart_ptr/shared_ptr.h>
+#include <base/noncopyable.h>
 
 namespace woodycxx { namespace io {
 
@@ -193,6 +195,7 @@ private:
     static const int MAX_SKIP_BUFFER_SIZE = 2048;
 };
 
+typedef woodycxx::smart_prt::shared_ptr<InputStream> InputStreamPtr;
 
 
 }}

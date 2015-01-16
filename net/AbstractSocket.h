@@ -21,7 +21,7 @@ namespace woodycxx { namespace net {
 
 
 
-class AbstractSocket : public woodycxx::noncopyable
+class AbstractSocket : woodycxx::noncopyable
 {
 //protected:
 public:
