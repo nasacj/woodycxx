@@ -20,7 +20,7 @@ int main(int argc, char* argv[])
         // 向客户端发送hello world!
         boost::system::error_code ec;
         socket.write_some(buffer("hello world!"), ec);
-        sleep(10); 
+        //sleep(10); 
         // 如果出错，打印出错信息
         if(ec)
         {

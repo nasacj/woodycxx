@@ -1,6 +1,9 @@
 #include "AbstractSocketImpl.h"
 #include "InetAddress.h"
 #include <iostream>
+#ifndef WIN32
+#include <signal.h>
+#endif
 
 using namespace woodycxx::net;
 using namespace std;
@@ -45,6 +48,9 @@ int Test_AbstractSocketImpl()
 
 int main()
 {
+#ifndef WIN32
+signal(SIGPIPE, SIG_IGN);
+#endif
     cout << "Test_AbstractSocketImpl Start..." << endl;
     int ret = Test_AbstractSocketImpl();
     cout << "Test_AbstractSocketImpl End ===> ret = " << hex << ret << endl;
