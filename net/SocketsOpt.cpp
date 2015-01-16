@@ -42,7 +42,7 @@ InitialWindowsSocketAPI initialwindowssocketapi;
 
 int createBlockingSocketFd()
 {
-    int sockfd = ::socket(AF_INET, SOCK_STREAM, 0);
+    int sockfd = ::socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
     return sockfd;
 }
 
@@ -74,6 +74,7 @@ int write(int sockfd, const void *buf, size_t count)
     return ::send(sockfd, (const char*)buf, count, 0);
 #else
     return ::write(sockfd, buf, count);
+    //return ::send(sockfd, (const char*)buf, count, 0);
 #endif
 }
 

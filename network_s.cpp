@@ -8,7 +8,7 @@ int main(int argc, char* argv[])
     // 所有asio类都需要io_service对象
     io_service iosev;
     ip::tcp::acceptor acceptor(iosev, 
-        ip::tcp::endpoint(ip::tcp::v4(), 1000));
+        ip::tcp::endpoint(ip::tcp::v4(), 12345));
     for(;;)
     {
         // socket对象
@@ -20,7 +20,7 @@ int main(int argc, char* argv[])
         // 向客户端发送hello world!
         boost::system::error_code ec;
         socket.write_some(buffer("hello world!"), ec);
- 
+        sleep(10); 
         // 如果出错，打印出错信息
         if(ec)
         {
