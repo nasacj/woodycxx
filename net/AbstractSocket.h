@@ -1,9 +1,12 @@
 /*
- * AbstractSocket.h
- *
- *  Created on: 2014-7-18
- *      Author: qianchj
- */
+  Copyright (c) 2014-2015 by NASa Qian <nasacj@nasacj.net>
+  This file is part of the woodycxx library.
+
+  This software is distributed under BSD 3-Clause License.
+  The full license agreement can be found in the LICENSE file.
+
+  This software is distributed without any warranty.
+*/
 
 #ifndef ABSTRACTSOCKET_H_
 #define ABSTRACTSOCKET_H_
@@ -35,7 +38,7 @@ public:
      * @param      port   the port number.
      *
      */
-    virtual int connect(string host, int port) = 0;
+    virtual int connect(const string& host, int port) = 0;
 
     /**
      * Connects this socket to the specified port number on the specified host.
@@ -43,7 +46,7 @@ public:
      * @param      address   InetAddress.
      *
      */
-    virtual int connect(InetAddress& address) = 0;
+    virtual int connect(const InetAddress& address) = 0;
 
     /**
      * Connects this socket to the specified port number on the initialized host.
@@ -59,7 +62,7 @@ public:
      * @param      host   an IP address that belongs to a local interface.
      * @param      port   the port number.
      */
-    virtual void bind(InetAddress& host) = 0;
+    virtual void bind(const InetAddress& host) = 0;
 
     /**
      * Sets the maximum queue length for incoming connection indications
@@ -78,7 +81,7 @@ public:
      * @param      s   the accepted connection.
      *
      */
-    virtual void accept(AbstractSocket& s) = 0;
+    virtual void accept(const AbstractSocket& s) = 0;
 
     /**
      * Returns an input stream for this socket.

@@ -1,12 +1,15 @@
 /*
- * InetSocketAddress.h
- *
- *  Created on: 2014-7-18
- *      Author: qianchj
- */
+  Copyright (c) 2014-2015 by NASa Qian <nasacj@nasacj.net>
+  This file is part of the woodycxx library.
 
-#ifndef InetSocketAddress_H_
-#define InetSocketAddress_H_
+  This software is distributed under BSD 3-Clause License.
+  The full license agreement can be found in the LICENSE file.
+
+  This software is distributed without any warranty.
+*/
+
+#ifndef Woodycxx_Net_InetSocketAddress_H_
+#define Woodycxx_Net_InetSocketAddress_H_
 
 #include <string>
 

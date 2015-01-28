@@ -1,14 +1,16 @@
 /*
- * SocketsOpt.cpp
- *
- *  Created on: 2015-1-13
- *      Author: qianchj
- */
+  Copyright (c) 2014-2015 by NASa Qian <nasacj@nasacj.net>
+  This file is part of the woodycxx library.
+
+  This software is distributed under BSD 3-Clause License.
+  The full license agreement can be found in the LICENSE file.
+
+  This software is distributed without any warranty.
+*/
 
 #include "SocketsOpt.h"
 #include <stdio.h>
 #include <assert.h>
-#include <string.h>
 #ifdef WIN32
 #include <WinSock2.h>
 #include <Ws2tcpip.h>
@@ -36,6 +38,11 @@ public:
             //TODO: handle this error;
         }
     }
+
+    ~InitialWindowsSocketAPI()
+    {
+        WSACleanup();
+    }
 };
 InitialWindowsSocketAPI initialwindowssocketapi;
 #endif
@@ -49,6 +56,18 @@ int createBlockingSocketFd()
 int connect(int sockfd, const struct sockaddr_in& addr)
 {
     int ret = ::connect(sockfd, (struct sockaddr *)(&addr), static_cast<socklen_t>(sizeof addr));
+    return ret;
+}
+
+int bind(int sockfd, const struct sockaddr_in& addr)
+{
+    int ret = ::bind(sockfd,(struct sockaddr *)(&addr), static_cast<socklen_t>(sizeof addr));
+    return ret;
+}
+
+int listen(int sockfd)
+{
+    int ret = ::listen(sockfd, SOMAXCONN);
     return ret;
 }
 
@@ -74,14 +93,21 @@ int write(int sockfd, const void *buf, size_t count)
     return ::send(sockfd, (const char*)buf, count, 0);
 #else
     return ::write(sockfd, buf, count);
-    //return ::send(sockfd, (const char*)buf, count, 0);
+#endif
+}
+
+int shutdownWrite(int sockfd)
+{
+#ifdef WIN32
+    return ::shutdown(sockfd, SD_SEND);
+#else
+    retun ::shutdown(sockfd, SHUT_WR)
 #endif
 }
 
 int close(int sockfd)
 {
 #ifdef WIN32
-    ::shutdown(sockfd, SD_SEND);
     return ::closesocket(sockfd);
 #else
     return ::close(sockfd);

@@ -1,9 +1,12 @@
 /*
- * AbstractSocketImpl.h
- *
- *  Created on: 2014-12-16
- *      Author: qianchj
- */
+  Copyright (c) 2014-2015 by NASa Qian <nasacj@nasacj.net>
+  This file is part of the woodycxx library.
+
+  This software is distributed under BSD 3-Clause License.
+  The full license agreement can be found in the LICENSE file.
+
+  This software is distributed without any warranty.
+*/
 
 #ifndef ABSTRACTSOCKETIMPL_H_
 #define ABSTRACTSOCKETIMPL_H_
@@ -41,22 +44,25 @@ private:
     SocketInputStreamPtr    inputStreamPtr;
     SocketOutputStreamPtr   outputStreamPtr;
 
+    InetAddress address;
+    FileDescriptor fileHandler;
+
 public:
-    AbstractSocketImpl( InetAddress addr) : shut_rd(false), shut_wr(false), closePending(false), connected(false), address(addr) {}
-    AbstractSocketImpl( string ip, int port): shut_rd(false), shut_wr(false), closePending(false), connected(false), address(ip, port) {}
+    AbstractSocketImpl( const InetAddress& addr) : shut_rd(false), shut_wr(false), closePending(false), connected(false), address(addr) {}
+    AbstractSocketImpl( const string& ip, int port): shut_rd(false), shut_wr(false), closePending(false), connected(false), address(ip, port) {}
     virtual ~AbstractSocketImpl() {}
 
-    virtual int connect(string host, int port);
+    virtual int connect(const string& host, int port);
 
-    virtual int connect(InetAddress& address);
+    virtual int connect(const InetAddress& address);
 
     virtual int connect();
 
-    virtual void bind(InetAddress& host);
+    virtual void bind(const InetAddress& host);
 
     virtual void listen(int backlog);
 
-    virtual void accept(AbstractSocket& s);
+    virtual void accept(const AbstractSocket& s);
 
     virtual InputStream& getInputStream();
 
@@ -69,6 +75,12 @@ public:
     InetAddress& getInetSoecktAddress() { return this->address; }
 
     FileDescriptor& getFileDescriptor() { return this->fileHandler; }
+
+    string getIpString();
+
+    uint16_t getPortString();
+
+    string getIpPortString();
 
     virtual bool isClosed()
     {
@@ -121,10 +133,6 @@ public:
         }
     }
 
-protected:
-
-    InetAddress address;
-    FileDescriptor fileHandler;
 
 };
 

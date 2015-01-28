@@ -1,9 +1,12 @@
 /*
- * InputStream.h
- *
- *  Created on: 2014-7-14
- *      Author: qianchj
- */
+  Copyright (c) 2014-2015 by NASa Qian <nasacj@nasacj.net>
+  This file is part of the woodycxx library.
+
+  This software is distributed under BSD 3-Clause License.
+  The full license agreement can be found in the LICENSE file.
+
+  This software is distributed without any warranty.
+*/
 
 #ifndef INPUTSTREAM_H_
 #define INPUTSTREAM_H_
@@ -30,7 +33,7 @@ public:
      * <code>255</code>. If no byte is available because the end of the stream
      * has been reached, the value <code>-1</code> is returned. This method
      * blocks until input data is available, the end of the stream is detected,
-     * or an exception is thrown.
+     * or IO error returns
      *
      * <p> A subclass must provide an implementation of this method.
      *
@@ -43,7 +46,7 @@ public:
      * Reads some number of bytes from the input stream and stores them into
      * the buffer array <code>b</code>. The number of bytes actually read is
      * returned as an integer.  This method blocks until input data is
-     * available, end of file is detected, or an exception is thrown.
+     * available, end of file is detected or IO error returns.
      *
      * <p> If the length of <code>b</code> is zero, then no bytes are read and
      * <code>0</code> is returned; otherwise, there is an attempt to read at
@@ -79,7 +82,7 @@ public:
      * The number of bytes actually read is returned as an integer.
      *
      * <p> This method blocks until input data is available, end of file is
-     * detected, or an exception is thrown.
+     * detected, or IO error returns.
      *
      * <p> If <code>len</code> is zero, then no bytes are read and
      * <code>0</code> is returned; otherwise, there is an attempt to read at
@@ -101,16 +104,10 @@ public:
      *
      * <p> The <code>read(b,</code> <code>off,</code> <code>len)</code> method
      * for class <code>InputStream</code> simply calls the method
-     * <code>read()</code> repeatedly. If the first such call results in an
-     * <code>IOException</code>, that exception is returned from the call to
-     * the <code>read(b,</code> <code>off,</code> <code>len)</code> method.  If
-     * any subsequent call to <code>read()</code> results in a
-     * <code>IOException</code>, the exception is caught and treated as if it
-     * were end of file; the bytes read up to that point are stored into
-     * <code>b</code> and the number of bytes read before the exception
-     * occurred is returned. The default implementation of this method blocks
+     * <code>read()</code> repeatedly.
+     * The default implementation of this method blocks
      * until the requested amount of input data <code>len</code> has been read,
-     * end of file is detected, or an exception is thrown. Subclasses are encouraged
+     * end of file is detected or IO error returns. Subclasses are encouraged
      * to provide a more efficient implementation of this method.
      *
      * @param      b     the buffer into which the data is read.
@@ -160,10 +157,6 @@ public:
      * the total number of bytes in the stream, many will not.  It is
      * never correct to use the return value of this method to allocate
      * a buffer intended to hold all data in this stream.
-     *
-     * <p> A subclass' implementation of this method may choose to throw an
-     * {@link IOException} if this input stream has been closed by
-     * invoking the {@link #close()} method.
      *
      * <p> The {@code available} method for class {@code InputStream} always
      * returns {@code 0}.
