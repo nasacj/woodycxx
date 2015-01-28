@@ -13,6 +13,7 @@
 
 #include "detail/shared_count.h"
 #include "checked_delete.h"
+#include <algorithm>    //for std::swap
 
 namespace woodycxx { namespace smart_prt {
 

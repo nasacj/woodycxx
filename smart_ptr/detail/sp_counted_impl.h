@@ -44,7 +44,7 @@ namespace woodycxx { namespace smart_prt { namespace detail {
 	{
 	private:
 
-		P ptr; // copy constructor must not throw
+		P* ptr; // copy constructor must not throw
 		D del; // copy constructor must not throw
 
 		sp_counted_impl_pd( sp_counted_impl_pd const & );
@@ -55,11 +55,11 @@ namespace woodycxx { namespace smart_prt { namespace detail {
 	public:
 
 		// pre: d(p) must not throw
-		sp_counted_impl_pd( P p, D & d ): ptr( p ), del( d )
+		sp_counted_impl_pd( P* p, D & d ): ptr( p ), del( d )
 		{
 		}
 
-		sp_counted_impl_pd( P p ): ptr( p ), del()
+		sp_counted_impl_pd( P* p ): ptr( p ), del()
 		{
 		}
 

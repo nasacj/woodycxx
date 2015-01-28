@@ -15,7 +15,7 @@ using namespace std;
 
 struct Foo
 {
-	Foo() : x(0) {}
+    Foo() : x(0) {}
 	Foo( int _x ) : x(_x) {}
 	~Foo() { std::cout << "Destructing a Foo with x=" << x << "\n"; }
 	int x;
@@ -29,7 +29,6 @@ void test()
 	FooArray(new Foo[10]);
 }
 
-#if 0
 
 int main()
 {
@@ -37,4 +36,3 @@ int main()
 	return 0;
 }
 
-#endif
