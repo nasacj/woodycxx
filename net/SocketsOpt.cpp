@@ -11,6 +11,7 @@
 #include "SocketsOpt.h"
 #include <stdio.h>
 #include <assert.h>
+#include <string.h>
 #ifdef WIN32
 #include <WinSock2.h>
 #include <Ws2tcpip.h>
@@ -101,7 +102,7 @@ int shutdownWrite(int sockfd)
 #ifdef WIN32
     return ::shutdown(sockfd, SD_SEND);
 #else
-    retun ::shutdown(sockfd, SHUT_WR)
+    return ::shutdown(sockfd, SHUT_WR);
 #endif
 }
 
