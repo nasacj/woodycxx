@@ -10,7 +10,8 @@
 
 #include "InputStream.h"
 #include <base/Math.h>
-#include <smart_ptr/scoped_array.h>
+//#include <smart_ptr/scoped_array.h>
+#include <boost/scoped_array.hpp>
 #include <iostream>
 
 using namespace std;
@@ -93,7 +94,8 @@ long InputStream::skip(long n)
 
     int size = static_cast<int>(Math::min(static_cast<long>(MAX_SKIP_BUFFER_SIZE), remaining));
     //ByteBuffer skipBuffer(size);
-    typedef woodycxx::smart_prt::scoped_array<char> Byte_Array;
+    //typedef woodycxx::smart_prt::scoped_array<char> Byte_Array;
+    typedef boost::scoped_array<char> Byte_Array;
     char* skipBuffer = Byte_Array(new char[size]).get();
     while (remaining > 0)
     {

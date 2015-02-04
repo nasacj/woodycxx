@@ -14,8 +14,7 @@
 #include "ByteBuffer.h"
 #include <base/Types.h>
 #include <cstddef> //for std::size_t
-#include <smart_ptr/shared_ptr.h>
-#include <base/noncopyable.h>
+#include <boost/noncopyable.hpp>
 
 namespace woodycxx { namespace io {
 
@@ -30,7 +29,7 @@ namespace woodycxx { namespace io {
  * that writes one byte of output.
  *
 **/
-class OutputStream : woodycxx::noncopyable
+class OutputStream : boost::noncopyable
 {
 public:
 
@@ -133,7 +132,6 @@ public:
 
 };
 
-typedef woodycxx::smart_prt::shared_ptr<OutputStream> OutputStreamPtr;
 
 }}
 

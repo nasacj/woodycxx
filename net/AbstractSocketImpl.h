@@ -15,7 +15,9 @@
 #include <io/FileDescriptor.h>
 #include "SocketInputStream.h"
 #include "SocketOutputStream.h"
-#include <smart_ptr/shared_ptr.h>
+//#include <smart_ptr/shared_ptr.h>
+#include <boost/shared_ptr.hpp>
+//#include <memory>
 
 using namespace std;
 using namespace woodycxx::io;
@@ -24,8 +26,10 @@ namespace woodycxx { namespace net {
 
 class SocketInputStream;
 class SocketOutputStream;
-typedef woodycxx::smart_prt::shared_ptr<SocketInputStream> SocketInputStreamPtr;
-typedef woodycxx::smart_prt::shared_ptr<SocketOutputStream> SocketOutputStreamPtr;
+//typedef woodycxx::smart_prt::shared_ptr<SocketInputStream> SocketInputStreamPtr;
+//typedef woodycxx::smart_prt::shared_ptr<SocketOutputStream> SocketOutputStreamPtr;
+typedef boost::shared_ptr<SocketInputStream> SocketInputStreamPtr;
+typedef boost::shared_ptr<SocketOutputStream> SocketOutputStreamPtr;
 
 class AbstractSocketImpl : public AbstractSocket
 {

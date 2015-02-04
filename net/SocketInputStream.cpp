@@ -9,7 +9,8 @@
 */
 
 #include "SocketInputStream.h"
-#include <smart_ptr/scoped_array.h>
+//#include <smart_ptr/scoped_array.h>
+#include <boost/scoped_array.hpp>
 #include <sys/types.h>
 #include "SocketsOpt.h"
 
@@ -20,7 +21,8 @@ int SocketInputStream::read()
     if (eof) {
         return -1;
     }
-    typedef woodycxx::smart_prt::scoped_array<char> Byte_Array;
+    //typedef woodycxx::smart_prt::scoped_array<char> Byte_Array;
+    typedef boost::scoped_array<char> Byte_Array;
     char* temp = Byte_Array(new char[1]).get();
     int n = read(temp, 1);
     if (n <= 0) {

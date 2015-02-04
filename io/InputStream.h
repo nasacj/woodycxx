@@ -14,8 +14,7 @@
 #include <base/Types.h>
 #include <cstddef> //for std::size_t
 #include "ByteBuffer.h"
-#include <smart_ptr/shared_ptr.h>
-#include <base/noncopyable.h>
+#include <boost/noncopyable.hpp>
 
 namespace woodycxx { namespace io {
 
@@ -23,7 +22,7 @@ namespace woodycxx { namespace io {
 * This abstract class is the superclass of all classes representing an input stream of bytes.
 * Applications that need to define a subclass of InputStream must always provide a method that returns the next byte of input.
 */
-class InputStream
+class InputStream : boost::noncopyable
 {
 public:
 	
@@ -187,8 +186,6 @@ public:
 private:
     static const int MAX_SKIP_BUFFER_SIZE = 2048;
 };
-
-typedef woodycxx::smart_prt::shared_ptr<InputStream> InputStreamPtr;
 
 
 }}

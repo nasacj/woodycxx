@@ -13,7 +13,8 @@
 
 #include <base/Types.h>
 #include <base/Math.h>
-#include <smart_ptr/scoped_array.h>
+//#include <smart_ptr/scoped_array.h>
+#include <boost/scoped_array.hpp>
 //#include <vector>
 #include <string.h>
 
@@ -87,8 +88,8 @@ public:
 private:
 	uint32 buffer_size;
 	//vector<uint8> buffer;
-
-    typedef woodycxx::smart_prt::scoped_array<uint8> Byte_Array;
+    typedef boost::scoped_array<uint8> Byte_Array;
+    //typedef woodycxx::smart_prt::scoped_array<uint8> Byte_Array;
     Byte_Array buffer;
 	
 };
