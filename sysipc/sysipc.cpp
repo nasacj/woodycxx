@@ -11,7 +11,7 @@
 #ifdef WIN32
 #include <windows.h>
 #else
-#include <sys/statfs.h>
+//#include <sys/statfs.h>
 #endif
 
 #include "sysipc.h"
