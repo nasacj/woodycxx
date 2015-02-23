@@ -61,6 +61,15 @@ int main()
 #if !defined(WIN32) && !defined(__Apple__)
 signal(SIGPIPE, SIG_IGN);
 #endif
+#if defined(__APPLE__)
+cout << "<<< This is Mac System >>>" << endl;
+#endif
+#if defined(WIN32)
+cout << "<<< This is Windows System >>>" << endl;
+#endif
+#if defined(linux)
+cout << "<<< This is Linux System >>>" << endl;
+#endif
     cout << "Test_AbstractSocketImpl Start..." << endl;
     int ret = Test_AbstractSocketImpl();
     cout << "Test_AbstractSocketImpl End ===> ret = " << hex << ret << endl;
