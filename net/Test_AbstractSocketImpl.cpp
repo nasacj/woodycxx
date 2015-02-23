@@ -58,7 +58,7 @@ int Test_AbstractSocketImpl()
 
 int main()
 {
-#ifndef WIN32
+#ifdef linux
 signal(SIGPIPE, SIG_IGN);
 #endif
     cout << "Test_AbstractSocketImpl Start..." << endl;
