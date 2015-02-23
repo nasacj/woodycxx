@@ -58,7 +58,7 @@ int Test_AbstractSocketImpl()
 
 int main()
 {
-#ifdef linux
+#if !defined(WIN32) && !defined(__Apple__)
 signal(SIGPIPE, SIG_IGN);
 #endif
     cout << "Test_AbstractSocketImpl Start..." << endl;
