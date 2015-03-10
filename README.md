@@ -1,6 +1,10 @@
 Woodycxx is a C++ library for XMPP Core.
 
+***
+Related Library:
+Boost
 
+***
 Woodycxx also contains some Libraries:
 
     woodycxx/io             I/O classes for base and network, designed as Java usage.
