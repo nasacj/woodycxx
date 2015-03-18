@@ -30,3 +30,4 @@ Test_Thread
 Test_log
 Test_AbstractSocketImpl
 Test_InetAddress
+Test_LRUCache
