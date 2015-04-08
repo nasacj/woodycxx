@@ -1,0 +1,13 @@
+language: cpp
+
+compiler:
+  - gcc
+  
+before_script:
+  - autoreconf --install
+  
+./configure && make
+
+os:
+  - linux
+  - osx
