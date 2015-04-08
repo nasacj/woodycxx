@@ -5,8 +5,9 @@ compiler:
   
 before_script:
   - autoreconf --install
-  
-./configure && make
+
+script:
+  - ./configure && make
 
 os:
   - linux
