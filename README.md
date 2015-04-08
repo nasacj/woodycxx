@@ -1,7 +1,11 @@
 Woodycxx is a C++ library for XMPP Core.
 
+> Build & Run Unit Test in |  Linux |
+> -------------------------|--------|
+> Status |  [[![Build Status](https://travis-ci.org/nasacj/woodycxx.svg?branch=master)](https://travis-ci.org/nasacj/woodycxx) |
+
 ***
-Related Library:
+Dependent Library:
 Boost
 
 ***
