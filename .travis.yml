@@ -9,6 +9,9 @@ before_script:
 script:
   - ./configure && make
 
+notifications:
+  email: false
+  
 os:
   - linux
   - osx
