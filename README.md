@@ -1,12 +1,21 @@
-Woodycxx is a C++ library for XMPP Core.
-
+Woodycxx
+=======
+> Woodycxx is a C++ library for XMPP Core.
+>
+> in developing ...
+>
 > Build & Run Unit Test in |  Linux |
 > -------------------------|--------|
 > Status |  [![Build Status](https://travis-ci.org/nasacj/woodycxx.svg?branch=master)](https://travis-ci.org/nasacj/woodycxx) |
 
+LICENSE
+-------
+Under BSD Liense
+
 ***
-Dependent Library:
-Boost
+Dependent Library
+-------
+### Boost
 
 ***
 Woodycxx also contains some Libraries:
@@ -17,10 +26,9 @@ Woodycxx also contains some Libraries:
 
 
 
-=== Setup ===
-
-
-autotool is needed to configure and compile the code:
+INSTALL
+=======
+> autotool is needed to configure and compile the code:
 
     autoreconf --install
     ./configure
