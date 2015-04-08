@@ -31,8 +31,8 @@ Boost
 INSTALL
 =======
 > Woodycxx is written in C++11
->
 > autotool is needed to configure and compile the code
+
 Prerequisites
 -------
 -   **[Required]** GCC or Clang or VC support ISO C++ 11.
@@ -41,7 +41,6 @@ Prerequisites
 
 Build
 -------
-Run command:
     autoreconf --install
     ./configure
     make
