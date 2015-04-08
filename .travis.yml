@@ -17,7 +17,8 @@ before_script:
   - autoreconf --install
 
 script:
-  - ./configure && make
+  - ./configure
+  - make  
 
 notifications:
   email: false
