@@ -14,7 +14,8 @@
 #include <io/InputStream.h>
 #include <io/OutputStream.h>
 #include "InetAddress.h"
-#include <base/noncopyable.h>
+//#include <base/noncopyable.h>
+#include <boost/noncopyable.hpp>
 #include <string>
 
 using namespace std;
@@ -24,7 +25,7 @@ namespace woodycxx { namespace net {
 
 
 
-class AbstractSocket : woodycxx::noncopyable
+class AbstractSocket : boost::noncopyable
 {
 //protected:
 public:
@@ -89,7 +90,7 @@ public:
      * @return     a stream for reading from this socket.
      *
     */
-    virtual InputStream& getInputStream() = 0;
+    virtual InputStreamPtr getInputStream() = 0;
 
 
     /**
@@ -99,7 +100,7 @@ public:
      * @exception  IOException  if an I/O error occurs when creating the
      *               output stream.
      */
-    virtual OutputStream& getOutputStream() = 0;
+    virtual OutputStreamPtr getOutputStream() = 0;
 
     /**
      * Returns the number of bytes that can be read from this socket

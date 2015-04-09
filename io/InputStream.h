@@ -15,6 +15,10 @@
 #include <cstddef> //for std::size_t
 #include "ByteBuffer.h"
 #include <boost/noncopyable.hpp>
+//#include <boost/shared_ptr.hpp>
+#include <memory>
+
+using namespace std;
 
 namespace woodycxx { namespace io {
 
@@ -187,6 +191,7 @@ private:
     static const int MAX_SKIP_BUFFER_SIZE = 2048;
 };
 
+typedef shared_ptr<InputStream> InputStreamPtr;
 
 }}
 

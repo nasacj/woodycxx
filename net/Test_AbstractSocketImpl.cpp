@@ -25,22 +25,23 @@ int Test_AbstractSocketImpl()
     int n;
 
     InetAddress address("127.0.0.1", 12345);
-    AbstractSocketImpl socketImpl(address);
+    AbstractSocketImplPtr socketImpl = make_shared<AbstractSocketImpl>(address);
     cout << "Connect to " << address.getIpPort() << endl;
-    int error_no = socketImpl.connect(address.getIp(), address.getPort());
+    int error_no = socketImpl->connect(address.getIp(), address.getPort());
     if (error_no != 0)
     {
         cout << "connect failed: error_no=" << hex << error_no << endl;
         return -1;
     }
     cout << "Connect successfully..." << endl;
-    InputStream& inputstream = socketImpl.getInputStream();
-    OutputStream& outputstream = socketImpl.getOutputStream();
-    while ( (n = inputstream.read(recvline, MAXLINE)) > 0 )
+    InputStreamPtr inputstream = socketImpl->getInputStream();
+    OutputStreamPtr outputstream = socketImpl->getOutputStream();
+    InputStreamPtr inputstream2 = socketImpl->getInputStream();
+    while ( (n = inputstream->read(recvline, MAXLINE)) > 0 )
     {
         recvline[n] = 0;
         cout << recvline;
-        int n_written = outputstream.write(recvline, n);
+        int n_written = outputstream->write(recvline, n);
         if (n_written <= 0 )
         {
             cout << endl << "Write Error!" << endl;
@@ -64,7 +65,7 @@ signal(SIGPIPE, SIG_IGN);
 #if defined(__APPLE__)
 cout << "<<< This is Mac System >>>" << endl;
 #endif
-#if defined(WIN32)
+#if defined(_WINDOWS_)
 cout << "<<< This is Windows System >>>" << endl;
 #endif
 #if defined(__linux__)

@@ -14,20 +14,24 @@
 #include <io/OutputStream.h>
 #include <io/FileDescriptor.h>
 #include "AbstractSocketImpl.h"
+//#include <boost/shared_ptr.hpp>
+#include <memory>
 
+using namespace std;
 using namespace woodycxx::io;
 
 namespace woodycxx { namespace net {
 
 class AbstractSocketImpl;
+typedef shared_ptr<AbstractSocketImpl> AbstractSocketImplPtr;
 
 class SocketOutputStream : public OutputStream
 {
 private:
-    AbstractSocketImpl* socket_impl;
+    AbstractSocketImplPtr socket_impl;
 
 public:
-    SocketOutputStream(AbstractSocketImpl* impl) : socket_impl(impl) {}
+    SocketOutputStream(AbstractSocketImplPtr& impl) : socket_impl(impl) {}
     ~SocketOutputStream(){}
 
     int write(char b);

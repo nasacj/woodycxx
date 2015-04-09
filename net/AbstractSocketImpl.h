@@ -16,8 +16,9 @@
 #include "SocketInputStream.h"
 #include "SocketOutputStream.h"
 //#include <smart_ptr/shared_ptr.h>
-#include <boost/shared_ptr.hpp>
-//#include <memory>
+//#include <boost/shared_ptr.hpp>
+//#include <boost/enable_shared_from_this.hpp>
+#include <memory>
 
 using namespace std;
 using namespace woodycxx::io;
@@ -28,10 +29,10 @@ class SocketInputStream;
 class SocketOutputStream;
 //typedef woodycxx::smart_prt::shared_ptr<SocketInputStream> SocketInputStreamPtr;
 //typedef woodycxx::smart_prt::shared_ptr<SocketOutputStream> SocketOutputStreamPtr;
-typedef boost::shared_ptr<SocketInputStream> SocketInputStreamPtr;
-typedef boost::shared_ptr<SocketOutputStream> SocketOutputStreamPtr;
+typedef shared_ptr<SocketInputStream> SocketInputStreamPtr;
+typedef shared_ptr<SocketOutputStream> SocketOutputStreamPtr;
 
-class AbstractSocketImpl : public AbstractSocket
+class AbstractSocketImpl : public AbstractSocket, public enable_shared_from_this<AbstractSocketImpl>
 {
 private:
 
@@ -45,8 +46,10 @@ private:
     bool closed;
     bool connected;
     
-    SocketInputStreamPtr    inputStreamPtr;
-    SocketOutputStreamPtr   outputStreamPtr;
+    //SocketInputStreamPtr    inputStreamPtr;
+    //SocketOutputStreamPtr   outputStreamPtr;
+    InputStreamPtr    inputStreamPtr;
+    OutputStreamPtr   outputStreamPtr;
 
     InetAddress address;
     FileDescriptor fileHandler;
@@ -68,9 +71,9 @@ public:
 
     virtual void accept(const AbstractSocket& s);
 
-    virtual InputStream& getInputStream();
+    virtual InputStreamPtr getInputStream();
 
-    virtual OutputStream& getOutputStream();
+    virtual OutputStreamPtr getOutputStream();
 
     virtual int available();
 
@@ -139,6 +142,8 @@ public:
 
 
 };
+
+typedef shared_ptr<AbstractSocketImpl> AbstractSocketImplPtr;
 
 }}//end of namspace woodycxx::net
 

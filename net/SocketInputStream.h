@@ -14,24 +14,28 @@
 #include <io/InputStream.h>
 #include <io/FileDescriptor.h>
 #include "AbstractSocketImpl.h"
+//#include <boost/shared_ptr.hpp>
+#include <memory>
 
+using namespace std;
 using namespace woodycxx::io;
 
 namespace woodycxx { namespace net {
 
 class AbstractSocketImpl;
+typedef shared_ptr<AbstractSocketImpl> AbstractSocketImplPtr;
 
 class SocketInputStream : public InputStream
 {
 private:
-    AbstractSocketImpl* socket_impl;
+    AbstractSocketImplPtr socket_impl;
     bool eof;
     //bool closing;
     //FileDescriptor fd;
 
 public:
     //SocketInputStream(){}
-    SocketInputStream(AbstractSocketImpl* impl) : socket_impl(impl), eof(false)
+    SocketInputStream(AbstractSocketImplPtr& impl) : socket_impl(impl), eof(false)
     {
         //fd = impl->getFileDescriptor();
     }

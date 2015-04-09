@@ -15,6 +15,10 @@
 #include <base/Types.h>
 #include <cstddef> //for std::size_t
 #include <boost/noncopyable.hpp>
+//#include <boost/shared_ptr.hpp>
+#include <memory>
+
+using namespace std;
 
 namespace woodycxx { namespace io {
 
@@ -132,6 +136,7 @@ public:
 
 };
 
+typedef shared_ptr<OutputStream> OutputStreamPtr;
 
 }}
 
