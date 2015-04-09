@@ -35,7 +35,7 @@ private:
 
 public:
     //SocketInputStream(){}
-    SocketInputStream(AbstractSocketImplPtr& impl) : socket_impl(impl), eof(false)
+    SocketInputStream(const AbstractSocketImplPtr& impl) : socket_impl(impl), eof(false)
     {
         //fd = impl->getFileDescriptor();
     }

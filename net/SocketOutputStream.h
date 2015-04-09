@@ -31,7 +31,7 @@ private:
     AbstractSocketImplPtr socket_impl;
 
 public:
-    SocketOutputStream(AbstractSocketImplPtr& impl) : socket_impl(impl) {}
+    SocketOutputStream(const AbstractSocketImplPtr& impl) : socket_impl(impl) {}
     ~SocketOutputStream(){}
 
     int write(char b);
