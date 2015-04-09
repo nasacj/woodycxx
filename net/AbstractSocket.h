@@ -25,7 +25,7 @@ namespace woodycxx { namespace net {
 
 
 
-class AbstractSocket : boost::noncopyable
+class AbstractSocket : boost::noncopyable, public enable_shared_from_this<AbstractSocket>
 {
 //protected:
 public:

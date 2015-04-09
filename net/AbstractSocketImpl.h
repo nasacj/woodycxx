@@ -32,7 +32,7 @@ class SocketOutputStream;
 typedef shared_ptr<SocketInputStream> SocketInputStreamPtr;
 typedef shared_ptr<SocketOutputStream> SocketOutputStreamPtr;
 
-class AbstractSocketImpl : public AbstractSocket, public enable_shared_from_this<AbstractSocketImpl>
+class AbstractSocketImpl : public AbstractSocket
 {
 private:
 
@@ -58,6 +58,11 @@ public:
     AbstractSocketImpl( const InetAddress& addr) : shut_rd(false), shut_wr(false), closePending(false), connected(false), address(addr) {}
     AbstractSocketImpl( const string& ip, int port): shut_rd(false), shut_wr(false), closePending(false), connected(false), address(ip, port) {}
     virtual ~AbstractSocketImpl() {}
+
+    std::shared_ptr<AbstractSocketImpl> shared_from_this()
+    {
+        return std::static_pointer_cast<AbstractSocketImpl>(AbstractSocket::shared_from_this());
+    }
 
     virtual int connect(const string& host, int port);
 
