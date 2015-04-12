@@ -25,7 +25,7 @@ int Test_AbstractSocketImpl()
     int n;
 
     InetAddress address("127.0.0.1", 12345);
-    AbstractSocketImplPtr socketImpl = make_shared<AbstractSocketImpl>(address);
+    auto socketImpl = make_shared<AbstractSocketImpl>(address);
     cout << "Connect to " << address.getIpPort() << endl;
     int error_no = socketImpl->connect(address.getIp(), address.getPort());
     if (error_no != 0)
@@ -34,8 +34,8 @@ int Test_AbstractSocketImpl()
         return -1;
     }
     cout << "Connect successfully..." << endl;
-    InputStreamPtr inputstream = socketImpl->getInputStream();
-    OutputStreamPtr outputstream = socketImpl->getOutputStream();
+    auto inputstream = socketImpl->getInputStream();
+    auto outputstream = socketImpl->getOutputStream();
     InputStreamPtr inputstream2 = socketImpl->getInputStream();
     while ( (n = inputstream->read(recvline, MAXLINE)) > 0 )
     {

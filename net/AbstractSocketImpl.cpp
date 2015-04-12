@@ -72,7 +72,7 @@ InputStreamPtr AbstractSocketImpl::getInputStream()
     if ( !inputStreamPtr )
     {
         //inputStreamPtr.reset(new SocketInputStream(shared_from_this()));
-        inputStreamPtr = make_shared<SocketInputStream>(shared_from_this());
+        inputStreamPtr = static_pointer_cast<InputStream>(make_shared<SocketInputStream>(shared_from_this()));
     }
     return inputStreamPtr;
 }
@@ -83,7 +83,7 @@ OutputStreamPtr AbstractSocketImpl::getOutputStream()
     if ( !outputStreamPtr )
     {
         //outputStreamPtr.reset(new SocketOutputStream(shared_from_this()));
-        outputStreamPtr = make_shared<SocketOutputStream>(shared_from_this());
+        outputStreamPtr = static_pointer_cast<OutputStream>(make_shared<SocketOutputStream>(shared_from_this()));
     }
     return outputStreamPtr;
 }
