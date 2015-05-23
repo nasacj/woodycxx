@@ -66,7 +66,7 @@ int SocketInputStream::read(char* b, int byte_size, int off, int length, int tim
         return woodycxx::error::BufferIndexOutOfBounds;
     }
 
-    FileDescriptor& fd = socket_impl->getFileDescriptor();
+    FileDescriptor fd = socket_impl->getFileDescriptor();
     n = socketRead0(fd, byte_size, b, off, length, timeout);
     if (n > 0) {
         return n;

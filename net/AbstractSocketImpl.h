@@ -84,9 +84,9 @@ public:
 
     virtual void close();
 
-    InetAddress& getInetSoecktAddress() { return this->address; }
+    InetAddress getInetSoecktAddress() { return this->address; }
 
-    FileDescriptor& getFileDescriptor() { return this->fileHandler; }
+    FileDescriptor getFileDescriptor() { return this->fileHandler; }
 
     string getIpString();
 

@@ -43,7 +43,7 @@ int SocketOutputStream::write(const void* b, int b_size, int off, int len)
     if (socket_impl->isConnectionReset()) 
         return woodycxx::error::ConnectionReset;
 
-    FileDescriptor& fd = socket_impl->getFileDescriptor();
+    FileDescriptor fd = socket_impl->getFileDescriptor();
     return socketWrite0(fd, b, b_size, off, len);
 }
 
