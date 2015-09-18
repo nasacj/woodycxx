@@ -29,9 +29,14 @@ class SocketOutputStream : public OutputStream
 {
 private:
     AbstractSocketImplPtr socket_impl;
+    FileDescriptor socketFD;
 
 public:
-    SocketOutputStream(const AbstractSocketImplPtr& impl) : socket_impl(impl) {}
+    SocketOutputStream(const AbstractSocketImplPtr& impl) : socket_impl(impl)
+    {
+        init();
+    }
+
     ~SocketOutputStream(){}
 
     int write(char b);
@@ -45,6 +50,7 @@ public:
     void close();
 
 private:
+    void init();
     int socketWrite0(FileDescriptor& fd, const void* b, int b_size, int off, int len);
 };
 

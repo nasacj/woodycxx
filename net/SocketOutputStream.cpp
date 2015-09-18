@@ -13,6 +13,11 @@
 
 namespace woodycxx { namespace net {
 
+void SocketOutputStream::init()
+{
+    socketFD = socket_impl->getFileDescriptor();
+}
+
 int SocketOutputStream::write(char b)
 {
     return write(&b, 1, 0, 1);
@@ -43,8 +48,7 @@ int SocketOutputStream::write(const void* b, int b_size, int off, int len)
     if (socket_impl->isConnectionReset()) 
         return woodycxx::error::ConnectionReset;
 
-    FileDescriptor fd = socket_impl->getFileDescriptor();
-    return socketWrite0(fd, b, b_size, off, len);
+    return socketWrite0(socketFD, b, b_size, off, len);
 }
 
 int SocketOutputStream::socketWrite0(FileDescriptor& fd, const void* b, int b_size, int off, int len)

@@ -29,6 +29,7 @@ class SocketInputStream : public InputStream
 {
 private:
     AbstractSocketImplPtr socket_impl;
+    FileDescriptor socketFD;
     bool eof;
     //bool closing;
     //FileDescriptor fd;
@@ -37,7 +38,7 @@ public:
     //SocketInputStream(){}
     SocketInputStream(const AbstractSocketImplPtr& impl) : socket_impl(impl), eof(false)
     {
-        //fd = impl->getFileDescriptor();
+        init();
     }
     ~SocketInputStream(){}
 
@@ -53,6 +54,7 @@ protected:
     int read(char* b, int byte_size, int off, int length, int timeout);
 
 private:
+    void init();
     int socketRead0(FileDescriptor& fd, int buf_size, char* b, int off, int len, int timeout);
 
 };
