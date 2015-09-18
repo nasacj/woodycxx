@@ -29,8 +29,8 @@ class SocketInputStream;
 class SocketOutputStream;
 //typedef woodycxx::smart_prt::shared_ptr<SocketInputStream> SocketInputStreamPtr;
 //typedef woodycxx::smart_prt::shared_ptr<SocketOutputStream> SocketOutputStreamPtr;
-typedef shared_ptr<SocketInputStream> SocketInputStreamPtr;
-typedef shared_ptr<SocketOutputStream> SocketOutputStreamPtr;
+typedef weak_ptr<InputStream> InputStreamWeakPtr;
+typedef weak_ptr<OutputStream> OutputStreamWeakPtr;
 
 class AbstractSocketImpl : public AbstractSocket
 {
@@ -48,6 +48,8 @@ private:
     
     //InputStreamPtr    inputStreamPtr;
     //OutputStreamPtr   outputStreamPtr;
+    InputStreamWeakPtr   wkInputStreamPtr;
+    OutputStreamWeakPtr  wkOutputStreamPtr;
 
     InetAddress address;
     FileDescriptor fileHandler;
