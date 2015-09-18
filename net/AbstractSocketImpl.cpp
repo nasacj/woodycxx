@@ -69,23 +69,13 @@ void AbstractSocketImpl::accept(const AbstractSocket& s)
 
 InputStreamPtr AbstractSocketImpl::getInputStream()
 {
-    if ( !inputStreamPtr )
-    {
-        //inputStreamPtr.reset(new SocketInputStream(shared_from_this()));
-        inputStreamPtr = make_shared<SocketInputStream>(shared_from_this());
-    }
-    return inputStreamPtr;
+    return make_shared<SocketInputStream>(shared_from_this());
 }
 
 
 OutputStreamPtr AbstractSocketImpl::getOutputStream()
 {
-    if ( !outputStreamPtr )
-    {
-        //outputStreamPtr.reset(new SocketOutputStream(shared_from_this()));
-        outputStreamPtr = make_shared<SocketOutputStream>(shared_from_this());
-    }
-    return outputStreamPtr;
+    return make_shared<SocketOutputStream>(shared_from_this());
 }
 
 

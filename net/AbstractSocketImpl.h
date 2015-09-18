@@ -46,10 +46,8 @@ private:
     bool closed;
     bool connected;
     
-    //SocketInputStreamPtr    inputStreamPtr;
-    //SocketOutputStreamPtr   outputStreamPtr;
-    InputStreamPtr    inputStreamPtr;
-    OutputStreamPtr   outputStreamPtr;
+    //InputStreamPtr    inputStreamPtr;
+    //OutputStreamPtr   outputStreamPtr;
 
     InetAddress address;
     FileDescriptor fileHandler;
