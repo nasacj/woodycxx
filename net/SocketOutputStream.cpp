@@ -82,7 +82,8 @@ void SocketOutputStream::flush()
 
 void SocketOutputStream::close()
 {
-    if (socket_impl != NULL)
+    weak_ptr<AbstractSocketImpl> wkAbSocImp = socket_impl;
+    if ( !wkAbSocImp.expired() )
     {
         if (!socket_impl->isClosed())
         {

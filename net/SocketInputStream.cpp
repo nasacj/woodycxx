@@ -83,7 +83,8 @@ int SocketInputStream::read(char* b, int byte_size, int off, int length, int tim
 
 void SocketInputStream::close()
 {
-    if (socket_impl != NULL)
+    weak_ptr<AbstractSocketImpl> wkAbSocImp = socket_impl;
+    if ( !wkAbSocImp.expired() )
     {
         if (!socket_impl->isClosed())
         {
