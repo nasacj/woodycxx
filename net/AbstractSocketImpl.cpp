@@ -101,6 +101,7 @@ int AbstractSocketImpl::available()
 
 void AbstractSocketImpl::close()
 {
+    sockets::close(fileHandler.getHandler());
 }
 
 string AbstractSocketImpl::getIpString()
