@@ -19,6 +19,7 @@ using namespace woodycxx::sysipc;
 
 int main()
 {
+/*
     debug_log dbg_lg("debug.log");
 #ifdef USE_SYSLOG
     dbg_lg.open_syslog("Test_log", LOG_INFO);
@@ -29,6 +30,15 @@ int main()
     dbg_lg.set_mask(event_log::level_1, DEBUG_INFORMATION);
     dbg_lg.set_level(event_log::level_1);
     dbg_lg.enable_stdout();
+    */
+    DEBUG_LOGER.setFileName("debug.log");
+    DEBUG_LOGER.open_syslog("Test_log", LOG_INFO);
+    DEBUG_LOGER.set_mask(event_log::level_0, DEBUG_ERRORS);
+    DEBUG_LOGER.set_mask(event_log::level_1, DEBUG_INFORMATION);
+    DEBUG_LOGER.set_level(event_log::level_1);
+    DEBUG_LOGER.enable_stdout();
     DEBUG_INFO("TEST", "Hello World!");
     return 0;
+    
 }
+

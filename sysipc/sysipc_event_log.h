@@ -15,10 +15,10 @@
 #include "sysipc_threads.h"
 #include <fstream>
 #include <sstream>
+#include <boost/serialization/singleton.hpp>
 
 namespace woodycxx { namespace sysipc
 {
-
     const uint DEBUG_ASSERTIONS     = 0x00000001;
     const uint DEBUG_ERRORS         = 0x00000002;
     const uint DEBUG_INFORMATION    = 0x00000004;
@@ -87,7 +87,7 @@ namespace woodycxx { namespace sysipc
 
     public:
         event_log( const char* nm );
-        event_log();
+        event_log() {}
         ~event_log(){ close_file(); }
         void open_file();
         void close_file();
@@ -173,6 +173,19 @@ namespace woodycxx { namespace sysipc
         static event_log*  debug_streams;
     public:
         static bool is_enabled( uint m ){ return debug_streams && debug_streams->is_enabled( m );  }
+        void setFileName(const char* nm)
+        {
+            _filename = nm;
+        }
+        debug_log()
+        {
+            if ( !debug_streams )
+            {
+                debug_streams = this;
+                write_mask( level_0, DEBUG_LEVEL_0 );
+                write_mask( level_5, DEBUG_LEVEL_5 );
+            }
+        }
         debug_log( const char* nm ) : event_log( nm )
         {
             if ( !debug_streams )
@@ -196,6 +209,9 @@ namespace woodycxx { namespace sysipc
         static event_log* get_log() { return debug_streams; }
     };
 
+    typedef boost::serialization::singleton<debug_log> DebugLogSingleton;
+
+#define DEBUG_LOGER DebugLogSingleton::get_mutable_instance()
 
 #define LOG_ENTRY(prefix,m,message) do { \
     if ( woodycxx::sysipc::application_log::is_enabled( m ) ) \
