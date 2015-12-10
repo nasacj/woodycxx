@@ -211,7 +211,7 @@ namespace woodycxx { namespace sysipc
 
     typedef boost::serialization::singleton<debug_log> DebugLogSingleton;
 
-#define DEBUG_LOGER DebugLogSingleton::get_mutable_instance()
+#define DEBUG_LOGER woodycxx::sysipc::DebugLogSingleton::get_mutable_instance()
 
 #define LOG_ENTRY(prefix,m,message) do { \
     if ( woodycxx::sysipc::application_log::is_enabled( m ) ) \
