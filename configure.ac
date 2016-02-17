@@ -4,6 +4,7 @@ AM_INIT_AUTOMAKE([-Wall -Werror foreign -Wno-portability])
 AM_SILENT_RULES([yes])
 
 AC_CONFIG_HEADERS([config.h])
+CPPFLAGS="$CPPFLAGS -I/usr/local/include"
 
 # the upper level dir
 project_dir="\$(top_srcdir)/.."
@@ -31,7 +32,6 @@ AC_CHECK_HEADERS([boost/shared_ptr.hpp], [],[AC_MSG_ERROR(You need the Boost lib
 AC_LANG_POP([C++])
 
 MY_CFLAGS="-std=c++11 -Wall -Wno-sign-compare -Wno-non-virtual-dtor -include config.h -I \$(top_srcdir)/"
-
 AM_CPPFLAGS="$MY_CFLAGS"
 
 AC_SUBST(AM_CPPFLAGS)
