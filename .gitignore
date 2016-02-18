@@ -32,3 +32,9 @@ Test_log
 Test_AbstractSocketImpl
 Test_InetAddress
 Test_LRUCache
+.ycm_extra_conf.pyc
+cscope.in.out
+cscope.out
+cscope.po.out
+tags
+
