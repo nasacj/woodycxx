@@ -71,6 +71,9 @@ cout << "<<< This is Windows System >>>" << endl;
 #if defined(__linux__)
 cout << "<<< This is Linux System >>>" << endl;
 #endif
+#if defined(__CYGWIN__)
+cout << "<<< This is Cygwin System >>>" << endl;
+#endif
     cout << "Test_AbstractSocketImpl Start..." << endl;
     int ret = Test_AbstractSocketImpl();
     cout << "Test_AbstractSocketImpl End ===> ret = " << hex << ret << endl;

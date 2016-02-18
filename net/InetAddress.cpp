@@ -19,6 +19,9 @@ typedef uint32_t in_addr_t;
 #else
 #include <strings.h>   //bzero
 #endif
+#if defined(__CYGWIN__)
+#include <string.h>   //bzero for cygwin
+#endif
 
 using namespace woodycxx::net;
 
