@@ -19,6 +19,7 @@ config.status
 Makefile
 Makefile.in
 *.[oa]
+*.exe
 Test_ByteBuffer
 Test_InputStreamImpl
 Test_InetSocketAddress
