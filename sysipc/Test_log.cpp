@@ -35,7 +35,7 @@ int main()
 #ifdef USE_SYSLOG
     DEBUG_LOGER.open_syslog("Test_log", LOG_INFO);
 #else
-    DEBUG_LOGER.dbg_lg.open_file();
+    DEBUG_LOGER.open_file();
 #endif
     DEBUG_LOGER.set_mask(event_log::level_0, DEBUG_ERRORS);
     DEBUG_LOGER.set_mask(event_log::level_1, DEBUG_INFORMATION);
