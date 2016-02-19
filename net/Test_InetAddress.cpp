@@ -19,8 +19,8 @@ int main()
     InetAddress address1(80);
     InetAddress address2("127.0.0.1", 12345);
     InetAddress address3("127.0.k.1", 123);
-	InetAddress address4("fe80::ccae:f2cd:f261:fa4d", 12345, true);
-	InetAddress address5("::1", 123, true);
+	InetAddress address4("fe80::ccae:f2cd:f261:fa4d", 12345);
+	InetAddress address5("::1", 123);
     cout << "address1.getIpPort() = " << address1.getIpPort() << endl;
     cout << "address2.getIpPort() = " << address2.getIpPort() << endl;
 	cout << "address3.getIpPort() = " << address3.getIpPort() << endl;

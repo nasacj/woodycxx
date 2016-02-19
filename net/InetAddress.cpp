@@ -34,9 +34,9 @@ InetAddress::InetAddress(uint16_t port, bool loopbackOnly)
     addr_.sin_port = htons(port);
 }
 
-InetAddress::InetAddress(string ip, uint16_t port, bool isIPv6)
+InetAddress::InetAddress(string ip, uint16_t port)
 {
-	if (isIPv6)
+	if (string::npos != ip.find(":"))
 	{
 		bzero(&addr6_, sizeof addr6_);
 		sockets::fromIpPort(ip.c_str(), port, &addr6_);

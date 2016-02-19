@@ -32,7 +32,7 @@ public:
     explicit InetAddress(uint16_t port, bool loopbackonly = false);
 
     /// Constructs an endpoint with given ip and port.
-	InetAddress(string ip, uint16_t port, bool isIPv6 = false);
+	InetAddress(string ip, uint16_t port);
 
     // Constructs an endpoint with given struct @c sockaddr_in
     InetAddress(const struct sockaddr_in& addr)
