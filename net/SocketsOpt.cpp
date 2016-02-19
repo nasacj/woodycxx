@@ -175,43 +175,26 @@ void toIpPort(char* buf, size_t size, const struct sockaddr *sa)
 
 void toIp(char* buf, size_t size, const struct sockaddr *sa)
 {
-	assert(size >= INET6_ADDRSTRLEN || size >= INET_ADDRSTRLEN);
-
-	switch (sa->sa_family) {
-	case AF_INET: {
-		struct sockaddr_in	*addr = (struct sockaddr_in *) sa;
-
+	if (sa->sa_family == AF_INET)
+	{
+		assert(size >= INET_ADDRSTRLEN);
+		const struct sockaddr_in* addr4 = (const struct sockaddr_in*)(sa);
 #ifdef WIN32
-		if (inet_ntop(AF_INET, (PVOID)(&(addr->sin_addr)), buf, size) == NULL)
+		inet_ntop(AF_INET, (PVOID)(&(addr4->sin_addr)), buf, size);
 #else
-		if (inet_ntop(AF_INET, &addr->sin_addr, buf, static_cast<socklen_t>(size)) == NULL)
+		inet_ntop(AF_INET, &addr4->sin_addr, buf, static_cast<socklen_t>(size));
 #endif
-		{
-			buf = NULL;
-		}
-		return;
-	}// end of AF_INET:
-
-	case AF_INET6: {
-		struct sockaddr_in6	*addr = (struct sockaddr_in6 *) sa;
-		buf[0] = '[';
+	}
+	else if (sa->sa_family == AF_INET6)
+	{
+		assert(size >= INET6_ADDRSTRLEN);
+		const struct sockaddr_in6* addr6 = (const struct sockaddr_in6*)(sa);
 #ifdef WIN32
-		if (inet_ntop(AF_INET6, (PVOID)(&(addr->sin6_addr)), buf + 1, size) == NULL)
+		inet_ntop(AF_INET6, (PVOID)(&(addr6->sin6_addr)), buf, size);
 #else
-		if (inet_ntop(AF_INET6, &addr->sin6_addr, buf + 1, static_cast<socklen_t>(size)) == NULL)
+		inet_ntop(AF_INET6, &addr6->sin6_addr, buf, static_cast<socklen_t>(size));
 #endif
-		{
-			buf = NULL;
-			return;
-		}
-		int end = strlen(buf);
-		buf[end] = ']';
-		buf[end + 1] = 0;
-		return;
-	} // end of  AF_INET6:
-		
-
-	} // end of switch
+	}
 }
 
 void fromIpPort(const char* ip, uint16_t port, struct sockaddr_in* addr)
