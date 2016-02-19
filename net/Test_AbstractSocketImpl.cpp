@@ -27,7 +27,7 @@ int Test_AbstractSocketImpl()
     InetAddress address("127.0.0.1", 12345);
     auto socketImpl = make_shared<AbstractSocketImpl>(address);
     cout << "Connect to " << address.getIpPort() << endl;
-    int error_no = socketImpl->connect(address.getIp(), address.getPort());
+    int error_no = socketImpl->connect(address);
     if (error_no != 0)
     {
         cout << "connect failed: error_no=" << hex << error_no << endl;

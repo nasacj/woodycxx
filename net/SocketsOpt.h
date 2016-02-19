@@ -14,6 +14,7 @@
 #include<stdint.h>
 #ifdef WIN32
 #include <WinSock2.h>
+#include <ws2ipdef.h>
 #else
 #include <arpa/inet.h>
 #endif
@@ -21,7 +22,7 @@
 namespace woodycxx { namespace net { namespace sockets {
 
 int createBlockingSocketFd();
-int connect(int sockfd, const struct sockaddr_in& addr);
+int connect(int sockfd, const struct sockaddr * addr);
 int bind(int sockfd, const struct sockaddr_in& addr);
 int listen(int sockfd);
 int read(int sockfd, void *buf, size_t count);
@@ -31,9 +32,13 @@ int readv(int sockfd, const struct iovec *iov, int iovcnt);
 int write(int sockfd, const void *buf, size_t count);
 int shutdownWrite();
 int close(int sockfd);
-void toIpPort(char* buf, size_t size, const struct sockaddr_in& addr);
-void toIp(char* buf, size_t size, const struct sockaddr_in& addr);
+void toIpPort(char* buf, size_t size, const struct sockaddr *sa);
+void toIp(char* buf, size_t size, const struct sockaddr *sa);
 void fromIpPort(const char* ip, uint16_t port, struct sockaddr_in* addr);
+void fromIpPort(const char* ip, uint16_t port, struct sockaddr_in6* addr);
+
+const struct sockaddr* sockaddr_cast(const struct sockaddr_in* addr);
+const struct sockaddr* sockaddr_cast(const struct sockaddr_in6* addr);
 
 }}}//end of namespace woodycxx::net::sockets
 

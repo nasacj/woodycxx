@@ -34,23 +34,36 @@ InetAddress::InetAddress(uint16_t port, bool loopbackOnly)
     addr_.sin_port = htons(port);
 }
 
-InetAddress::InetAddress(string ip, uint16_t port)
+InetAddress::InetAddress(string ip, uint16_t port, bool isIPv6)
 {
-    bzero(&addr_, sizeof addr_);
-    sockets::fromIpPort(ip.c_str(), port, &addr_);
+	if (isIPv6)
+	{
+		bzero(&addr6_, sizeof addr6_);
+		sockets::fromIpPort(ip.c_str(), port, &addr6_);
+	}
+	else
+	{
+		bzero(&addr_, sizeof addr_);
+		sockets::fromIpPort(ip.c_str(), port, &addr_);
+	}
+}
+
+const struct sockaddr* InetAddress::getSockAddrInet() const
+{ 
+	return sockets::sockaddr_cast(&addr6_);
 }
 
 string InetAddress::getIpPort() const
 {
-    char buf[32];
-    sockets::toIpPort(buf, sizeof buf, addr_);
+    char buf[INET6_ADDRSTRLEN];
+    sockets::toIpPort(buf, sizeof buf, (const sockaddr*)&addr6_);
     return buf;
 }
 
 string InetAddress::getIp() const
 {
-    char buf[32];
-    sockets::toIp(buf, sizeof buf, addr_);
+    char buf[INET6_ADDRSTRLEN];
+    sockets::toIp(buf, sizeof buf, (const sockaddr*)&addr6_);
     return buf;
 }
 

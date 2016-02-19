@@ -16,6 +16,7 @@
 #include <sys/types.h>
 #ifdef WIN32
 #include <WinSock2.h>
+#include <ws2ipdef.h>
 #else
 #include <netinet/in.h>
 #endif
@@ -31,7 +32,7 @@ public:
     explicit InetAddress(uint16_t port, bool loopbackonly = false);
 
     /// Constructs an endpoint with given ip and port.
-    InetAddress(string ip, uint16_t port);
+	InetAddress(string ip, uint16_t port, bool isIPv6 = false);
 
     // Constructs an endpoint with given struct @c sockaddr_in
     InetAddress(const struct sockaddr_in& addr)
@@ -42,7 +43,7 @@ public:
     string getIpPort() const;
     uint16_t getPort() const;
 
-    const struct sockaddr_in& getSockAddrInet() const { return addr_; }
+    const struct sockaddr* getSockAddrInet() const;
     void setSockAddrInet(const struct sockaddr_in& addr) { addr_ = addr; }
 
     // resolve hostname to IP address
@@ -51,7 +52,12 @@ public:
     static bool resolve(string hostname, InetAddress* result);
 
 private:
-    struct sockaddr_in addr_;
+	union 
+	{
+		struct sockaddr_in addr_;
+		struct sockaddr_in6 addr6_;
+	};
+    
 };
 
 }}//end of namespace woodycxx::net

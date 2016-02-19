@@ -57,9 +57,9 @@ int createBlockingSocketFd()
     return sockfd;
 }
 
-int connect(int sockfd, const struct sockaddr_in& addr)
+int connect(int sockfd, const struct sockaddr * addr)
 {
-    int ret = ::connect(sockfd, (struct sockaddr *)(&addr), static_cast<socklen_t>(sizeof addr));
+    int ret = ::connect( sockfd, addr, static_cast<socklen_t>(sizeof(struct sockaddr_in6)) );
     return ret;
 }
 
@@ -118,32 +118,100 @@ int close(int sockfd)
 #endif
 }
 
-void toIpPort(char* buf, size_t size, const struct sockaddr_in& addr)
+void toIpPort(char* buf, size_t size, const struct sockaddr *sa)
 {
-    assert(size >= INET_ADDRSTRLEN);
+	assert(size >= INET6_ADDRSTRLEN || size >= INET_ADDRSTRLEN);
+
+	switch (sa->sa_family) {
+		case AF_INET: {
+			struct sockaddr_in	*addr = (struct sockaddr_in *) sa;
+
 #ifdef WIN32
-    inet_ntop(AF_INET, (PVOID)(&addr.sin_addr), buf, size);
+			if (inet_ntop(AF_INET, (PVOID)(&(addr->sin_addr)), buf, size) == NULL)
 #else
-    inet_ntop(AF_INET, &addr.sin_addr, buf, static_cast<socklen_t>(size));
+			if (inet_ntop(AF_INET, &addr->sin_addr, buf, static_cast<socklen_t>(size)) == NULL)
 #endif
-    size_t end = strlen(buf);
-    uint16_t port = ntohs(addr.sin_port);
-    assert(size > end);
+			{
+				buf = NULL;
+				return;
+			}
+			size_t end = strlen(buf);
+			assert(size > end);
+			uint16_t port = 0;
+			if ((port = ntohs(addr->sin_port)) != 0) {
 #ifdef WIN32
-    sprintf(buf+end, ":%u", port);
+				sprintf_s(buf + end, size - end, ":%u", port);
 #else
-    snprintf(buf+end, size-end, ":%u", port);
+				snprintf(buf + end, size - end, ":%u", port);
 #endif
+			}
+			return;
+		}
+
+		case AF_INET6: {
+			struct sockaddr_in6	*addr = (struct sockaddr_in6 *) sa;
+			buf[0] = '[';
+#ifdef WIN32
+			if (inet_ntop(AF_INET6, (PVOID)(&(addr->sin6_addr)), buf + 1, size) == NULL)
+#else
+			if (inet_ntop(AF_INET6, &addr->sin6_addr, buf + 1, static_cast<socklen_t>(size)) == NULL)
+#endif
+			{
+				buf = NULL;
+				return;
+			}
+			size_t end = strlen(buf);
+			assert(size > end);
+			uint16_t port = ntohs(addr->sin6_port);
+#ifdef WIN32
+			sprintf_s(buf + end, size - end, "]:%u", port);
+#else
+			snprintf(buf + end, size - end, "]:%u", port);
+#endif
+			return;
+		}
+	}
 }
 
-void toIp(char* buf, size_t size, const struct sockaddr_in& addr)
+void toIp(char* buf, size_t size, const struct sockaddr *sa)
 {
-    assert(size >= INET_ADDRSTRLEN);
+	assert(size >= INET6_ADDRSTRLEN || size >= INET_ADDRSTRLEN);
+
+	switch (sa->sa_family) {
+	case AF_INET: {
+		struct sockaddr_in	*addr = (struct sockaddr_in *) sa;
+
 #ifdef WIN32
-    inet_ntop( AF_INET, (PVOID)(&addr.sin_addr), buf, size );
+		if (inet_ntop(AF_INET, (PVOID)(&(addr->sin_addr)), buf, size) == NULL)
 #else
-    inet_ntop(AF_INET, &addr.sin_addr, buf, static_cast<socklen_t>(size));
+		if (inet_ntop(AF_INET, &addr->sin_addr, buf, static_cast<socklen_t>(size)) == NULL)
 #endif
+		{
+			buf = NULL;
+		}
+		return;
+	}// end of AF_INET:
+
+	case AF_INET6: {
+		struct sockaddr_in6	*addr = (struct sockaddr_in6 *) sa;
+		buf[0] = '[';
+#ifdef WIN32
+		if (inet_ntop(AF_INET6, (PVOID)(&(addr->sin6_addr)), buf + 1, size) == NULL)
+#else
+		if (inet_ntop(AF_INET6, &addr->sin6_addr, buf + 1, static_cast<socklen_t>(size)) == NULL)
+#endif
+		{
+			buf = NULL;
+			return;
+		}
+		int end = strlen(buf);
+		buf[end] = ']';
+		buf[end + 1] = 0;
+		return;
+	} // end of  AF_INET6:
+		
+
+	} // end of switch
 }
 
 void fromIpPort(const char* ip, uint16_t port, struct sockaddr_in* addr)
@@ -153,9 +221,30 @@ void fromIpPort(const char* ip, uint16_t port, struct sockaddr_in* addr)
     if ( inet_pton(AF_INET, ip, &addr->sin_addr) <= 0)
     {
         //TODO: Handle invalid IP address format error
+		return;
     }
 }
 
+void fromIpPort(const char* ip, uint16_t port, struct sockaddr_in6* addr)
+{
+	addr->sin6_family = AF_INET6;
+	addr->sin6_port = htons(port);
+	if (inet_pton(AF_INET6, ip, &addr->sin6_addr) <= 0)
+	{
+		//TODO: Handle invalid IP address format error
+		return;
+	}
+}
+
+const struct sockaddr* sockaddr_cast(const struct sockaddr_in* addr)
+{
+	return (struct sockaddr*)(addr);
+}
+
+const struct sockaddr* sockaddr_cast(const struct sockaddr_in6* addr)
+{
+	return (struct sockaddr*)(addr);
+}
 
 
 }}}//end of namespace
