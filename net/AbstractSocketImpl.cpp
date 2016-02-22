@@ -29,7 +29,7 @@ int AbstractSocketImpl::connect(const InetAddress& addr)
         return 0;
     }
     this->address = addr;
-    int sockfd = sockets::createBlockingSocketFd();
+    int sockfd = sockets::createBlockingSocketFd(addr.isIPV6());
 #ifdef WIN32
     if ( sockfd == INVALID_SOCKET )
 #else

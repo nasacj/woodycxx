@@ -21,7 +21,7 @@
 
 namespace woodycxx { namespace net { namespace sockets {
 
-int createBlockingSocketFd();
+int createBlockingSocketFd(bool isIpv6=false);
 int connect(int sockfd, const struct sockaddr * addr);
 int bind(int sockfd, const struct sockaddr_in& addr);
 int listen(int sockfd);

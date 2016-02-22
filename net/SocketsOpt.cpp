@@ -51,9 +51,12 @@ public:
 InitialWindowsSocketAPI initialwindowssocketapi;
 #endif
 
-int createBlockingSocketFd()
+int createBlockingSocketFd(bool isIpv6)
 {
-    int sockfd = ::socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+	int af = AF_INET;
+	if (isIpv6)
+		af = AF_INET6;
+    int sockfd = ::socket(af, SOCK_STREAM, IPPROTO_TCP);
     return sockfd;
 }
 

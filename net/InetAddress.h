@@ -42,6 +42,7 @@ public:
     string getIp() const;
     string getIpPort() const;
     uint16_t getPort() const;
+	bool isIPV6() const;
 
     const struct sockaddr* getSockAddrInet() const;
     void setSockAddrInet(const struct sockaddr_in& addr) { addr_ = addr; }
@@ -57,7 +58,7 @@ private:
 		struct sockaddr_in addr_;
 		struct sockaddr_in6 addr6_;
 	};
-    
+	bool isIPv6;
 };
 
 }}//end of namespace woodycxx::net

@@ -27,6 +27,8 @@ using namespace woodycxx::net;
 
 InetAddress::InetAddress(uint16_t port, bool loopbackOnly)
 {
+	//TODO: localhost is not IPv6
+	isIPv6 = false;
     bzero(&addr_, sizeof addr_);
     addr_.sin_family = AF_INET;
     in_addr_t ip = loopbackOnly ? INADDR_LOOPBACK : INADDR_ANY;
@@ -40,11 +42,13 @@ InetAddress::InetAddress(string ip, uint16_t port)
 	{
 		bzero(&addr6_, sizeof addr6_);
 		sockets::fromIpPort(ip.c_str(), port, &addr6_);
+		isIPv6 = true;
 	}
 	else
 	{
 		bzero(&addr_, sizeof addr_);
 		sockets::fromIpPort(ip.c_str(), port, &addr_);
+		isIPv6 = false;
 	}
 }
 
@@ -70,6 +74,11 @@ string InetAddress::getIp() const
 uint16_t InetAddress::getPort() const
 {
     return ntohs(addr_.sin_port);
+}
+
+bool InetAddress::isIPV6() const
+{
+	return this->isIPv6;
 }
 
 bool InetAddress::resolve(string hostname, InetAddress* result)
