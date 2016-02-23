@@ -36,6 +36,7 @@ int main()
 	cout << "address3.getPort() = " << address3.getPort() << endl;
 	cout << "address4.getPort() = " << address4.getPort() << endl;
 	cout << "address5.getPort() = " << address5.getPort() << endl;
+	cout << "localhost name = " << InetAddress::gethostname() << endl;
     
     return 0;
 }

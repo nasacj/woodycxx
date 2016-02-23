@@ -81,6 +81,13 @@ bool InetAddress::isIPV6() const
 	return this->isIPv6;
 }
 
+string InetAddress::gethostname()
+{
+	char hostname[256] = {};
+	::gethostname(hostname, sizeof(hostname));
+	return string(hostname);
+}
+
 bool InetAddress::resolve(string hostname, InetAddress* result)
 {
     /*

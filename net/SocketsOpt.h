@@ -17,6 +17,7 @@
 #include <ws2ipdef.h>
 #else
 #include <arpa/inet.h>
+#include <unistd.h>
 #endif
 
 namespace woodycxx { namespace net { namespace sockets {

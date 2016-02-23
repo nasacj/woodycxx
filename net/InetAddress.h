@@ -46,7 +46,7 @@ public:
 
     const struct sockaddr* getSockAddrInet() const;
     void setSockAddrInet(const struct sockaddr_in& addr) { addr_ = addr; }
-
+	static string gethostname();
     // resolve hostname to IP address
     // return true on success.
     // thread safe
