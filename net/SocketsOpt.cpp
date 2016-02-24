@@ -176,6 +176,15 @@ void toIpPort(char* buf, size_t size, const struct sockaddr *sa)
 	}
 }
 
+void toIp(char* buf, size_t size, const void *addr, uint16_t family)
+{
+#ifdef WIN32
+	inet_ntop(family, (PVOID)addr, buf, size);
+#else
+	inet_ntop(family, addr, buf, static_cast<socklen_t>(size));
+#endif
+}
+
 void toIp(char* buf, size_t size, const struct sockaddr *sa)
 {
 	if (sa->sa_family == AF_INET)

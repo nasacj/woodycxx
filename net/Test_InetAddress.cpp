@@ -10,6 +10,7 @@
 
 #include "InetAddress.h"
 #include <iostream>
+#include <list>
 
 using namespace woodycxx::net;
 using namespace std;
@@ -36,7 +37,13 @@ int main()
 	cout << "address3.getPort() = " << address3.getPort() << endl;
 	cout << "address4.getPort() = " << address4.getPort() << endl;
 	cout << "address5.getPort() = " << address5.getPort() << endl;
-	cout << "localhost name = " << InetAddress::gethostname() << endl;
-    
+	cout << "localhost name = " << InetAddress::getLocalHost() << endl;
+	cout << "baidu.com IP = " << InetAddress::getByName("baidu.com").getHostAddress() << endl;
+
+	string errMsg;
+	list<InetAddress> addrList = InetAddress::getAllByName("localhost", errMsg);
+	for (InetAddress address : addrList)
+		cout << address.getHostName() << " --> " << address.getHostAddress() << endl;
+	cout << "errMsg: " << errMsg << endl;
     return 0;
 }

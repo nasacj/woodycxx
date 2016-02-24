@@ -35,6 +35,7 @@ int shutdownWrite();
 int close(int sockfd);
 void toIpPort(char* buf, size_t size, const struct sockaddr *sa);
 void toIp(char* buf, size_t size, const struct sockaddr *sa);
+void toIp(char* buf, size_t size, const void *addr, uint16_t family);
 void fromIpPort(const char* ip, uint16_t port, struct sockaddr_in* addr);
 void fromIpPort(const char* ip, uint16_t port, struct sockaddr_in6* addr);
 
