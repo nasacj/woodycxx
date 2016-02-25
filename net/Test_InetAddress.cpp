@@ -45,8 +45,19 @@ int main()
     for (InetAddress address : addrList)
         cout << address.getHostName() << " --> " << address.getHostAddress() << endl;
     cout << "errMsg: " << errMsg << endl;
+    cout << "-----------------------------------" << endl; 
     list<InetAddress> addrList2 = InetAddress::getAllByName("localhost", errMsg);
     for (InetAddress address : addrList2)
+        cout << address.getHostName() << " --> " << address.getHostAddress() << endl;
+    cout << "errMsg: " << errMsg << endl;
+    list<InetAddress> addrList3 = InetAddress::getAllByNameIPv4("localhost", errMsg);
+    for (InetAddress address : addrList3)
+        cout << address.getHostName() << " --> " << address.getHostAddress() << endl;
+    cout << "errMsg: " << errMsg << endl;
+    cout << "-----------------" << endl; 
+    InetAddress addr_localhost = addrList3.front(); 
+    list<InetAddress> addrList4 = InetAddress::getAllByName(addr_localhost.getHostName(), errMsg);
+    for (InetAddress address : addrList3)
         cout << address.getHostName() << " --> " << address.getHostAddress() << endl;
     cout << "errMsg: " << errMsg << endl;
     
