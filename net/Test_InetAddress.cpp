@@ -40,9 +40,6 @@ int main()
     cout << "localhost name = " << InetAddress::getLocalHost() << endl;
     cout << "baidu.com IP = " << InetAddress::getByName("baidu.com").getHostAddress() << endl;
 
-    string errMsg;
-    
-	
 	try
 	{
 		list<InetAddress> addrList = InetAddress::getAllByNameIPv4("baidu.com");
