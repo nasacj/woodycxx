@@ -15,6 +15,7 @@
 #include <stdint.h>
 #include <sys/types.h>
 #include <list>
+#include "UnknownHostException.h"
 #ifdef WIN32
 #include <WinSock2.h>
 #include <ws2ipdef.h>
@@ -76,8 +77,8 @@ public:
     { }
 
 	//TODO: Use cache, then it will not call gethostbyname every time.
-	static list<InetAddress> getAllByNameIPv4(const string& host, string& errMsg);
-	static list<InetAddress> getAllByName(const string& host, string& errMsg);
+	static list<InetAddress> getAllByNameIPv4(const string& host);
+	static list<InetAddress> getAllByName(const string& host);
 	static InetAddress getByName(const string& host);
 	static InetAddress getByAddress(const struct in_addr& address);
 	static InetAddress getByAddress(const struct in6_addr& address);

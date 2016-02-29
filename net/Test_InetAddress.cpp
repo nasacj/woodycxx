@@ -41,25 +41,40 @@ int main()
     cout << "baidu.com IP = " << InetAddress::getByName("baidu.com").getHostAddress() << endl;
 
     string errMsg;
-    list<InetAddress> addrList = InetAddress::getAllByNameIPv4("baidu.com", errMsg);
-    for (InetAddress address : addrList)
-        cout << address.getHostName() << " --> " << address.getHostAddress() << endl;
-    cout << "errMsg: " << errMsg << endl;
-    cout << "-----------------------------------" << endl; 
-    list<InetAddress> addrList2 = InetAddress::getAllByName("localhost", errMsg);
-    for (InetAddress address : addrList2)
-        cout << address.getHostName() << " --> " << address.getHostAddress() << endl;
-    cout << "errMsg: " << errMsg << endl;
-    list<InetAddress> addrList3 = InetAddress::getAllByNameIPv4("localhost", errMsg);
-    for (InetAddress address : addrList3)
-        cout << address.getHostName() << " --> " << address.getHostAddress() << endl;
-    cout << "errMsg: " << errMsg << endl;
-    cout << "-----------------" << endl; 
-    InetAddress addr_localhost = addrList3.front(); 
-    list<InetAddress> addrList4 = InetAddress::getAllByName(addr_localhost.getHostName(), errMsg);
-    for (InetAddress address : addrList4)
-        cout << address.getHostName() << " --> " << address.getHostAddress() << endl;
-    cout << "errMsg: " << errMsg << endl;
+    
+	
+	try
+	{
+		list<InetAddress> addrList = InetAddress::getAllByNameIPv4("baidu.com");
+		for (InetAddress address : addrList)
+			cout << address.getHostName() << " --> " << address.getHostAddress() << endl;
+
+		cout << "-----------------getAllByName(localhost)------------------" << endl; 
+		list<InetAddress> addrList2 = InetAddress::getAllByName("localhost");
+		for (InetAddress address : addrList2)
+			cout << address.getHostName() << " --> " << address.getHostAddress() << endl;
+		
+		cout << "-----------------getAllByNameIPv4(localhost)------------------" << endl; 
+		list<InetAddress> addrList3 = InetAddress::getAllByNameIPv4("localhost");
+		for (InetAddress address : addrList3)
+			cout << address.getHostName() << " --> " << address.getHostAddress() << endl;
+
+		cout << "--------getAllByName(addr_localhost.getHostName())---------" << endl; 
+		InetAddress addr_localhost = addrList3.front(); 
+		list<InetAddress> addrList4 = InetAddress::getAllByName(addr_localhost.getHostName());
+		for (InetAddress address : addrList4)
+			cout << address.getHostName() << " --> " << address.getHostAddress() << endl;
+		
+		cout << "--------getAllByName(hahaha)---------" << endl; 
+		list<InetAddress> addrList5 = InetAddress::getAllByName("hahaha");
+		for (InetAddress address : addrList5)
+			cout << address.getHostName() << " --> " << address.getHostAddress() << endl;
+
+	}
+	catch (Exception& unkonwhostexp)
+	{
+		cout << "catch <Exception> --> " << unkonwhostexp.what() << endl;
+	}
     
     return 0;
 }

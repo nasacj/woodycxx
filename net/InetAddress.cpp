@@ -71,8 +71,9 @@ InetAddress::InetAddress(const string& host, const struct in_addr& address)
 	this->family = AF_INET;
 }
 
-list<InetAddress> InetAddress::getAllByNameIPv4(const string& host, string& errMsg)
+list<InetAddress> InetAddress::getAllByNameIPv4(const string& host)
 {
+	string errMsg;
 	list<InetAddress> addr_list;
 	struct hostent	*remoteHost;
 	string comm_err_msg = string("Failed to get Host Name: ") + host + ", ";
@@ -95,6 +96,7 @@ list<InetAddress> InetAddress::getAllByNameIPv4(const string& host, string& errM
 #else
 		errMsg = comm_err_msg + string(hstrerror(h_errno));
 #endif
+		throw UnknownHostException(errMsg);
 	}
 	else
 	{
@@ -120,8 +122,9 @@ list<InetAddress> InetAddress::getAllByNameIPv4(const string& host, string& errM
 	return addr_list;
 }
 
-list<InetAddress> InetAddress::getAllByName(const string& host, string& errMsg)
+list<InetAddress> InetAddress::getAllByName(const string& host)
 {
+	string errMsg;
 	list<InetAddress> addr_list;
 	string comm_err_msg = string("Failed to get Host Name: ") + host + ", ";
 
@@ -151,6 +154,7 @@ list<InetAddress> InetAddress::getAllByName(const string& host, string& errMsg)
 #else
 		errMsg = comm_err_msg + gai_strerror(dwRetval);
 #endif
+		throw UnknownHostException(errMsg);
 	}
 	else
 	{
@@ -184,8 +188,7 @@ list<InetAddress> InetAddress::getAllByName(const string& host, string& errMsg)
 
 InetAddress InetAddress::getByName(const string& host)
 {
-	string err;
-	list<InetAddress> addr_list = getAllByName(host, err);
+	list<InetAddress> addr_list = getAllByName(host);
 	if (!addr_list.empty())
 		return addr_list.front();
 	//TODO: UnknowhostException
