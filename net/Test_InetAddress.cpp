@@ -57,7 +57,7 @@ int main()
     cout << "-----------------" << endl; 
     InetAddress addr_localhost = addrList3.front(); 
     list<InetAddress> addrList4 = InetAddress::getAllByName(addr_localhost.getHostName(), errMsg);
-    for (InetAddress address : addrList3)
+    for (InetAddress address : addrList4)
         cout << address.getHostName() << " --> " << address.getHostAddress() << endl;
     cout << "errMsg: " << errMsg << endl;
     
