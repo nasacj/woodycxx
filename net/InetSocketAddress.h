@@ -61,9 +61,9 @@ private:
 	static int checkPort(int port);
 	static string checkHost(const string& hostname);
 
-	string hostname;
-	int port;
 	InetAddress inetAddress;
+    int port;
+    string hostname;
 	bool Unresolved;
 
 	union
