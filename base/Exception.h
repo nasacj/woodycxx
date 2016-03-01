@@ -14,6 +14,7 @@ This software is distributed without any warranty.
 
 #include <exception>
 #include <string>
+#include <sstream>
 
 using namespace std;
 
@@ -24,7 +25,6 @@ class Exception : public exception
 protected:
 	string exception_name;
 	string what_msg;
-	string detailed_errmsg;
 public:
 	Exception(const string& errMsg) : what_msg(errMsg)
 	{
@@ -33,10 +33,11 @@ public:
 
 	virtual ~Exception() {}
 
-	virtual char const* what() 
+	virtual char const* what() const noexcept 
 	{
-		detailed_errmsg = exception_name + what_msg;
-		return detailed_errmsg.c_str();
+        stringstream ss;
+        ss << exception_name << what_msg;
+		return ss.str().c_str();
 	}
 };
 
