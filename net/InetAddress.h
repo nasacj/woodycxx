@@ -11,6 +11,7 @@
 #ifndef Woodycxx_Net_InetAddress_H_
 #define Woodycxx_Net_InetAddress_H_
 
+#include <string.h>
 #include <string>
 #include <stdint.h>
 #include <sys/types.h>
@@ -78,6 +79,20 @@ public:
 	static InetAddress getAnylocalAddress();
 	static InetAddress getAnylocalAddressIPv6();
 	static string getLocalHostName();
+
+	friend bool operator==(const InetAddress& p1, const InetAddress& p2)
+	{
+		return ( (p1.family == p2.family) &&
+			(p1.hostName == p2.hostName) &&
+			(!memcmp(&p1.sin_addr6, &p2.sin_addr6, sizeof(p1.sin_addr6))));
+	}
+
+	friend bool operator!=(const InetAddress& p1, const InetAddress& p2)
+	{
+		return ((p1.family != p2.family) ||
+			(p1.hostName != p2.hostName) ||
+			( 0 != memcmp(&p1.sin_addr6, &p2.sin_addr6, sizeof(p1.sin_addr6))));
+	}
 
 private:
 	static string getHostByAddr(const InetAddress& inet_address);

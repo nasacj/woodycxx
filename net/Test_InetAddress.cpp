@@ -72,6 +72,8 @@ int main()
 		cout << InetAddress::getAnylocalAddress().getHostName() << " = " << InetAddress::getAnylocalAddress().getHostAddress() << endl;
 		cout << InetAddress::getAnylocalAddressIPv6().getHostName() << " = " << InetAddress::getAnylocalAddressIPv6().getHostAddress() << endl;
 
+		cout << "Is 2 InetAddress are equal (true)---> " << boolalpha << (InetAddress::getLoopbackAddress() == InetAddress::getLoopbackAddress()) << endl;
+		cout << "Is 2 InetAddress are equal (false)---> " << boolalpha << (InetAddress::getLoopbackAddress() == InetAddress::getAnylocalAddress()) << endl;
 	}
 	catch (Exception& unkonwhostexp)
 	{

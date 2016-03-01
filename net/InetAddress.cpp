@@ -57,6 +57,7 @@ InetAddress::InetAddress(string ip, uint16_t port)
 
 InetAddress::InetAddress(const string& host, const struct in6_addr& address)
 {
+	bzero(&(this->sin_addr6), sizeof(this->sin_addr6));
 	this->originalHostName = host;
 	this->hostName = host;
 	this->sin_addr6 = address;
@@ -65,6 +66,7 @@ InetAddress::InetAddress(const string& host, const struct in6_addr& address)
 
 InetAddress::InetAddress(const string& host, const struct in_addr& address)
 {
+	bzero(&(this->sin_addr6), sizeof(this->sin_addr6));
 	this->originalHostName = host;
 	this->hostName = host;
 	this->sin_addr = address;
@@ -292,6 +294,7 @@ string InetAddress::getHostByAddr(const InetAddress& inet_address)
 InetAddress InetAddress::getLoopbackAddress()
 {
 	struct in_addr ipv4Addr;
+	bzero(&ipv4Addr, sizeof(ipv4Addr));
 	in_addr_t ip = INADDR_LOOPBACK;
 	ipv4Addr.s_addr = htonl(ip);
 	return InetAddress("localhost", ipv4Addr);
