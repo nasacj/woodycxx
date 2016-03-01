@@ -41,7 +41,6 @@ int Test_AbstractSocketImpl()
     {
         recvline[n] = 0;
         cout << string(recvline);
-		cout << "hello" << endl;
         int n_written = outputstream->write(recvline, n);
         if (n_written <= 0 )
         {
