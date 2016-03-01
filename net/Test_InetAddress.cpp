@@ -11,6 +11,7 @@
 #include "InetAddress.h"
 #include <iostream>
 #include <list>
+#include <assert.h>
 
 using namespace woodycxx::net;
 using namespace std;
@@ -72,8 +73,9 @@ int main()
 		cout << InetAddress::getAnylocalAddress().getHostName() << " = " << InetAddress::getAnylocalAddress().getHostAddress() << endl;
 		cout << InetAddress::getAnylocalAddressIPv6().getHostName() << " = " << InetAddress::getAnylocalAddressIPv6().getHostAddress() << endl;
 
-		cout << "Is 2 InetAddress are equal (true)---> " << boolalpha << (InetAddress::getLoopbackAddress() == InetAddress::getLoopbackAddress()) << endl;
-		cout << "Is 2 InetAddress are equal (false)---> " << boolalpha << (InetAddress::getLoopbackAddress() == InetAddress::getAnylocalAddress()) << endl;
+		assert(InetAddress::getLoopbackAddress() == InetAddress::getLoopbackAddress());
+		assert(InetAddress::getLoopbackAddress() != InetAddress::getAnylocalAddress());
+
 	}
 	catch (Exception& unkonwhostexp)
 	{
