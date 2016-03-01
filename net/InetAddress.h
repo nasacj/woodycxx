@@ -30,36 +30,6 @@ namespace woodycxx { namespace net {
 class InetAddress
 {
 protected:
-	class InetAddressHolder {
-		/**
-		* Reserve the original application specified hostname.
-		*
-		* The original hostname is useful for domain-based endpoint
-		* identification (see RFC 2818 and RFC 6125).  If an address
-		* was created with a raw IP address, a reverse name lookup
-		* may introduce endpoint identification security issue via
-		* DNS forging.
-		*
-		* Note: May define a new public method in the future if necessary.
-		*/
-		string originalHostName;
-		string hostName;
-		uint16_t family;
-		union address_in
-		{
-			struct sockaddr_in addr_;
-			struct sockaddr_in6 addr6_;
-		};
-	public:
-		InetAddressHolder() {}
-		InetAddressHolder(string hostName, uint16_t family) {
-			this->originalHostName = hostName;
-			this->hostName = hostName;
-			this->family = family;
-
-		}
-	};
-
 	explicit InetAddress(const string& host, const struct in6_addr& address);
 
 	explicit InetAddress(const string& host, const struct in_addr& address);
@@ -76,6 +46,25 @@ public:
         : addr_(addr)
     { }
 
+	string getIp() const;
+	string getIpPort() const;
+	uint16_t getPort() const;
+	bool isIPV6() const;
+
+	// resolve hostname to IP address
+	// return true on success.
+	// thread safe
+	static bool resolve(string hostname, InetAddress* result);
+
+	//-----------------------------------------------------------------------------
+
+	const struct sockaddr* getSockAddrInet() const;
+	void setSockAddrInet(const struct sockaddr_in& addr) { addr_ = addr; }
+
+	string getHostName() const;
+	string getHostAddress() const;
+	void setHostName(const string& hname);
+
 	//TODO: Use cache, then it will not call gethostbyname every time.
 	static list<InetAddress> getAllByNameIPv4(const string& host);
 	static list<InetAddress> getAllByName(const string& host);
@@ -84,24 +73,15 @@ public:
 	static InetAddress getByAddress(const struct in6_addr& address);
 	static InetAddress getByAddress(const string& host, const struct in_addr& address);
 	static InetAddress getByAddress(const string& host, const struct in6_addr& address);
-
-    string getIp() const;
-    string getIpPort() const;
-    uint16_t getPort() const;
-	bool isIPV6() const;
-
-	string getHostName() const;
-	string getHostAddress() const;
-
-    const struct sockaddr* getSockAddrInet() const;
-    void setSockAddrInet(const struct sockaddr_in& addr) { addr_ = addr; }
-	static string getLocalHost();
-    // resolve hostname to IP address
-    // return true on success.
-    // thread safe
-    static bool resolve(string hostname, InetAddress* result);
+	static InetAddress getLoopbackAddress();
+	static InetAddress getLoopbackAddressIPv6();
+	static InetAddress getAnylocalAddress();
+	static InetAddress getAnylocalAddressIPv6();
+	static string getLocalHostName();
 
 private:
+	static string getHostByAddr(const InetAddress& inet_address);
+
 	union 
 	{
 		struct sockaddr_in addr_;

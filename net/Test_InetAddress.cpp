@@ -34,11 +34,11 @@ int main()
     cout << "address5.getIp() = " << address5.getIp() << endl;
     cout << "address1.getPort() = " << address1.getPort() << endl;
     cout << "address2.getPort() = " << address2.getPort() << endl;
-    cout << "address3.getPort() = " << address3.getPort() << endl;
-    cout << "address4.getPort() = " << address4.getPort() << endl;
-    cout << "address5.getPort() = " << address5.getPort() << endl;
-    cout << "localhost name = " << InetAddress::getLocalHost() << endl;
-    cout << "baidu.com IP = " << InetAddress::getByName("baidu.com").getHostAddress() << endl;
+	cout << "address3.getPort() = " << address3.getPort() << endl;
+	cout << "address4.getPort() = " << address4.getPort() << endl;
+	cout << "address5.getPort() = " << address5.getPort() << endl;
+	cout << "localhost name = " << InetAddress::getLocalHostName() << endl;
+	cout << "baidu.com IP = " << InetAddress::getByName("baidu.com").getHostAddress() << endl;
 
 	try
 	{
@@ -62,10 +62,15 @@ int main()
 		for (InetAddress address : addrList4)
 			cout << address.getHostName() << " --> " << address.getHostAddress() << endl;
 		
-		cout << "--------getAllByName(hahaha)---------" << endl; 
-		list<InetAddress> addrList5 = InetAddress::getAllByName("hahaha");
-		for (InetAddress address : addrList5)
-			cout << address.getHostName() << " --> " << address.getHostAddress() << endl;
+		//cout << "--------getAllByName(hahaha)---------" << endl; 
+		//list<InetAddress> addrList5 = InetAddress::getAllByName("hahaha");
+		//for (InetAddress address : addrList5)
+		//	cout << address.getHostName() << " --> " << address.getHostAddress() << endl;
+
+		cout << InetAddress::getLoopbackAddress().getHostName() << " = " << InetAddress::getLoopbackAddress().getHostAddress() << endl;
+		cout << InetAddress::getLoopbackAddressIPv6().getHostName() << " = " << InetAddress::getLoopbackAddressIPv6().getHostAddress() << endl;
+		cout << InetAddress::getAnylocalAddress().getHostName() << " = " << InetAddress::getAnylocalAddress().getHostAddress() << endl;
+		cout << InetAddress::getAnylocalAddressIPv6().getHostName() << " = " << InetAddress::getAnylocalAddressIPv6().getHostAddress() << endl;
 
 	}
 	catch (Exception& unkonwhostexp)

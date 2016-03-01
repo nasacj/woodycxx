@@ -57,8 +57,8 @@ InetAddress::InetAddress(string ip, uint16_t port)
 
 InetAddress::InetAddress(const string& host, const struct in6_addr& address)
 {
-	this->originalHostName = hostName;
-	this->hostName = hostName;
+	this->originalHostName = host;
+	this->hostName = host;
 	this->sin_addr6 = address;
 	this->family = AF_INET6;
 }
@@ -166,7 +166,7 @@ list<InetAddress> InetAddress::getAllByName(const string& host)
 				sockaddr_ipv4 = (struct sockaddr_in *) ptr->ai_addr;
 				struct in_addr addr;
 				addr = sockaddr_ipv4->sin_addr;
-				InetAddress inetAdd("", addr);
+				InetAddress inetAdd(host, addr);
 				addr_list.push_back(inetAdd);
 				break;
 			}
@@ -175,7 +175,7 @@ list<InetAddress> InetAddress::getAllByName(const string& host)
 				sockaddr_ipv6 = (struct sockaddr_in6 *) ptr->ai_addr;
 				struct in6_addr addr6;
 				addr6 = sockaddr_ipv6->sin6_addr;
-				InetAddress inetAdd6("", addr6);
+				InetAddress inetAdd6(host, addr6);
 				addr_list.push_back(inetAdd6);
 				break;
 			}
@@ -252,12 +252,9 @@ bool InetAddress::isIPV6() const
 	return this->isIPv6;
 }
 
-string InetAddress::getHostName() const
+string InetAddress::getHostByAddr(const InetAddress& inet_address)
 {
-	if ( (this->hostName != "") && (this->hostName.length() > 0) )
-		return this->hostName;
-
-	char hostname[1025] = {0};
+	char hostname[1025] = { 0 };
 	char servInfo[32] = { 0 };
 	int dwRetval = 0;
 	socklen_t size = 0;
@@ -266,11 +263,11 @@ string InetAddress::getHostName() const
 	struct sockaddr_in6 sockaddr_in_ipv6;
 	bzero(&sockaddr_in_ipv4, sizeof(sockaddr_in_ipv4));
 	bzero(&sockaddr_in_ipv6, sizeof(sockaddr_in_ipv6));
-	switch (this->family){
+	switch (inet_address.family) {
 	case AF_INET:
 	{
-		sockaddr_in_ipv4.sin_family = this->family;
-		sockaddr_in_ipv4.sin_addr = this->sin_addr;
+		sockaddr_in_ipv4.sin_family = inet_address.family;
+		sockaddr_in_ipv4.sin_addr = inet_address.sin_addr;
 		sockaddr_in_ipv4.sin_port = htons(0);
 		sa = (struct sockaddr *)&sockaddr_in_ipv4;
 		size = sizeof(struct sockaddr_in);
@@ -278,8 +275,8 @@ string InetAddress::getHostName() const
 	}
 	case AF_INET6:
 	{
-		sockaddr_in_ipv6.sin6_family = this->family;
-		sockaddr_in_ipv6.sin6_addr = this->sin_addr6;
+		sockaddr_in_ipv6.sin6_family = inet_address.family;
+		sockaddr_in_ipv6.sin6_addr = inet_address.sin_addr6;
 		sockaddr_in_ipv6.sin6_port = htons(0);
 		sa = (struct sockaddr *)&sockaddr_in_ipv6;
 		size = sizeof(struct sockaddr_in6);
@@ -289,8 +286,40 @@ string InetAddress::getHostName() const
 	dwRetval = getnameinfo(sa, size,
 		hostname, sizeof(hostname),
 		servInfo, sizeof(servInfo), NI_NUMERICSERV);
-
 	return string(hostname);
+}
+
+InetAddress InetAddress::getLoopbackAddress()
+{
+	struct in_addr ipv4Addr;
+	in_addr_t ip = INADDR_LOOPBACK;
+	ipv4Addr.s_addr = htonl(ip);
+	return InetAddress("localhost", ipv4Addr);
+}
+
+InetAddress InetAddress::getLoopbackAddressIPv6()
+{
+	return InetAddress("localhost", in6addr_loopback);
+}
+
+InetAddress InetAddress::getAnylocalAddress()
+{
+	struct in_addr ipv4Addr;
+	in_addr_t ip = INADDR_ANY;
+	ipv4Addr.s_addr = htonl(ip);
+	return InetAddress(getLocalHostName(), ipv4Addr);
+}
+
+InetAddress InetAddress::getAnylocalAddressIPv6()
+{
+	return InetAddress(getLocalHostName(), in6addr_any);
+}
+
+string InetAddress::getHostName() const
+{
+	if ( (this->hostName != "") && (this->hostName.length() > 0) )
+		return this->hostName;
+	return getHostByAddr(*this);
 }
 
 string InetAddress::getHostAddress() const
@@ -300,11 +329,16 @@ string InetAddress::getHostAddress() const
 	return string(buf);
 }
 
-string InetAddress::getLocalHost()
+string InetAddress::getLocalHostName()
 {
 	char hostname[256] = {};
 	::gethostname(hostname, sizeof(hostname));
 	return string(hostname);
+}
+
+void InetAddress::setHostName(const string& hname)
+{
+	this->hostName = hname;
 }
 
 bool InetAddress::resolve(string hostname, InetAddress* result)
