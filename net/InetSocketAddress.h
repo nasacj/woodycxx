@@ -7,58 +7,73 @@
 
   This software is distributed without any warranty.
 */
-
+#pragma once
 #ifndef Woodycxx_Net_InetSocketAddress_H_
 #define Woodycxx_Net_InetSocketAddress_H_
 
 #include <string>
+#include <stdint.h>
+#include <sys/types.h>
+#include <list>
+#include <base/IllegalArgumentException.h>
+#include "UnknownHostException.h"
+#include "InetAddress.h"
+#ifdef WIN32
+#include <WinSock2.h>
+#include <ws2ipdef.h>
+#else
+#include <netinet/in.h>
+#endif
 
-//using namespace std;
+using namespace std;
 
 namespace woodycxx { namespace net {
 
 class InetSocketAddress
 {
-private:
-    std::string hostName;
-    int port;
-
 public:
 
-    InetSocketAddress(){}
+	InetSocketAddress(int tPort);
 
-    InetSocketAddress( std::string host, int port  )
-        : hostName(host), port(port)
-    {
-    }
+	InetSocketAddress(const InetAddress& addr, int tProt);
 
-    InetSocketAddress( const char* host, int port  )
-        : hostName(host), port(port)
-    {
-    }
+	InetSocketAddress(const string& host, int tProt);
 
-    std::string getHostName() { return this->hostName; }
-    int getPort() { return this->port; }
+	string getHostName();
 
-    InetSocketAddress& operator=(const InetSocketAddress& other)
-    {
-        this->hostName = other.hostName;
-        this->port = other.port;
-        return *this;
-    }
+	int getPort();
 
-    friend bool operator==(const InetSocketAddress& p1, const InetSocketAddress& p2)
-    {
-        return ( (p1.hostName == p2.hostName) && (p1.port == p2.port) );
-    }
+	InetAddress getAddress();
 
-    friend bool operator!=(const InetSocketAddress& p1, const InetSocketAddress& p2)
-    {
-        return ( (p1.hostName != p2.hostName) || (p1.port != p2.port) );
-    }
+	string getHostAddress();
+
+	string toString();
+
+	bool isUnresolved();
+
+	bool isIPv6();
+
+	const struct sockaddr * const getSockAddrP() const;
+
+
+private:
+	void init();
+	static int checkPort(int port);
+	static string checkHost(const string& hostname);
+
+	string hostname;
+	int port;
+	InetAddress inetAddress;
+	bool Unresolved;
+
+	union
+	{
+		struct sockaddr_in addr_;
+		struct sockaddr_in6 addr6_;
+	};
 
 };
 
-}}
+}}// end of namespace woodycxx::net
 
 #endif

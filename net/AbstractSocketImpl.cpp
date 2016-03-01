@@ -18,18 +18,18 @@ int AbstractSocketImpl::connect(const string& host, int port)
 {
     if (connected)
         return 0;
-    InetAddress addr(host, port);
+	InetSocketAddress addr(host, port);
     return connect(addr);
 }
 
-int AbstractSocketImpl::connect(const InetAddress& addr)
+int AbstractSocketImpl::connect(const InetSocketAddress& addr)
 {
     if (connected)
     {
         return 0;
     }
     this->address = addr;
-    int sockfd = sockets::createBlockingSocketFd(addr.isIPV6());
+    int sockfd = sockets::createBlockingSocketFd(address.isIPv6());
 #ifdef WIN32
     if ( sockfd == INVALID_SOCKET )
 #else
@@ -39,7 +39,7 @@ int AbstractSocketImpl::connect(const InetAddress& addr)
         return woodycxx::error::SocketError;
     }
     
-    int ret = sockets::connect(sockfd, address.getSockAddrInet());
+    int ret = sockets::connect(sockfd, address.getSockAddrP());
     if ( ret < 0 )
         return woodycxx::error::ConnectionError;
 
@@ -53,7 +53,7 @@ int AbstractSocketImpl::connect()
     return this->connect(this->address);
 }
 
-void AbstractSocketImpl::bind(const InetAddress& host)
+void AbstractSocketImpl::bind(const InetSocketAddress& host)
 {
 }
 
@@ -106,7 +106,7 @@ void AbstractSocketImpl::close()
 
 string AbstractSocketImpl::getIpString()
 {
-    return this->address.getIp();
+    return this->address.getHostAddress();
 }
 
 uint16_t AbstractSocketImpl::getPortString()
@@ -116,7 +116,7 @@ uint16_t AbstractSocketImpl::getPortString()
 
 string AbstractSocketImpl::getIpPortString()
 {
-    return this->address.getIpPort();
+    return this->address.toString();
 }
 
 }}

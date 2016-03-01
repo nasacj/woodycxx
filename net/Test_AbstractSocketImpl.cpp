@@ -9,7 +9,7 @@
 */
 
 #include "AbstractSocketImpl.h"
-#include "InetAddress.h"
+#include "InetSocketAddress.h"
 #include <iostream>
 #ifndef WIN32
 #include <signal.h>
@@ -24,9 +24,9 @@ int Test_AbstractSocketImpl()
     char    recvline[MAXLINE + 1];
     int n;
 
-    InetAddress address("127.0.0.1", 12345);
+    InetSocketAddress address("127.0.0.1", 12345);
     auto socketImpl = make_shared<AbstractSocketImpl>(address);
-    cout << "Connect to " << address.getIpPort() << endl;
+    cout << "Connect to " << address.toString() << endl;
     int error_no = socketImpl->connect(address);
     if (error_no != 0)
     {
@@ -40,7 +40,8 @@ int Test_AbstractSocketImpl()
     while ( (n = inputstream->read(recvline, MAXLINE)) > 0 )
     {
         recvline[n] = 0;
-        cout << recvline;
+        cout << string(recvline);
+		cout << "hello" << endl;
         int n_written = outputstream->write(recvline, n);
         if (n_written <= 0 )
         {

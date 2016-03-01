@@ -51,11 +51,11 @@ private:
     InputStreamWeakPtr   wkInputStreamPtr;
     OutputStreamWeakPtr  wkOutputStreamPtr;
 
-    InetAddress address;
+	InetSocketAddress address;
     FileDescriptor fileHandler;
 
 public:
-    AbstractSocketImpl( const InetAddress& addr) : shut_rd(false), shut_wr(false), closePending(false), connected(false), address(addr) {}
+    AbstractSocketImpl( const InetSocketAddress& addr) : shut_rd(false), shut_wr(false), closePending(false), connected(false), address(addr) {}
     AbstractSocketImpl( const string& ip, int port): shut_rd(false), shut_wr(false), closePending(false), connected(false), address(ip, port) {}
     virtual ~AbstractSocketImpl() {}
 
@@ -66,11 +66,11 @@ public:
 
     virtual int connect(const string& host, int port);
 
-    virtual int connect(const InetAddress& address);
+    virtual int connect(const InetSocketAddress& address);
 
     virtual int connect();
 
-    virtual void bind(const InetAddress& host);
+    virtual void bind(const InetSocketAddress& host);
 
     virtual void listen(int backlog);
 
@@ -84,7 +84,7 @@ public:
 
     virtual void close();
 
-    InetAddress getInetSoecktAddress() { return this->address; }
+    InetSocketAddress getInetSoecktAddress() { return this->address; }
 
     FileDescriptor getFileDescriptor() { return this->fileHandler; }
 

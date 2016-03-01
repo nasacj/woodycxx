@@ -231,6 +231,20 @@ void fromIpPort(const char* ip, uint16_t port, struct sockaddr_in6* addr)
 	}
 }
 
+void fromAddrPort(const struct in_addr& address, uint16_t port, struct sockaddr_in* addr)
+{
+	addr->sin_family = AF_INET;
+	addr->sin_port = htons(port);
+	addr->sin_addr = address;
+}
+
+void fromAddrPort(const struct in6_addr& address, uint16_t port, struct sockaddr_in6* addr)
+{
+	addr->sin6_family = AF_INET6;
+	addr->sin6_port = htons(port);
+	addr->sin6_addr = address;
+}
+
 const struct sockaddr* sockaddr_cast(const struct sockaddr_in* addr)
 {
 	return (struct sockaddr*)(addr);

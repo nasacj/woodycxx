@@ -15,8 +15,6 @@
 #ifdef WIN32
 #include <WinSock2.h>
 #include <ws2tcpip.h>
-#define bzero(x,y) ZeroMemory(x,y)
-typedef uint32_t in_addr_t;
 #else
 #include <strings.h>   //bzero
 #include <sys/socket.h>
@@ -28,33 +26,6 @@ typedef uint32_t in_addr_t;
 
 using namespace woodycxx::net;
 
-InetAddress::InetAddress(uint16_t port, bool loopbackOnly)
-{
-	//TODO: localhost is not IPv6
-	isIPv6 = false;
-    bzero(&addr_, sizeof addr_);
-    addr_.sin_family = AF_INET;
-    in_addr_t ip = loopbackOnly ? INADDR_LOOPBACK : INADDR_ANY;
-    addr_.sin_addr.s_addr = htonl(ip);
-    addr_.sin_port = htons(port);
-}
-
-InetAddress::InetAddress(string ip, uint16_t port)
-{
-	if (string::npos != ip.find(":"))
-	{
-		bzero(&addr6_, sizeof addr6_);
-		sockets::fromIpPort(ip.c_str(), port, &addr6_);
-		isIPv6 = true;
-	}
-	else
-	{
-		bzero(&addr_, sizeof addr_);
-		sockets::fromIpPort(ip.c_str(), port, &addr_);
-		isIPv6 = false;
-	}
-}
-
 InetAddress::InetAddress(const string& host, const struct in6_addr& address)
 {
 	bzero(&(this->sin_addr6), sizeof(this->sin_addr6));
@@ -62,6 +33,7 @@ InetAddress::InetAddress(const string& host, const struct in6_addr& address)
 	this->hostName = host;
 	this->sin_addr6 = address;
 	this->family = AF_INET6;
+	this->isIPv6 = true;
 }
 
 InetAddress::InetAddress(const string& host, const struct in_addr& address)
@@ -71,6 +43,7 @@ InetAddress::InetAddress(const string& host, const struct in_addr& address)
 	this->hostName = host;
 	this->sin_addr = address;
 	this->family = AF_INET;
+	this->isIPv6 = false;
 }
 
 list<InetAddress> InetAddress::getAllByNameIPv4(const string& host)
@@ -224,31 +197,6 @@ InetAddress InetAddress::getByAddress(const string& host, const struct in6_addr&
 	return inetAddr;
 }
 
-
-const struct sockaddr* InetAddress::getSockAddrInet() const
-{ 
-	return sockets::sockaddr_cast(&addr6_);
-}
-
-string InetAddress::getIpPort() const
-{
-    char buf[INET6_ADDRSTRLEN];
-    sockets::toIpPort(buf, sizeof buf, (const sockaddr*)&addr6_);
-    return buf;
-}
-
-string InetAddress::getIp() const
-{
-    char buf[INET6_ADDRSTRLEN];
-    sockets::toIp(buf, sizeof buf, (const sockaddr*)&addr6_);
-    return buf;
-}
-
-uint16_t InetAddress::getPort() const
-{
-    return ntohs(addr_.sin_port);
-}
-
 bool InetAddress::isIPV6() const
 {
 	return this->isIPv6;
@@ -320,9 +268,17 @@ InetAddress InetAddress::getAnylocalAddressIPv6()
 
 string InetAddress::getHostName() const
 {
+	/*
 	if ( (this->hostName != "") && (this->hostName.length() > 0) )
 		return this->hostName;
 	return getHostByAddr(*this);
+	*/
+	return this->hostName;
+}
+
+void InetAddress::setHostName(const string& hname)
+{
+	this->hostName = hname;
 }
 
 string InetAddress::getHostAddress() const
@@ -332,6 +288,20 @@ string InetAddress::getHostAddress() const
 	return string(buf);
 }
 
+uint16_t InetAddress::getFamily() const
+{
+	return this->family;
+}
+
+struct in_addr InetAddress::getAddress() const
+{
+	return this->sin_addr;
+}
+struct in6_addr InetAddress::getAddressIPv6() const
+{
+	return this->sin_addr6;
+}
+
 string InetAddress::getLocalHostName()
 {
 	char hostname[256] = {};
@@ -339,35 +309,8 @@ string InetAddress::getLocalHostName()
 	return string(hostname);
 }
 
-void InetAddress::setHostName(const string& hname)
+string InetAddress::toString() const
 {
-	this->hostName = hname;
-}
-
-bool InetAddress::resolve(string hostname, InetAddress* result)
-{
-    /*
-    assert(out != NULL);
-    struct hostent hent;
-    struct hostent* he = NULL;
-    int herrno = 0;
-    bzero(&hent, sizeof(hent));
-
-    int ret = gethostbyname_r(hostname.c_str(), &hent, t_resolveBuffer, sizeof t_resolveBuffer, &he, &herrno);
-    if (ret == 0 && he != NULL)
-    {
-        assert(he->h_addrtype == AF_INET && he->h_length == sizeof(uint32_t));
-        out->addr_.sin_addr = *reinterpret_cast<struct in_addr*>(he->h_addr);
-        return true;
-    }
-    else
-    {
-        if (ret)
-        {
-            LOG_SYSERR << "InetAddress::resolve";
-        }
-        return false;
-    }
-    */
-    return false;
+	string hostname = getHostName();
+	return (hostname + "/" + getHostAddress());
 }

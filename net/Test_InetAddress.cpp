@@ -18,26 +18,6 @@ using namespace std;
 
 int main()
 {
-    InetAddress address1(80);
-    InetAddress address2("127.0.0.1", 12345);
-    InetAddress address3("127.0.k.1", 123);
-    InetAddress address4("fe80::ccae:f2cd:f261:fa4d", 12345);
-    InetAddress address5("::1", 123);
-    cout << "address1.getIpPort() = " << address1.getIpPort() << endl;
-    cout << "address2.getIpPort() = " << address2.getIpPort() << endl;
-    cout << "address3.getIpPort() = " << address3.getIpPort() << endl;
-    cout << "address4.getIpPort() = " << address4.getIpPort() << endl;
-    cout << "address5.getIpPort() = " << address5.getIpPort() << endl;
-    cout << "address1.getIp() = " << address1.getIp() << endl;
-    cout << "address2.getIp() = " << address2.getIp() << endl;
-    cout << "address3.getIp() = " << address3.getIp() << endl;
-    cout << "address4.getIp() = " << address4.getIp() << endl;
-    cout << "address5.getIp() = " << address5.getIp() << endl;
-    cout << "address1.getPort() = " << address1.getPort() << endl;
-    cout << "address2.getPort() = " << address2.getPort() << endl;
-	cout << "address3.getPort() = " << address3.getPort() << endl;
-	cout << "address4.getPort() = " << address4.getPort() << endl;
-	cout << "address5.getPort() = " << address5.getPort() << endl;
 	cout << "localhost name = " << InetAddress::getLocalHostName() << endl;
 	cout << "baidu.com IP = " << InetAddress::getByName("baidu.com").getHostAddress() << endl;
 
@@ -68,6 +48,7 @@ int main()
 		//for (InetAddress address : addrList5)
 		//	cout << address.getHostName() << " --> " << address.getHostAddress() << endl;
 
+		cout << "--------getLoopbackAddress & getAnylocalAddress---------" << endl;
 		cout << InetAddress::getLoopbackAddress().getHostName() << " = " << InetAddress::getLoopbackAddress().getHostAddress() << endl;
 		cout << InetAddress::getLoopbackAddressIPv6().getHostName() << " = " << InetAddress::getLoopbackAddressIPv6().getHostAddress() << endl;
 		cout << InetAddress::getAnylocalAddress().getHostName() << " = " << InetAddress::getAnylocalAddress().getHostAddress() << endl;

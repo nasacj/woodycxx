@@ -13,7 +13,7 @@
 
 #include <io/InputStream.h>
 #include <io/OutputStream.h>
-#include "InetAddress.h"
+#include "InetSocketAddress.h"
 //#include <base/noncopyable.h>
 #include <boost/noncopyable.hpp>
 #include <string>
@@ -47,7 +47,7 @@ public:
      * @param      address   InetAddress.
      *
      */
-    virtual int connect(const InetAddress& address) = 0;
+    virtual int connect(const InetSocketAddress& address) = 0;
 
     /**
      * Connects this socket to the specified port number on the initialized host.
@@ -63,7 +63,7 @@ public:
      * @param      host   an IP address that belongs to a local interface.
      * @param      port   the port number.
      */
-    virtual void bind(const InetAddress& host) = 0;
+    virtual void bind(const InetSocketAddress& host) = 0;
 
     /**
      * Sets the maximum queue length for incoming connection indications
