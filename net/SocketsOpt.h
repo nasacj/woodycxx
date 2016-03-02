@@ -44,6 +44,8 @@ void fromAddrPort(const struct in6_addr& address, uint16_t port, struct sockaddr
 const struct sockaddr* sockaddr_cast(const struct sockaddr_in* addr);
 const struct sockaddr* sockaddr_cast(const struct sockaddr_in6* addr);
 
+int getSocketError(int sockfd);
+
 }}}//end of namespace woodycxx::net::sockets
 
 #endif

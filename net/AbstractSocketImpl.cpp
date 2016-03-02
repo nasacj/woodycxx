@@ -64,6 +64,7 @@ int AbstractSocketImpl::connect(const InetSocketAddress& addr)
 		delete[](cword);
 		DEBUG_LOG("Connect Failed: " << errMsg);
 #else
+		ret = sockets::getSocketError(sockfd);
 		DEBUG_LOG("Connect Failed: " << strerror(ret));
 #endif
 		
