@@ -227,7 +227,7 @@ namespace woodycxx { namespace sysipc
     if ( woodycxx::sysipc::debug_log::is_enabled( m ) ) \
     { \
     ostringstream strm; \
-    strm << message; \
+    strm << "[" << __FILE__ << " : " << __LINE__ << "] " << message; \
     woodycxx::sysipc::debug_log::append( prefix, strm.str() ); \
     } \
     } while ( 0 )
