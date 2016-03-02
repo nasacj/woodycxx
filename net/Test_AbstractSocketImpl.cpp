@@ -11,11 +11,13 @@
 #include "AbstractSocketImpl.h"
 #include "InetSocketAddress.h"
 #include <iostream>
+#include <sysipc/sysipc_event_log.h>
 #ifndef WIN32
 #include <signal.h>
 #endif
 
 using namespace woodycxx::net;
+using namespace woodycxx::sysipc;
 using namespace std;
 
 int Test_AbstractSocketImpl()
@@ -74,6 +76,18 @@ cout << "<<< This is Linux System >>>" << endl;
 #if defined(__CYGWIN__)
 cout << "<<< This is Cygwin System >>>" << endl;
 #endif
+
+DEBUG_LOGER.setFileName("debug.log");
+#ifdef USE_SYSLOG
+DEBUG_LOGER.open_syslog("Test_log", LOG_INFO);
+#else
+DEBUG_LOGER.open_file();
+#endif
+DEBUG_LOGER.set_mask(event_log::level_0, DEBUG_ERRORS);
+DEBUG_LOGER.set_mask(event_log::level_1, DEBUG_INFORMATION);
+DEBUG_LOGER.set_level(event_log::level_1);
+DEBUG_LOGER.enable_stdout();
+
     cout << "Test_AbstractSocketImpl Start..." << endl;
     int ret = Test_AbstractSocketImpl();
     cout << "Test_AbstractSocketImpl End ===> ret = " << hex << ret << endl;

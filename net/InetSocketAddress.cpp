@@ -11,6 +11,9 @@ This software is distributed without any warranty.
 #include "InetSocketAddress.h"
 #include "SocketsOpt.h"
 #include <sstream>
+#include <sysipc/sysipc_event_log.h>
+
+#define DEBUG_LOG(message) DEBUG_INFO("InetSocketAddress", message)
 
 using namespace woodycxx::base;
 using namespace woodycxx::net;
@@ -21,13 +24,21 @@ void InetSocketAddress::init()
 	this->hostname = inetAddress.getHostName();
 	if (inetAddress.getFamily() == AF_INET6)
 	{
-		bzero(&(this->addr6_), sizeof(this->addr6_));
+		bzero(&(this->addr6_), sizeof(struct sockaddr_in6));
 		sockets::fromAddrPort(inetAddress.getAddressIPv6(), port, &addr6_);
+		//log
+		char ipPort[INET6_ADDRSTRLEN];
+		sockets::toIpPort(ipPort, sizeof(ipPort), sockets::sockaddr_cast(&addr6_));
+		DEBUG_LOG("init() --> AF_INET6, ipPort=" << ipPort);
 	}
 	if (inetAddress.getFamily() == AF_INET)
 	{
-		bzero(&(this->addr_), sizeof(this->addr_));
+		bzero(&(this->addr_), sizeof(struct sockaddr_in));
 		sockets::fromAddrPort(inetAddress.getAddress(), port, &addr_);
+		//log
+		char ipPort[INET_ADDRSTRLEN];
+		sockets::toIpPort(ipPort, sizeof(ipPort), sockets::sockaddr_cast(&addr_));
+		DEBUG_LOG("init() --> AF_INET, ipPort=" << ipPort);
 	}
 }
 

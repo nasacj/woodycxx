@@ -10,6 +10,17 @@
 
 #include "AbstractSocketImpl.h"
 #include "SocketsOpt.h"
+#include <sysipc/sysipc_event_log.h>
+#ifdef WIN32
+#include <WinSock2.h>
+#include <ws2tcpip.h>
+#else
+#include <strings.h>   //bzero
+#include <sys/socket.h>
+#include <netdb.h>
+#endif
+
+#define DEBUG_LOG(message) DEBUG_INFO("AbstractSocketImpl", message)
 
 namespace woodycxx { namespace net {
 
@@ -40,9 +51,25 @@ int AbstractSocketImpl::connect(const InetSocketAddress& addr)
     }
     
     int ret = sockets::connect(sockfd, address.getSockAddrP());
-    if ( ret < 0 )
-        return woodycxx::error::ConnectionError;
-
+	if (ret < 0)
+	{
+		string errMsg;
+#ifdef _WINDOWS_
+		WCHAR* msg = gai_strerror(ret);
+		DWORD num = WideCharToMultiByte(CP_ACP, 0, msg, -1, NULL, 0, NULL, 0);
+		char *cword = new char[num];
+		bzero(cword, num);
+		WideCharToMultiByte(CP_ACP, 0, msg, -1, cword, num, NULL, 0);
+		errMsg = string(cword);
+		delete[](cword);
+		DEBUG_LOG("Connect Failed: " << errMsg);
+#else
+		DEBUG_LOG("Connect Failed: " << strerror(ret));
+#endif
+		
+		return woodycxx::error::ConnectionError;
+	}
+        
     this->fileHandler.set(sockfd);
     this->connected = true;
     return 0;    
