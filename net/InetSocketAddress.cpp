@@ -42,7 +42,7 @@ void InetSocketAddress::init()
 	}
 }
 
-InetSocketAddress::InetSocketAddress(int tPort) : 
+InetSocketAddress::InetSocketAddress(int tPort) :
 	inetAddress(InetAddress::getAnylocalAddress()),
 	port(checkPort(tPort))
 {
@@ -90,6 +90,13 @@ int InetSocketAddress::getPort()
 InetAddress InetSocketAddress::getAddress()
 {
 	return this->inetAddress;
+}
+
+uint16_t InetSocketAddress::getFamily()
+{
+    if (Unresolved)
+        return AF_INET;
+    return this->inetAddress.getFamily();
 }
 
 string InetSocketAddress::toString()
@@ -150,4 +157,3 @@ string InetSocketAddress::checkHost(const string& hostname)
 		throw IllegalArgumentException("hostname can't be null");
 	return hostname;
 }
-

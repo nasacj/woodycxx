@@ -45,13 +45,13 @@ private:
     bool closePending;
     bool closed;
     bool connected;
-    
+
     //InputStreamPtr    inputStreamPtr;
     //OutputStreamPtr   outputStreamPtr;
     InputStreamWeakPtr   wkInputStreamPtr;
     OutputStreamWeakPtr  wkOutputStreamPtr;
 
-	InetSocketAddress address;
+    InetSocketAddress address;
     FileDescriptor fileHandler;
 
 public:
@@ -138,7 +138,7 @@ public:
         //if (closePending || (fd == null))
         {
             return true;
-        } 
+        }
         else
         {
             return false;

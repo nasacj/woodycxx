@@ -45,6 +45,8 @@ public:
 
 	InetAddress getAddress();
 
+	uint16_t getFamily();
+
 	string getHostAddress();
 
 	string toString();
@@ -62,8 +64,8 @@ private:
 	static string checkHost(const string& hostname);
 
 	InetAddress inetAddress;
-    int port;
-    string hostname;
+  int port;
+	string hostname;
 	bool Unresolved;
 
 	union

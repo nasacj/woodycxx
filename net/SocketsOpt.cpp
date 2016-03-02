@@ -61,9 +61,15 @@ int createBlockingSocketFd(bool isIpv6)
     return sockfd;
 }
 
-int connect(int sockfd, const struct sockaddr * addr)
+int connect(int sockfd, uint16_t family, const struct sockaddr * addr)
 {
-    int ret = ::connect( sockfd, addr, static_cast<socklen_t>(sizeof(struct sockaddr_in6)) );
+    int ret = 0;
+    socklen_t size = 0;
+    if (AF_INET == family)
+        size = static_cast<socklen_t>(sizeof(struct sockaddr_in));
+    else
+        size = static_cast<socklen_t>(sizeof(struct sockaddr_in6));
+    ret = ::connect( sockfd, addr, size );
     return ret;
 }
 

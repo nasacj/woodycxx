@@ -49,10 +49,10 @@ int AbstractSocketImpl::connect(const InetSocketAddress& addr)
     {
         return woodycxx::error::SocketError;
     }
-    
-    int ret = sockets::connect(sockfd, address.getSockAddrP());
-	if (ret < 0)
-	{
+
+    int ret = sockets::connect(sockfd, address.getFamily() , address.getSockAddrP());
+    if (ret < 0)
+    {
 		string errMsg;
 #ifdef _WINDOWS_
 		WCHAR* msg = gai_strerror(ret);
@@ -67,13 +67,13 @@ int AbstractSocketImpl::connect(const InetSocketAddress& addr)
 		ret = sockets::getSocketError(sockfd);
 		DEBUG_LOG("Connect Failed: " << strerror(ret));
 #endif
-		
+
 		return woodycxx::error::ConnectionError;
 	}
-        
+
     this->fileHandler.set(sockfd);
     this->connected = true;
-    return 0;    
+    return 0;
 }
 
 int AbstractSocketImpl::connect()
