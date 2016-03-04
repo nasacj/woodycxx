@@ -64,6 +64,11 @@ public:
         return std::static_pointer_cast<AbstractSocketImpl>(AbstractSocket::shared_from_this());
     }
 
+	static AbstractSocketImplPtr createSocket(InetSocketAddress& address)
+	{
+		return make_shared<AbstractSocketImpl>(address);
+	}
+
     virtual int connect(const string& host, int port);
 
     virtual int connect(const InetSocketAddress& address);
