@@ -10,7 +10,6 @@
 
 #include "AbstractSocketImpl.h"
 #include "SocketsOpt.h"
-#include <sysipc/sysipc_event_log.h>
 #ifdef WIN32
 #include <WinSock2.h>
 #include <ws2tcpip.h>
@@ -19,8 +18,6 @@
 #include <sys/socket.h>
 #include <netdb.h>
 #endif
-
-#define DEBUG_LOG(message) DEBUG_INFO("AbstractSocketImpl", message)
 
 namespace woodycxx { namespace net {
 
@@ -62,10 +59,8 @@ int AbstractSocketImpl::connect(const InetSocketAddress& addr)
 		WideCharToMultiByte(CP_ACP, 0, msg, -1, cword, num, NULL, 0);
 		errMsg = string(cword);
 		delete[](cword);
-		DEBUG_LOG("Connect Failed: " << errMsg);
 #else
 		ret = sockets::getSocketError(sockfd);
-		DEBUG_LOG("Connect Failed: " << strerror(ret));
 #endif
 
 		return woodycxx::error::ConnectionError;
