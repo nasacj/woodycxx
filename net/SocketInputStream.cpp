@@ -107,6 +107,10 @@ int SocketInputStream::socketRead0(FileDescriptor& fd, int buf_size, char* b, in
     int n = 0;
     n = TEMP_FAILURE_RETRY(sockets::read(socketfd, &b[off], len));
 
+	if (n < 0)
+	{
+		throw SocketException(Exception::GetLastErrorAsString());
+	}
     //TODO Timeout handling
 
     return n;
