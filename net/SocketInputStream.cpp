@@ -109,6 +109,7 @@ int SocketInputStream::socketRead0(FileDescriptor& fd, int buf_size, char* b, in
 
 	if (n < 0)
 	{
+		socket_impl->setConnectionReset();
 		throw SocketException(Exception::GetLastErrorAsString());
 	}
     //TODO Timeout handling
