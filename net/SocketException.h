@@ -9,8 +9,8 @@ This software is distributed without any warranty.
 */
 
 #pragma once
-#ifndef WOODYCXX_NET_UNKNOWNHOSTEXCEPTION_H_
-#define WOODYCXX_NET_UNKNOWNHOSTEXCEPTION_H_
+#ifndef WOODYCXX_NET_SOCKETEXCPETION_H_
+#define WOODYCXX_NET_SOCKETEXCPETION_H_
 
 #include <io/IOException.h>
 
@@ -19,24 +19,23 @@ using namespace woodycxx::io;
 
 namespace woodycxx { namespace net {
 
-class UnknownHostException : public IOException
+class SocketException : public IOException
 {
 public:
-	UnknownHostException(const string& errMsg) : IOException(errMsg)
+	SocketException(const string& errMsg) : IOException(errMsg)
+    {
+        exception_name = "SocketException: ";
+    }
+
+	SocketException(int errcode) : IOException(errcode)
 	{
-		exception_name = "UnknownHostException: ";
+		exception_name = "SocketException: ";
 	}
 
-	UnknownHostException(int errcode) : IOException(errcode)
-	{
-		exception_name = "UnknownHostException: ";
-	}
+    virtual ~SocketException() {}
 
-	virtual ~UnknownHostException() {}
-
-};
+    };
 
 }} //end of namespace woodycxx::io
 
 #endif
-

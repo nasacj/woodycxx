@@ -118,18 +118,7 @@ list<InetAddress> InetAddress::getAllByName(const string& host)
 	int dwRetval = ::getaddrinfo(host.c_str(), "", &hints, &result);
 	if (dwRetval != 0)
 	{
-#ifdef _WINDOWS_
-		WCHAR* msg = gai_strerror(dwRetval);
-		DWORD num = WideCharToMultiByte(CP_ACP, 0, msg, -1, NULL, 0, NULL, 0);
-		char *cword = new char[num];
-		bzero(cword, num);
-		WideCharToMultiByte(CP_ACP, 0, msg, -1, cword, num, NULL, 0);
-		errMsg = comm_err_msg + string(cword);
-		delete[](cword);
-#else
-		errMsg = comm_err_msg + gai_strerror(dwRetval);
-#endif
-		throw UnknownHostException(errMsg);
+		throw UnknownHostException(dwRetval);
 	}
 	else
 	{

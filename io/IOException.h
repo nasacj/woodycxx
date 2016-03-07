@@ -29,6 +29,11 @@ public:
 		exception_name = "IOException: ";
 	}
 
+	IOException(int errcode) : Exception(errcode)
+	{
+		exception_name = "IOException: ";
+	}
+
 	virtual ~IOException() {}
 
 };

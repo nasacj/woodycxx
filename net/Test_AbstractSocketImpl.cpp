@@ -24,35 +24,43 @@ int Test_AbstractSocketImpl()
     char    recvline[MAXLINE + 1];
     int n;
 
-    InetSocketAddress address("127.0.0.1", 12345);
-    auto socketImpl = AbstractSocketImpl::createSocket(address);
-    cout << "Connect to " << address.toString() << endl;
-    int error_no = socketImpl->connect(address);
-    if (error_no != 0)
-    {
-        cout << "connect failed: error_no=" << hex << error_no << endl;
-        return -1;
-    }
-    cout << "Connect successfully..." << endl;
-    auto inputstream = socketImpl->getInputStream();
-    auto outputstream = socketImpl->getOutputStream();
-    InputStreamPtr inputstream2 = socketImpl->getInputStream();
-    while ( (n = inputstream->read(recvline, MAXLINE)) > 0 )
-    {
-        recvline[n] = 0;
-        cout << string(recvline);
-        int n_written = outputstream->write(recvline, n);
-        if (n_written <= 0 )
-        {
-            cout << endl << "Write Error!" << endl;
-            continue;
-        }
-    }
-    if (n != 0)
-    {
-        cout << endl << "read error: error_no=" << n << endl;
-        return -1;
-    }
+	try
+	{
+		InetSocketAddress address("127.0.0.1", 12345);
+		auto socketImpl = AbstractSocketImpl::createSocket(address);
+		cout << "Connect to " << address.toString() << endl;
+		int error_no = socketImpl->connect(address);
+		if (error_no != 0)
+		{
+			cout << "connect failed: error_no=" << hex << error_no << endl;
+			return -1;
+		}
+		cout << "Connect successfully..." << endl;
+		auto inputstream = socketImpl->getInputStream();
+		auto outputstream = socketImpl->getOutputStream();
+		InputStreamPtr inputstream2 = socketImpl->getInputStream();
+		while ((n = inputstream->read(recvline, MAXLINE)) > 0)
+		{
+			recvline[n] = 0;
+			cout << string(recvline);
+			int n_written = outputstream->write(recvline, n);
+			if (n_written <= 0)
+			{
+				cout << endl << "Write Error! error_no=" << hex << n_written << endl;
+				continue;
+			}
+		}
+		if (n != 0)
+		{
+			cout << endl << "read error: error_no=" << hex << n << endl;
+			return -1;
+		}
+	}
+	catch (Exception& e)
+	{
+		cerr << e.what() << endl;
+	}
+    
     return 0;
 }
 

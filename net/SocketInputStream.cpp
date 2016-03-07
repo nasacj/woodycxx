@@ -14,6 +14,8 @@
 #include <sys/types.h>
 #include "SocketsOpt.h"
 
+#define TEMP_FAILURE_RETRY
+
 namespace woodycxx { namespace net {
 
 void SocketInputStream::init()
@@ -55,11 +57,8 @@ int SocketInputStream::read(char* b, int byte_size, int off, int length, int tim
         return -1;
     }
 
-    if (NULL == socket_impl)
-        return woodycxx::error::NullPointerError;
-
     if (socket_impl->isConnectionReset()) 
-        return woodycxx::error::ConnectionReset;
+        throw SocketException("Connection Reset");
 
     // bounds check
     if (length <= 0 || off < 0 || off + length > byte_size)
@@ -68,7 +67,7 @@ int SocketInputStream::read(char* b, int byte_size, int off, int length, int tim
         {
             return 0;
         }
-        return woodycxx::error::BufferIndexOutOfBounds;
+        throw IndexOutOfBoundsException("SocketInputStream::read(): buffer bounds check failed!");
     }
 
     n = socketRead0(socketFD, byte_size, b, off, length, timeout);
@@ -106,7 +105,7 @@ int SocketInputStream::socketRead0(FileDescriptor& fd, int buf_size, char* b, in
 
     int socketfd = static_cast<int>(fd.getHandler());
     int n = 0;
-    n = sockets::read(socketfd, &b[off], len);
+    n = TEMP_FAILURE_RETRY(sockets::read(socketfd, &b[off], len));
 
     //TODO Timeout handling
 

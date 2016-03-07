@@ -36,7 +36,13 @@ int AbstractSocketImpl::connect(const InetSocketAddress& addr)
     {
         return 0;
     }
+
     this->address = addr;
+	if (this->address.isUnresolved())
+	{
+		throw UnknownHostException(this->address.getHostName());
+	}
+
     int sockfd = sockets::createBlockingSocketFd(address.isIPv6());
 #ifdef WIN32
     if ( sockfd == INVALID_SOCKET )
@@ -50,20 +56,8 @@ int AbstractSocketImpl::connect(const InetSocketAddress& addr)
     int ret = sockets::connect(sockfd, address.getFamily() , address.getSockAddrP());
     if (ret < 0)
     {
-		string errMsg;
-#ifdef _WINDOWS_
-		WCHAR* msg = gai_strerror(ret);
-		DWORD num = WideCharToMultiByte(CP_ACP, 0, msg, -1, NULL, 0, NULL, 0);
-		char *cword = new char[num];
-		bzero(cword, num);
-		WideCharToMultiByte(CP_ACP, 0, msg, -1, cword, num, NULL, 0);
-		errMsg = string(cword);
-		delete[](cword);
-#else
-		ret = sockets::getSocketError(sockfd);
-#endif
-
-		return woodycxx::error::ConnectionError;
+		throw SocketException(Exception::GetLastErrorAsString());
+		//return woodycxx::error::ConnectionError;
 	}
 
     this->fileHandler.set(sockfd);
