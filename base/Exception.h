@@ -14,6 +14,7 @@ This software is distributed without any warranty.
 
 #include <exception>
 #include <string>
+#include <functional>
 #ifdef WIN32
 //#include <base/StackWalker.h>
 #include <WinSock2.h>
@@ -93,6 +94,17 @@ public:
 #endif
 	}
 
+};
+
+typedef std::function<void(void)> FinalCallBack;
+
+class Finally
+{
+private:
+	FinalCallBack finalCallBack;
+public:
+	Finally(const FinalCallBack& callback) : finalCallBack(callback) {}
+	~Finally() { finalCallBack(); }
 };
 
 }} //end of namespace woodycxx::io

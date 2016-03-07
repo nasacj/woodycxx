@@ -60,6 +60,7 @@ int Test_AbstractSocketImpl()
 	{
 		cerr << e.what() << endl;
 	}
+	Finally([] {cout << "This is Finally!" << endl; });
     
     return 0;
 }
