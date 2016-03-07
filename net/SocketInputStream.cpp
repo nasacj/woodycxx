@@ -76,7 +76,8 @@ int SocketInputStream::read(char* b, int byte_size, int off, int length, int tim
     }
 
     eof = true;
-    return -1;
+	
+    return n;
 
 }
 
