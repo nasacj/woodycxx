@@ -14,6 +14,8 @@
 #include <io/OutputStream.h>
 #include <io/FileDescriptor.h>
 #include "AbstractSocketImpl.h"
+#include "SocketException.h"
+#include <base/IndexOutOfBoundsException.h>
 //#include <boost/shared_ptr.hpp>
 #include <memory>
 

@@ -110,8 +110,12 @@ int SocketInputStream::socketRead0(FileDescriptor& fd, int buf_size, char* b, in
 
 	if (n < 0)
 	{
+		if (errno == EINTR)
+		{
+			return 0;
+		}
 		socket_impl->setConnectionReset();
-		throw SocketException(Exception::GetLastErrorAsString());
+		throw SocketException("read: " + Exception::GetLastErrorAsString());
 	}
     //TODO Timeout handling
 

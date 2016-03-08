@@ -30,48 +30,31 @@ int SocketOutputStream::write(const void* b, int len)
 
 int SocketOutputStream::write(const void* b, int b_size, int off, int len)
 {
-    if ( 0 == b )
-        return woodycxx::error::NullPointerError;
-    else if ( (off < 0) || (off > b_size) || (len < 0) ||
+
+    if ( (off < 0) || (off > b_size) || (len < 0) ||
         ( (off + len) > b_size) || ((off + len) < 0))
     {
-        return woodycxx::error::BufferIndexOutOfBounds;
+        throw IndexOutOfBoundsException("SocketOutputStream::write: buffer size out-of-bounds");
     }
     else if (len == 0)
     {
         return 0;
     }
 
-    if (NULL == socket_impl)
-        return woodycxx::error::NullPointerError;
-
     if (socket_impl->isConnectionReset()) 
-        return woodycxx::error::ConnectionReset;
+        throw SocketException("Connection reset");
 
     return socketWrite0(socketFD, b, b_size, off, len);
 }
 
 int SocketOutputStream::socketWrite0(FileDescriptor& fd, const void* b, int b_size, int off, int len)
 {
-    if ( 0 == b )
-        return woodycxx::error::NullPointerError;
-    else if ( (off < 0) || (off > b_size) || (len < 0) ||
-        ( (off + len) > b_size) || ((off + len) < 0))
-    {
-        return woodycxx::error::BufferIndexOutOfBounds;
-    }
-    else if (len == 0)
-    {
-        return 0;
-    }
-
     int socketfd = static_cast<int>(fd.getHandler());
     const char* byte_buf = static_cast<const char*>(b);
     int write_count = sockets::write(socketfd, &byte_buf[off], len);
-    if ( write_count != len )
+    if ( write_count < 0 )
     {
-        //TODO Handle error?
-        return write_count;
+		throw SocketException("write: " + Exception::GetLastErrorAsString());
     }
     return write_count;
 }

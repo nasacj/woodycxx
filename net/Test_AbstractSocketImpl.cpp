@@ -24,12 +24,14 @@ int Test_AbstractSocketImpl()
     char    recvline[MAXLINE + 1];
     int n;
 
+	InetSocketAddress address("127.0.0.1", 12345);
+	auto socketImpl = AbstractSocketImpl::createSocket(address);
+
 	try
 	{
-		InetSocketAddress address("127.0.0.1", 12345);
-		auto socketImpl = AbstractSocketImpl::createSocket(address);
+		
 		cout << "Connect to " << address.toString() << endl;
-		int error_no = socketImpl->connect(address);
+		int error_no = socketImpl->connect();
 		if (error_no != 0)
 		{
 			cout << "connect failed: error_no=" << hex << error_no << endl;
@@ -55,12 +57,18 @@ int Test_AbstractSocketImpl()
 			cout << endl << "read error: error_no=" << hex << n << endl;
 			return -1;
 		}
+		
 	}
 	catch (Exception& e)
 	{
+		Finally aa([&]
+		{
+			socketImpl->close();
+			cout << "This is Finally!" << endl;
+		});
 		cerr << e.what() << endl;
+		return -1;
 	}
-	Finally([] {cout << "This is Finally!" << endl; });
     
     return 0;
 }
