@@ -54,6 +54,7 @@ int SocketOutputStream::socketWrite0(FileDescriptor& fd, const void* b, int b_si
     int write_count = sockets::write(socketfd, &byte_buf[off], len);
     if ( write_count < 0 )
     {
+		socket_impl->setConnectionReset();
 		throw SocketException("write: " + Exception::GetLastErrorAsString());
     }
     return write_count;
