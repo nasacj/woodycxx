@@ -10,6 +10,7 @@
 
 #include <iostream>
 #include "InetSocketAddress.h"
+#include <assert.h>
 
 using namespace woodycxx::net;
 using namespace std;
@@ -23,7 +24,10 @@ int main()
 		InetSocketAddress address("baidu.com", 8000);
 		cout << address.toString() << endl;
 
-		InetSocketAddress address2(80000000);
+		InetSocketAddress address2("baidu.com", 8000);
+		assert(address == address2);
+
+		InetSocketAddress address3(80000000);
 	}
 	catch (Exception& e)
 	{

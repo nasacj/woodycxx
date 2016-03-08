@@ -57,6 +57,18 @@ public:
 
 	const struct sockaddr * const getSockAddrP() const;
 
+	friend bool operator==(const InetSocketAddress& p1, const InetSocketAddress& p2)
+	{
+		return ( (p1.inetAddress == p2.inetAddress) &&
+			(p1.port == p2.port) );
+	}
+
+	friend bool operator!=(const InetSocketAddress& p1, const InetSocketAddress& p2)
+	{
+		return ( (p1.inetAddress != p2.inetAddress) ||
+			(p1.port != p2.port) );
+	}
+
 
 private:
 	void init();
