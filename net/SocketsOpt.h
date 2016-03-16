@@ -31,7 +31,8 @@ int read(int sockfd, void *buf, size_t count);
 int readv(int sockfd, const struct iovec *iov, int iovcnt);
 #endif
 int write(int sockfd, const void *buf, size_t count);
-int shutdownWrite();
+int shutdownWrite(int sockfd);
+int shutdownRead(int sockfd);
 int close(int sockfd);
 void toIpPort(char* buf, size_t size, const struct sockaddr *sa);
 void toIp(char* buf, size_t size, const struct sockaddr *sa);

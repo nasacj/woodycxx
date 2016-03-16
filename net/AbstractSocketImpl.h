@@ -55,8 +55,8 @@ private:
     FileDescriptor fileHandler;
 
 public:
-    AbstractSocketImpl( const InetSocketAddress& addr) : shut_rd(false), shut_wr(false), closePending(false), connected(false), address(addr) {}
-    AbstractSocketImpl( const string& ip, int port): shut_rd(false), shut_wr(false), closePending(false), connected(false), address(ip, port) {}
+    AbstractSocketImpl( const InetSocketAddress& addr) : shut_rd(false), shut_wr(false), closePending(false), closed(false), connected(false), address(addr) {}
+    AbstractSocketImpl( const string& ip, int port): shut_rd(false), shut_wr(false), closePending(false), closed(false), connected(false), address(ip, port) {}
     virtual ~AbstractSocketImpl() {}
 
     std::shared_ptr<AbstractSocketImpl> shared_from_this()
@@ -89,6 +89,10 @@ public:
 
     virtual void close();
 
+	virtual void closeRead();
+
+	virtual void closeWrite();
+
     InetSocketAddress getInetSoecktAddress() { return this->address; }
 
     FileDescriptor getFileDescriptor() { return this->fileHandler; }
@@ -103,6 +107,10 @@ public:
     {
         return closed;
     }
+
+	bool isCloseRead() { return shut_rd; }
+
+	bool isCloseWrite() { return shut_wr; }
 
     bool isConnectionReset()
     {

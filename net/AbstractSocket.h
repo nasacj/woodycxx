@@ -120,6 +120,10 @@ public:
      */
     virtual void close() = 0;
 
+	virtual void closeRead() = 0;
+
+	virtual void closeWrite() = 0;
+
     virtual ~AbstractSocket() {}
 
 };

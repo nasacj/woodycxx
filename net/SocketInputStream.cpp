@@ -86,9 +86,9 @@ void SocketInputStream::close()
     weak_ptr<AbstractSocketImpl> wkAbSocImp = socket_impl;
     if ( !wkAbSocImp.expired() )
     {
-        if (!socket_impl->isClosed())
+        if (!socket_impl->isCloseRead() && !socket_impl->isClosed())
         {
-            socket_impl->close();
+            socket_impl->closeRead();
         }
     }
 }

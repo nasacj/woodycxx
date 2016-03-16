@@ -119,6 +119,15 @@ int shutdownWrite(int sockfd)
 #endif
 }
 
+int shutdownRead(int sockfd)
+{
+#ifdef WIN32
+	return ::shutdown(sockfd, SD_RECEIVE);
+#else
+	return ::shutdown(sockfd, SHUT_RD);
+#endif
+}
+
 int close(int sockfd)
 {
 #ifdef WIN32

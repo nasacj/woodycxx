@@ -62,7 +62,8 @@ int AbstractSocketImpl::connect(const InetSocketAddress& addr)
 
     this->fileHandler.set(sockfd);
     this->connected = true;
-    return 0;
+	this->closed = false;
+    return 0;    
 }
 
 int AbstractSocketImpl::connect()
@@ -119,6 +120,18 @@ int AbstractSocketImpl::available()
 void AbstractSocketImpl::close()
 {
     sockets::close(fileHandler.getHandler());
+}
+
+void AbstractSocketImpl::closeRead()
+{
+	sockets::shutdownRead(fileHandler.getHandler());
+	this->shut_rd = true;
+}
+
+void AbstractSocketImpl::closeWrite()
+{
+	sockets::shutdownWrite(fileHandler.getHandler());
+	this->shut_wr = true;
 }
 
 string AbstractSocketImpl::getIpString()
