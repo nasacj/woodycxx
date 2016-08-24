@@ -8,7 +8,7 @@
 #ifndef WOODYCXX_COMM_LRUCACHE_H_
 #define WOODYCXX_COMM_LRUCACHE_H_
 
-#include <unordered_map>
+#include <map>
 #include <list>
 
 using namespace std;
@@ -70,7 +70,7 @@ namespace woodycxx {
     private:
         int size;
         list< CacheNode<KeyType, ValueType> > cacheList;
-        unordered_map< KeyType, typename list< CacheNode<KeyType, ValueType> >::iterator > cacheMap;
+        map< KeyType, typename list< CacheNode<KeyType, ValueType> >::iterator > cacheMap;
     };
 
 }//end of namespace woodycxx
