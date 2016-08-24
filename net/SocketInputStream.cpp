@@ -14,7 +14,9 @@
 #include <sys/types.h>
 #include "SocketsOpt.h"
 
+#ifndef TEMP_FAILURE_RETRY
 #define TEMP_FAILURE_RETRY
+#endif
 
 namespace woodycxx { namespace net {
 
