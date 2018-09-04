@@ -23,6 +23,7 @@
 #include <ws2ipdef.h>
 #else
 #include <netinet/in.h>
+#include <sys/socket.h>
 #endif
 
 using namespace std;
@@ -67,6 +68,11 @@ class InetSocketAddress {
         (p1.port != p2.port));
   }
 
+  ::sockaddr& as_posix_sockaddr() { return sa_; }
+  ::sockaddr_in& as_posix_sockaddr_in() { return addr_; }
+  const ::sockaddr& as_posix_sockaddr() const { return sa_; }
+  const ::sockaddr_in& as_posix_sockaddr_in() const { return addr_; }
+
  private:
   void init();
   static int checkPort(int port);
@@ -80,6 +86,7 @@ class InetSocketAddress {
   union {
     struct sockaddr_in addr_;
     struct sockaddr_in6 addr6_;
+    struct sockaddr sa_;
   };
 
 };

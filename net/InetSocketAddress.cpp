@@ -103,7 +103,8 @@ bool InetSocketAddress::isIPv6() {
 }
 
 const struct sockaddr *const InetSocketAddress::getSockAddrP() const {
-  return sockets::sockaddr_cast(&addr6_);
+  //return sockets::sockaddr_cast(&addr6_);
+  return &(as_posix_sockaddr());
 }
 
 int InetSocketAddress::checkPort(int port) {
