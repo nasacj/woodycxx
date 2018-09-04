@@ -20,11 +20,13 @@
 #include <unistd.h>
 #endif
 
-namespace woodycxx { namespace net { namespace sockets {
+namespace woodycxx {
+namespace net {
+namespace sockets {
 
-int createBlockingSocketFd(bool isIpv6=false);
-int connect(int sockfd, uint16_t family, const struct sockaddr * addr);
-int bind(int sockfd, const struct sockaddr_in& addr);
+int createBlockingSocketFd(bool isIpv6 = false);
+int connect(int sockfd, uint16_t family, const struct sockaddr *addr);
+int bind(int sockfd, const struct sockaddr_in &addr);
 int listen(int sockfd);
 int read(int sockfd, void *buf, size_t count);
 #ifndef WIN32
@@ -34,19 +36,21 @@ int write(int sockfd, const void *buf, size_t count);
 int shutdownWrite(int sockfd);
 int shutdownRead(int sockfd);
 int close(int sockfd);
-void toIpPort(char* buf, size_t size, const struct sockaddr *sa);
-void toIp(char* buf, size_t size, const struct sockaddr *sa);
-void toIp(char* buf, size_t size, const void *addr, uint16_t family);
-void fromIpPort(const char* ip, uint16_t port, struct sockaddr_in* addr);
-void fromIpPort(const char* ip, uint16_t port, struct sockaddr_in6* addr);
-void fromAddrPort(const struct in_addr& address, uint16_t port, struct sockaddr_in* addr);
-void fromAddrPort(const struct in6_addr& address, uint16_t port, struct sockaddr_in6* addr);
+void toIpPort(char *buf, size_t size, const struct sockaddr *sa);
+void toIp(char *buf, size_t size, const struct sockaddr *sa);
+void toIp(char *buf, size_t size, const void *addr, uint16_t family);
+void fromIpPort(const char *ip, uint16_t port, struct sockaddr_in *addr);
+void fromIpPort(const char *ip, uint16_t port, struct sockaddr_in6 *addr);
+void fromAddrPort(const struct in_addr &address, uint16_t port, struct sockaddr_in *addr);
+void fromAddrPort(const struct in6_addr &address, uint16_t port, struct sockaddr_in6 *addr);
 
-const struct sockaddr* sockaddr_cast(const struct sockaddr_in* addr);
-const struct sockaddr* sockaddr_cast(const struct sockaddr_in6* addr);
+const struct sockaddr *sockaddr_cast(const struct sockaddr_in *addr);
+const struct sockaddr *sockaddr_cast(const struct sockaddr_in6 *addr);
 
 int getSocketError(int sockfd);
 
-}}}//end of namespace woodycxx::net::sockets
+}
+}
+}//end of namespace woodycxx::net::sockets
 
 #endif

@@ -30,78 +30,78 @@
 
 using namespace std;
 
-namespace woodycxx { namespace sysipc
-{
+namespace woodycxx {
+namespace sysipc {
 
-    /// \defgroup sysipc System Interprocess Communication
-    /// \file sysipc.h
-    /// \brief System IPC Header File
+/// \defgroup sysipc System Interprocess Communication
+/// \file sysipc.h
+/// \brief System IPC Header File
 
-    typedef unsigned int    uint;
-    typedef unsigned char   uint8;
-    typedef unsigned char   byte;
-    typedef unsigned short  uint16;
-    typedef unsigned short  word;
-    typedef unsigned long   uint32; 
-    typedef unsigned long   dword; 
+typedef unsigned int uint;
+typedef unsigned char uint8;
+typedef unsigned char byte;
+typedef unsigned short uint16;
+typedef unsigned short word;
+typedef unsigned long uint32;
+typedef unsigned long dword;
 
-    struct os_error
-    {
-        uint    _error_code;
+struct os_error {
+  uint _error_code;
 
-        os_error( uint i = 0 ) : _error_code( i ){}
-        os_error& operator=( uint i ){ _error_code = i; return *this; }
-        bool operator==( uint i ) const { return _error_code == i; }
-    };
+  os_error(uint i = 0) : _error_code(i) {}
+  os_error &operator=(uint i) {
+    _error_code = i;
+    return *this;
+  }
+  bool operator==(uint i) const { return _error_code == i; }
+};
 
-    ostream& operator<<( ostream& strm, const os_error& err );
+ostream &operator<<(ostream &strm, const os_error &err);
 
-    //-------------------------------------------------------------------------------------------
-    class timestamp
-    {
-        friend ostream& operator<<( ostream&, const timestamp& stmp );
-        friend bool operator<( const timestamp& l, const timestamp& r );
+//-------------------------------------------------------------------------------------------
+class timestamp {
+  friend ostream &operator<<(ostream &, const timestamp &stmp);
+  friend bool operator<(const timestamp &l, const timestamp &r);
 
-    public:
-        time_t  sys_time;
-        word    msecs;
+ public:
+  time_t sys_time;
+  word msecs;
 
-        void clear(){ sys_time = 0; msecs = 0; }
-        timestamp(){ touch(); }
-        timestamp( time_t t, word ms ) : sys_time( t ), msecs( ms ){}
-        void touch();
-    };
+  void clear() {
+    sys_time = 0;
+    msecs = 0;
+  }
+  timestamp() { touch(); }
+  timestamp(time_t t, word ms) : sys_time(t), msecs(ms) {}
+  void touch();
+};
 
-    //-------------------------------------------------------------------------------------------
-    inline bool operator<( const timestamp& l, const timestamp& r )
-    {
-        return ( l.sys_time < r.sys_time ) || ( ( l.sys_time == r.sys_time ) && ( l.msecs < r.msecs ) ); 
-    }
+//-------------------------------------------------------------------------------------------
+inline bool operator<(const timestamp &l, const timestamp &r) {
+  return (l.sys_time < r.sys_time) || ((l.sys_time == r.sys_time) && (l.msecs < r.msecs));
+}
 
+//-------------------------------------------------------------------------------------------
+inline uint diff(const timestamp &l, const timestamp &r) {
+  uint d = (uint) (l.sys_time - r.sys_time);
+  if (l.msecs < r.msecs)
+    d--;
+  return d;
+}
 
-    //-------------------------------------------------------------------------------------------
-    inline uint diff(const timestamp& l, const timestamp& r )
-    {
-        uint d = (uint) ( l.sys_time - r.sys_time );
-        if ( l.msecs < r.msecs )
-            d--;
-        return d;
-    }
+//-------------------------------------------------------------------------------------------
+inline uint ms_diff(const timestamp &l, const timestamp &r) {
+  uint d = (uint) (l.sys_time - r.sys_time);
+  if (l.msecs < r.msecs)
+    return (d - 1) * 1000 + (r.msecs - l.msecs);
+  else
+    return d * 1000 + (l.msecs - r.msecs);
+}
 
-    //-------------------------------------------------------------------------------------------
-    inline uint ms_diff(const timestamp& l, const timestamp& r )
-    {
-        uint d = (uint) ( l.sys_time - r.sys_time );
-        if ( l.msecs < r.msecs )
-            return ( d - 1 ) * 1000 + ( r.msecs - l.msecs );
-        else
-            return d * 1000 + ( l.msecs - r.msecs );
-    }
-
-    ostream& operator<<( ostream& strm, const timestamp& stmp );
+ostream &operator<<(ostream &strm, const timestamp &stmp);
 
 
-    //-------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------
 
 } // end namespace
 } // end namespace woodycxx

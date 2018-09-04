@@ -17,26 +17,22 @@ using namespace std;
 
 #if 1
 
-int main()
-{
-	try
-	{
-		InetSocketAddress address("baidu.com", 8000);
-		cout << address.toString() << endl;
+int main() {
+  try {
+    InetSocketAddress address("baidu.com", 8000);
+    cout << address.toString() << endl;
 
-		InetSocketAddress address2("baidu.com", 8000);
-		assert(address == address2);
+    InetSocketAddress address2("baidu.com", 8000);
+    cout << address2.toString() << endl;
+    assert(address == address2);
 
-		InetSocketAddress address3(80000000);
-	}
-	catch (Exception& e)
-	{
-		cout << "Catch Exception --> " << e.what() << endl;
-	}
-    
+    InetSocketAddress address3(80000000);
+  }
+  catch (Exception &e) {
+    cout << "Catch Exception --> " << e.what() << endl;
+  }
 
-
-    return 0;
+  return 0;
 }
 
 #endif

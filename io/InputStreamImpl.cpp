@@ -10,11 +10,12 @@
 
 #include "InputStreamImpl.h"
 
-namespace woodycxx { namespace io {
+namespace woodycxx {
+namespace io {
 
-int InputStreamImpl::read()
-{
-    return 1;
+int InputStreamImpl::read() {
+  return 1;
 }
 
-}}
+}
+}

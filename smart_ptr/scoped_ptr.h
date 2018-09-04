@@ -15,79 +15,77 @@
 # include <memory>          // for std::auto_ptr
 # include <assert.h>
 
-namespace woodycxx { namespace smart_prt {
+namespace woodycxx {
+namespace smart_prt {
 
-    //  scoped_ptr mimics a built-in pointer except that it guarantees deletion
-    //  of the object pointed to, either on destruction of the scoped_ptr or via
-    //  an explicit reset(). scoped_ptr is a simple solution for simple needs;
-    //  use shared_ptr or std::auto_ptr if your needs are more complex.
+//  scoped_ptr mimics a built-in pointer except that it guarantees deletion
+//  of the object pointed to, either on destruction of the scoped_ptr or via
+//  an explicit reset(). scoped_ptr is a simple solution for simple needs;
+//  use shared_ptr or std::auto_ptr if your needs are more complex.
 
-    template<class T> class scoped_ptr // noncopyable
-    {
-    private:
+template<class T>
+class scoped_ptr // noncopyable
+{
+ private:
 
-        T * px;
+  T *px;
 
-        scoped_ptr(scoped_ptr const &);
-        scoped_ptr & operator=(scoped_ptr const &);
+  scoped_ptr(scoped_ptr const &);
+  scoped_ptr &operator=(scoped_ptr const &);
 
-        typedef scoped_ptr<T> this_type;
+  typedef scoped_ptr<T> this_type;
 
-        void operator==( scoped_ptr const& ) const;
-        void operator!=( scoped_ptr const& ) const;
+  void operator==(scoped_ptr const &) const;
+  void operator!=(scoped_ptr const &) const;
 
-    public:
+ public:
 
-        typedef T element_type;
+  typedef T element_type;
 
-        explicit scoped_ptr( T * p = 0 ): px( p ) // never throws
-        {
-        }
+  explicit scoped_ptr(T *p = 0) : px(p) // never throws
+  {
+  }
 
-        explicit scoped_ptr( std::auto_ptr<T> p ) : px( p.release() )
-        {
-        }
+  explicit scoped_ptr(std::auto_ptr<T> p) : px(p.release()) {
+  }
 
-        ~scoped_ptr() // never throws
-        {
-            if (px)
-            {
-                checked_delete(px);
-            }
-        }
+  ~scoped_ptr() // never throws
+  {
+    if (px) {
+      checked_delete(px);
+    }
+  }
 
-        void reset(T * p = 0) // never throws
-        {
-            assert( p == 0 || p != px ); // catch self-reset errors
-            this_type(p).swap(*this);
-        }
+  void reset(T *p = 0) // never throws
+  {
+    assert(p == 0 || p != px); // catch self-reset errors
+    this_type(p).swap(*this);
+  }
 
-        T & operator*() const // never throws
-        {
-            assert( px != 0 );
-            return *px;
-        }
+  T &operator*() const // never throws
+  {
+    assert(px != 0);
+    return *px;
+  }
 
-        T * operator->() const // never throws
-        {
-            assert( px != 0 );
-            return px;
-        }
+  T *operator->() const // never throws
+  {
+    assert(px != 0);
+    return px;
+  }
 
-        T * get() const
-        {
-            return px;
-        }
+  T *get() const {
+    return px;
+  }
 
-        void swap(scoped_ptr & b)
-        {
-            T * tmp = b.px;
-            b.px = px;
-            px = tmp;
-        }
-    };
+  void swap(scoped_ptr &b) {
+    T *tmp = b.px;
+    b.px = px;
+    px = tmp;
+  }
+};
 
-    
-}}
+}
+}
 
 #endif

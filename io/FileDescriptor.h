@@ -13,23 +13,24 @@
 
 #include <base/Types.h>
 
-namespace woodycxx { namespace io {
+namespace woodycxx {
+namespace io {
 
 typedef int Handle;
 
-class FileDescriptor
-{
-private:
-    Handle handler;
+class FileDescriptor {
+ private:
+  Handle handler;
 
-public:
-    FileDescriptor() {}
-    ~FileDescriptor(){}
-    explicit FileDescriptor(Handle handle_n) : handler(handle_n) {}
-    Handle getHandler() { return this->handler; }
-    void set( Handle handler_ot) { this->handler = handler_ot; }
+ public:
+  FileDescriptor() {}
+  ~FileDescriptor() {}
+  explicit FileDescriptor(Handle handle_n) : handler(handle_n) {}
+  Handle getHandler() { return this->handler; }
+  void set(Handle handler_ot) { this->handler = handler_ot; }
 };
 
-}}
+}
+}
 
 #endif

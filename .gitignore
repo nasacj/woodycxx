@@ -37,4 +37,9 @@ cscope.in.out
 cscope.out
 cscope.po.out
 tags
-
+.idea
+cmake-build-debug
+CMakeCache.txt
+CMakeFiles
+cmake_install.cmake
+*.cbp

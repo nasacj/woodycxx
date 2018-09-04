@@ -1,0 +1,9 @@
+cmake_minimum_required(VERSION 2.8)
+
+PROJECT(woodycxx)
+
+ADD_SUBDIRECTORY(smart_ptr)
+ADD_SUBDIRECTORY(base)
+ADD_SUBDIRECTORY(sysipc)
+ADD_SUBDIRECTORY(io)
+ADD_SUBDIRECTORY(net)

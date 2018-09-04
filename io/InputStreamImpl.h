@@ -13,15 +13,15 @@
 
 #include "InputStream.h"
 
-namespace woodycxx { namespace io {
+namespace woodycxx {
+namespace io {
 
-class InputStreamImpl : public InputStream
-{
-public:
-    virtual int read();
+class InputStreamImpl : public InputStream {
+ public:
+  virtual int read();
 };
 
-
-} }
+}
+}
 
 #endif /* INPUTSTREAMIMPL_H_ */

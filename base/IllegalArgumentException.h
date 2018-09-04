@@ -18,21 +18,21 @@ This software is distributed without any warranty.
 
 using namespace std;
 
-namespace woodycxx { namespace base {
+namespace woodycxx {
+namespace base {
 
-class IllegalArgumentException : public Exception
-{
-public:
-	IllegalArgumentException(const string& errMsg) : Exception(errMsg)
-	{
-		exception_name = "IllegalArgumentException: ";
-	}
+class IllegalArgumentException : public Exception {
+ public:
+  IllegalArgumentException(const string &errMsg) : Exception(errMsg) {
+    exception_name = "IllegalArgumentException: ";
+  }
 
-	virtual ~IllegalArgumentException() {}
+  virtual ~IllegalArgumentException() {}
 
 };
 
-	}} //end of namespace woodycxx::base
+}
+} //end of namespace woodycxx::base
 
 #endif
 

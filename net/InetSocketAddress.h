@@ -27,67 +27,64 @@
 
 using namespace std;
 
-namespace woodycxx { namespace net {
+namespace woodycxx {
+namespace net {
 
-class InetSocketAddress
-{
-public:
+class InetSocketAddress {
+ public:
 
-	InetSocketAddress(int tPort);
+  InetSocketAddress(int tPort);
 
-	InetSocketAddress(const InetAddress& addr, int tProt);
+  InetSocketAddress(const InetAddress &addr, int tProt);
 
-	InetSocketAddress(const string& host, int tProt);
+  InetSocketAddress(const string &host, int tProt);
 
-	string getHostName();
+  string getHostName();
 
-	int getPort();
+  int getPort();
 
-	InetAddress getAddress();
+  InetAddress getAddress();
 
-	uint16_t getFamily();
+  uint16_t getFamily();
 
-	string getHostAddress();
+  string getHostAddress();
 
-	string toString();
+  string toString();
 
-	bool isUnresolved();
+  bool isUnresolved();
 
-	bool isIPv6();
+  bool isIPv6();
 
-	const struct sockaddr * const getSockAddrP() const;
+  const struct sockaddr *const getSockAddrP() const;
 
-	friend bool operator==(const InetSocketAddress& p1, const InetSocketAddress& p2)
-	{
-		return ( (p1.inetAddress == p2.inetAddress) &&
-			(p1.port == p2.port) );
-	}
+  friend bool operator==(const InetSocketAddress &p1, const InetSocketAddress &p2) {
+    return ((p1.inetAddress == p2.inetAddress) &&
+        (p1.port == p2.port));
+  }
 
-	friend bool operator!=(const InetSocketAddress& p1, const InetSocketAddress& p2)
-	{
-		return ( (p1.inetAddress != p2.inetAddress) ||
-			(p1.port != p2.port) );
-	}
+  friend bool operator!=(const InetSocketAddress &p1, const InetSocketAddress &p2) {
+    return ((p1.inetAddress != p2.inetAddress) ||
+        (p1.port != p2.port));
+  }
 
+ private:
+  void init();
+  static int checkPort(int port);
+  static string checkHost(const string &hostname);
 
-private:
-	void init();
-	static int checkPort(int port);
-	static string checkHost(const string& hostname);
-
-	InetAddress inetAddress;
+  InetAddress inetAddress;
   int port;
-	string hostname;
-	bool Unresolved;
+  string hostname;
+  bool Unresolved;
 
-	union
-	{
-		struct sockaddr_in addr_;
-		struct sockaddr_in6 addr6_;
-	};
+  union {
+    struct sockaddr_in addr_;
+    struct sockaddr_in6 addr6_;
+  };
 
 };
 
-}}// end of namespace woodycxx::net
+}
+}// end of namespace woodycxx::net
 
 #endif

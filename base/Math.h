@@ -11,23 +11,21 @@
 #ifndef MATH_H_
 #define MATH_H_
 
-namespace woodycxx { namespace base {
+namespace woodycxx {
+namespace base {
 
-class Math
-{
-public:
-    static long min(long a, long b)
-    {
-        return (a <= b) ? a : b;
-    }
+class Math {
+ public:
+  static long min(long a, long b) {
+    return (a <= b) ? a : b;
+  }
 
-    static int min(int a, int b)
-    {
-        return (a <= b) ? a : b;
-    }
+  static int min(int a, int b) {
+    return (a <= b) ? a : b;
+  }
 };
 
-
-}}
+}
+}
 
 #endif /* MATH_H_ */

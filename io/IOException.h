@@ -19,25 +19,24 @@ This software is distributed without any warranty.
 using namespace std;
 using namespace woodycxx::base;
 
-namespace woodycxx { namespace io {
+namespace woodycxx {
+namespace io {
 
-class IOException : public Exception
-{
-public:
-	IOException(const string& errMsg) : Exception(errMsg)
-	{
-		exception_name = "IOException: ";
-	}
+class IOException : public Exception {
+ public:
+  IOException(const string &errMsg) : Exception(errMsg) {
+    exception_name = "IOException: ";
+  }
 
-	IOException(int errcode) : Exception(errcode)
-	{
-		exception_name = "IOException: ";
-	}
+  IOException(int errcode) : Exception(errcode) {
+    exception_name = "IOException: ";
+  }
 
-	virtual ~IOException() {}
+  virtual ~IOException() {}
 
 };
 
-}} //end of namespace woodycxx::io
+}
+} //end of namespace woodycxx::io
 
 #endif

@@ -22,41 +22,39 @@
 using namespace std;
 using namespace woodycxx::io;
 
-namespace woodycxx { namespace net {
+namespace woodycxx {
+namespace net {
 
 class AbstractSocketImpl;
 typedef shared_ptr<AbstractSocketImpl> AbstractSocketImplPtr;
 
-class SocketOutputStream : public OutputStream
-{
-private:
-    AbstractSocketImplPtr socket_impl;
-    FileDescriptor socketFD;
+class SocketOutputStream : public OutputStream {
+ private:
+  AbstractSocketImplPtr socket_impl;
+  FileDescriptor socketFD;
 
-public:
-    SocketOutputStream(const AbstractSocketImplPtr& impl) : socket_impl(impl)
-    {
-        init();
-    }
+ public:
+  SocketOutputStream(const AbstractSocketImplPtr &impl) : socket_impl(impl) {
+    init();
+  }
 
-    ~SocketOutputStream(){}
+  ~SocketOutputStream() {}
 
-    int write(char b);
+  int write(char b);
 
-    int write(const void* b, int len);
+  int write(const void *b, int len);
 
-    int write(const void* b, int b_size, int off, int len);
+  int write(const void *b, int b_size, int off, int len);
 
-    void flush();
+  void flush();
 
-    void close();
+  void close();
 
-private:
-    void init();
-    int socketWrite0(FileDescriptor& fd, const void* b, int b_size, int off, int len);
+ private:
+  void init();
+  int socketWrite0(FileDescriptor &fd, const void *b, int b_size, int off, int len);
 };
 
-
-
-}}//end of namespace woodycxx::net
+}
+}//end of namespace woodycxx::net
 #endif
