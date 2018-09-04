@@ -25,6 +25,11 @@ typedef uint32_t in_addr_t;
 #else
 #include <netinet/in.h>
 #endif
+#if defined(__CYGWIN__)
+#ifndef bzero
+#define bzero(b,len) (memset((b), '\0', (len)), (void) 0)
+#endif
+#endif
 
 using namespace std;
 

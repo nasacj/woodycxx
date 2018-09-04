@@ -21,7 +21,9 @@
 #include <netdb.h>
 #endif
 #if defined(__CYGWIN__)
-#include <string.h>   //bzero for cygwin
+#ifndef u_long
+typedef unsigned long u_long;
+#endif
 #endif
 
 using namespace woodycxx::net;
