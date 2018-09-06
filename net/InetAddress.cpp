@@ -33,7 +33,7 @@ InetAddress::InetAddress(const string &host, const struct in6_addr &address) {
 }
 
 InetAddress::InetAddress(const string &host, const struct in_addr &address) {
-  bzero(&(this->sin_addr6), sizeof(this->sin_addr6));
+  bzero(&(this->sin_addr), sizeof(this->sin_addr));
   this->originalHostName = host;
   this->hostName = host;
   this->sin_addr = address;
