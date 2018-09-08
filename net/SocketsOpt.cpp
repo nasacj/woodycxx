@@ -18,6 +18,7 @@
 #pragma comment(lib,"ws2_32.lib")
 #else
 #include <errno.h>
+#include <sys/uio.h>
 #endif
 #ifdef __APPLE__
 #include <sys/uio.h>
