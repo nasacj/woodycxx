@@ -24,7 +24,6 @@ install:
   
 before_script:
   - sudo apt-get install libboost-dev cmake
-  - autoreconf --install
 
 script:
   - cmake .
