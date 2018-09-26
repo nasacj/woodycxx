@@ -42,7 +42,7 @@ class InetSocketAddress {
 
   string getHostName();
 
-  int getPort();
+  uint16_t getPort();
 
   InetAddress getAddress();
 
@@ -79,7 +79,7 @@ class InetSocketAddress {
   static string checkHost(const string &hostname);
 
   InetAddress inetAddress;
-  int port;
+  uint16_t port;
   string hostname;
   bool Unresolved;
 

@@ -60,7 +60,7 @@ string InetSocketAddress::getHostName() {
   return this->hostname;
 }
 
-int InetSocketAddress::getPort() {
+uint16_t InetSocketAddress::getPort() {
   return this->port;
 }
 
