@@ -14,7 +14,8 @@
 #include <base/Types.h>
 #include <cstddef> //for std::size_t
 #include "ByteBuffer.h"
-#include <boost/noncopyable.hpp>
+//#include <boost/noncopyable.hpp>
+#include <base/noncopyable.h>
 //#include <boost/shared_ptr.hpp>
 #include <memory>
 
@@ -27,7 +28,7 @@ namespace io {
 * This abstract class is the superclass of all classes representing an input stream of bytes.
 * Applications that need to define a subclass of InputStream must always provide a method that returns the next byte of input.
 */
-class InputStream : boost::noncopyable {
+class InputStream : woodycxx::noncopyable {
  public:
 
   /**
