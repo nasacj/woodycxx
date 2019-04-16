@@ -14,8 +14,8 @@
 #include <io/InputStream.h>
 #include <io/OutputStream.h>
 #include "InetSocketAddress.h"
-//#include <base/noncopyable.h>
-#include <boost/noncopyable.hpp>
+#include <base/noncopyable.h>
+//#include <boost/noncopyable.hpp>
 #include <string>
 
 using namespace std;
@@ -24,7 +24,7 @@ using namespace woodycxx::io;
 namespace woodycxx {
 namespace net {
 
-class AbstractSocket : boost::noncopyable, public enable_shared_from_this<AbstractSocket> {
+class AbstractSocket : woodycxx::noncopyable, public enable_shared_from_this<AbstractSocket> {
 //protected:
  public:
 

@@ -20,9 +20,6 @@
 #include <errno.h>
 #include <sys/uio.h>
 #endif
-#ifdef __APPLE__
-#include <sys/uio.h>
-#endif
 
 using namespace woodycxx::net;
 
