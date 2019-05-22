@@ -21,6 +21,8 @@ Makefile
 Makefile.in
 *.[oa]
 *.exe
+*.cmake
+runUnitTests
 Test_ByteBuffer
 Test_InputStreamImpl
 Test_InetSocketAddress
