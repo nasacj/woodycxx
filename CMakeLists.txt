@@ -12,3 +12,5 @@ ADD_SUBDIRECTORY(base)
 ADD_SUBDIRECTORY(sysipc)
 ADD_SUBDIRECTORY(io)
 ADD_SUBDIRECTORY(net)
+
+enable_testing()
