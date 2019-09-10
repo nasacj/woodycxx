@@ -1,0 +1,20 @@
+name: C/C++ CI
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: make cmake build dir
+      run: pwd && ls -alht . && mkdir cmake-build-release
+    - name: cmake
+      run: cd cmake-build-release && cmake -DCMAKE_BUILD_TYPE="Release" .. && ls -alht .
+    - name: make build
+      run: pwd && ls -alht . && make
+    - name: run demo
+      run: pwd && ls -alht . && ./demo
+    - name: run benchmark
+      run: pwd && ls -alht . && ./benchmark
