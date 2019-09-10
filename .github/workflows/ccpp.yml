@@ -8,6 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
+    - uses: actions/checkout@v1
     - name: make cmake build dir
       run: pwd && ls -alht . && mkdir cmake-build-release
     - name: cmake
