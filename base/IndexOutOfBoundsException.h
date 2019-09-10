@@ -14,20 +14,20 @@ This software is distributed without any warranty.
 
 #include "RuntimeException.h"
 
-namespace woodycxx { namespace base {
+namespace woodycxx {
+namespace base {
 
-class IndexOutOfBoundsException : public RuntimeException
-{
-public:
-    IndexOutOfBoundsException(const string& errMsg) : RuntimeException(errMsg)
-{
+class IndexOutOfBoundsException : public RuntimeException {
+ public:
+  IndexOutOfBoundsException(const string &errMsg) : RuntimeException(errMsg) {
     exception_name = "IndexOutOfBoundsException: ";
-}
+  }
 
-    virtual ~IndexOutOfBoundsException() {}
+  virtual ~IndexOutOfBoundsException() {}
 
 };
 
-}} //end of namespace woodycxx::base
+}
+} //end of namespace woodycxx::base
 
 #endif

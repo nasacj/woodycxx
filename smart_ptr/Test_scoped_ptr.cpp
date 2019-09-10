@@ -17,46 +17,40 @@ using namespace std;
 class Test_scoped_ptr;
 typedef woodycxx::smart_prt::scoped_ptr<Test_scoped_ptr> Tester;
 
-class Test_scoped_ptr
-{
-public:
-    Test_scoped_ptr()
-    {
-        cout << "Test_scoped_ptr() ==>" << endl;
-    }
+class Test_scoped_ptr {
+ public:
+  Test_scoped_ptr() {
+    cout << "Test_scoped_ptr() ==>" << endl;
+  }
 
-    void inline inline_fun()
-    {
-        cout << "Start inline_fun()..." << endl;
-        Tester tester(new Test_scoped_ptr());
-        cout << "End inline_fun()..." << endl;
-    }
+  void inline inline_fun() {
+    cout << "Start inline_fun()..." << endl;
+    Tester tester(new Test_scoped_ptr());
+    cout << "End inline_fun()..." << endl;
+  }
 
-    ~Test_scoped_ptr()
-    {
-        cout << "~Test_scoped_ptr() |||" << endl;
-    }
+  ~Test_scoped_ptr() {
+    cout << "~Test_scoped_ptr() |||" << endl;
+  }
 };
 
-void test_str()
-{
-    //typedef woodycxx::smart_prt::scoped_ptr<Test_scoped_ptr> Tester;
+void test_str() {
+  //typedef woodycxx::smart_prt::scoped_ptr<Test_scoped_ptr> Tester;
+  Tester tester(new Test_scoped_ptr());
+  tester->inline_fun();
+
+  {
     Tester tester(new Test_scoped_ptr());
-    tester->inline_fun();
+  }
 
-    {
-        Tester tester(new Test_scoped_ptr());
-    }
+  typedef woodycxx::smart_prt::scoped_ptr<uint8> Byte;
 
-    typedef woodycxx::smart_prt::scoped_ptr<uint8> Byte;
-
-    uint8* byte_b = Byte(new uint8).get();
-    Byte a_byte(new uint8);
-    cout << "AFTER ---> uint8* byte_b = Byte(new uint8).get()" << endl;
+  uint8 *byte_b = Byte(new uint8).get();
+  Byte a_byte(new uint8);
+  cout << "AFTER ---> uint8* byte_b = Byte(new uint8).get()" << endl;
 }
 
-int main()
-{
-    test_str();
-    return 0;
+int main() {
+  test_str();
+  return 0;
 }

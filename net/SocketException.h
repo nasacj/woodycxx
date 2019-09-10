@@ -17,25 +17,24 @@ This software is distributed without any warranty.
 using namespace std;
 using namespace woodycxx::io;
 
-namespace woodycxx { namespace net {
+namespace woodycxx {
+namespace net {
 
-class SocketException : public IOException
-{
-public:
-	SocketException(const string& errMsg) : IOException(errMsg)
-    {
-        exception_name = "SocketException: ";
-    }
+class SocketException : public IOException {
+ public:
+  SocketException(const string &errMsg) : IOException(errMsg) {
+    exception_name = "SocketException: ";
+  }
 
-	SocketException(int errcode) : IOException(errcode)
-	{
-		exception_name = "SocketException: ";
-	}
+  SocketException(int errcode) : IOException(errcode) {
+    exception_name = "SocketException: ";
+  }
 
-    virtual ~SocketException() {}
+  virtual ~SocketException() {}
 
-    };
+};
 
-}} //end of namespace woodycxx::io
+}
+} //end of namespace woodycxx::io
 
 #endif

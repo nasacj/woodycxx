@@ -13,63 +13,64 @@
 
 #include "../checked_delete.h"
 
-namespace woodycxx { namespace smart_prt { namespace detail {
+namespace woodycxx {
+namespace smart_prt {
+namespace detail {
 
-	template<class X> class sp_counted_impl_p: public sp_counted_base
-	{
-	private:
+template<class X>
+class sp_counted_impl_p : public sp_counted_base {
+ private:
 
-		X * px_;
+  X *px_;
 
-		sp_counted_impl_p( sp_counted_impl_p const & );
-		sp_counted_impl_p & operator= ( sp_counted_impl_p const & );
+  sp_counted_impl_p(sp_counted_impl_p const &);
+  sp_counted_impl_p &operator=(sp_counted_impl_p const &);
 
-		typedef sp_counted_impl_p<X> this_type;
+  typedef sp_counted_impl_p<X> this_type;
 
-	public:
+ public:
 
-		explicit sp_counted_impl_p( X * px ): px_( px )
-		{
+  explicit sp_counted_impl_p(X *px) : px_(px) {
 
-		}
+  }
 
-		virtual void dispose() // nothrow
-		{
-			woodycxx::smart_prt::checked_delete(px_);
-		}
+  virtual void dispose() // nothrow
+  {
+    woodycxx::smart_prt::checked_delete(px_);
+  }
 
-	};
+};
 
-	template<class P, class D> class sp_counted_impl_pd: public sp_counted_base
-	{
-	private:
+template<class P, class D>
+class sp_counted_impl_pd : public sp_counted_base {
+ private:
 
-		P* ptr; // copy constructor must not throw
-		D del; // copy constructor must not throw
+  P *ptr; // copy constructor must not throw
+  D del; // copy constructor must not throw
 
-		sp_counted_impl_pd( sp_counted_impl_pd const & );
-		sp_counted_impl_pd & operator= ( sp_counted_impl_pd const & );
+  sp_counted_impl_pd(sp_counted_impl_pd const &);
+  sp_counted_impl_pd &operator=(sp_counted_impl_pd const &);
 
-		typedef sp_counted_impl_pd<P, D> this_type;
+  typedef sp_counted_impl_pd<P, D> this_type;
 
-	public:
+ public:
 
-		// pre: d(p) must not throw
-		sp_counted_impl_pd( P* p, D & d ): ptr( p ), del( d )
-		{
-		}
+  // pre: d(p) must not throw
+  sp_counted_impl_pd(P *p, D &d) : ptr(p), del(d) {
+  }
 
-		sp_counted_impl_pd( P* p ): ptr( p ), del()
-		{
-		}
+  sp_counted_impl_pd(P *p) : ptr(p), del() {
+  }
 
-		virtual void dispose() // nothrow
-		{
-			del( ptr );
-		}
+  virtual void dispose() // nothrow
+  {
+    del(ptr);
+  }
 
-	};
+};
 
-}}}
+}
+}
+}
 
 #endif

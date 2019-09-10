@@ -17,26 +17,25 @@ This software is distributed without any warranty.
 using namespace std;
 using namespace woodycxx::io;
 
-namespace woodycxx { namespace net {
+namespace woodycxx {
+namespace net {
 
-class UnknownHostException : public IOException
-{
-public:
-	UnknownHostException(const string& errMsg) : IOException(errMsg)
-	{
-		exception_name = "UnknownHostException: ";
-	}
+class UnknownHostException : public IOException {
+ public:
+  UnknownHostException(const string &errMsg) : IOException(errMsg) {
+    exception_name = "UnknownHostException: ";
+  }
 
-	UnknownHostException(int errcode) : IOException(errcode)
-	{
-		exception_name = "UnknownHostException: ";
-	}
+  UnknownHostException(int errcode) : IOException(errcode) {
+    exception_name = "UnknownHostException: ";
+  }
 
-	virtual ~UnknownHostException() {}
+  virtual ~UnknownHostException() {}
 
 };
 
-}} //end of namespace woodycxx::io
+}
+} //end of namespace woodycxx::io
 
 #endif
 

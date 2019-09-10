@@ -15,64 +15,63 @@
 #include <cstddef>            // for std::ptrdiff_t
 #include <assert.h>
 
-namespace woodycxx { namespace smart_prt {
+namespace woodycxx {
+namespace smart_prt {
 
-    //  scoped_array extends scoped_ptr to arrays. Deletion of the array pointed to
-    //  is guaranteed, either on destruction of the scoped_array or via an explicit
-    //  reset(). Use shared_array or std::vector if your needs are more complex.
+//  scoped_array extends scoped_ptr to arrays. Deletion of the array pointed to
+//  is guaranteed, either on destruction of the scoped_array or via an explicit
+//  reset(). Use shared_array or std::vector if your needs are more complex.
 
-    template<class T> class scoped_array // noncopyable
-    {
-    private:
+template<class T>
+class scoped_array // noncopyable
+{
+ private:
 
-        T * px;
+  T *px;
 
-        scoped_array(scoped_array const &);
-        scoped_array & operator=(scoped_array const &);
+  scoped_array(scoped_array const &);
+  scoped_array &operator=(scoped_array const &);
 
-        typedef scoped_array<T> this_type;
+  typedef scoped_array<T> this_type;
 
-        void operator==( scoped_array const& ) const;
-        void operator!=( scoped_array const& ) const;
+  void operator==(scoped_array const &) const;
+  void operator!=(scoped_array const &) const;
 
-    public:
+ public:
 
-        typedef T element_type;
+  typedef T element_type;
 
-        explicit scoped_array( T * p = 0 ) : px( p )
-        {
-        }
+  explicit scoped_array(T *p = 0) : px(p) {
+  }
 
-        ~scoped_array() // never throws
-        {
-            checked_delete(px);
-        }
+  ~scoped_array() // never throws
+  {
+    checked_delete(px);
+  }
 
-        void reset(T * p = 0) // never throws
-        {
-            assert( p == 0 || p != px ); // catch self-reset errors
-            this_type(p).swap(*this);
-        }
+  void reset(T *p = 0) // never throws
+  {
+    assert(p == 0 || p != px); // catch self-reset errors
+    this_type(p).swap(*this);
+  }
 
-        T & operator[](std::ptrdiff_t i) const
-        {
-            assert( px != 0 );
-            assert( i >= 0 );
-            return px[i];
-        }
+  T &operator[](std::ptrdiff_t i) const {
+    assert(px != 0);
+    assert(i >= 0);
+    return px[i];
+  }
 
-        T * get() const
-        {
-            return px;
-        }
+  T *get() const {
+    return px;
+  }
 
-        void swap(scoped_array & b)
-        {
-            T * tmp = b.px;
-            b.px = px;
-            px = tmp;
-        }
-    };
+  void swap(scoped_array &b) {
+    T *tmp = b.px;
+    b.px = px;
+    px = tmp;
+  }
+};
 
-}}
+}
+}
 #endif

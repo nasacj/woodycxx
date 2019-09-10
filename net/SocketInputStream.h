@@ -22,45 +22,45 @@
 using namespace std;
 using namespace woodycxx::io;
 
-namespace woodycxx { namespace net {
+namespace woodycxx {
+namespace net {
 
 class AbstractSocketImpl;
 typedef shared_ptr<AbstractSocketImpl> AbstractSocketImplPtr;
 
-class SocketInputStream : public InputStream
-{
-private:
-    AbstractSocketImplPtr socket_impl;
-    FileDescriptor socketFD;
-    bool eof;
-    //bool closing;
-    //FileDescriptor fd;
+class SocketInputStream : public InputStream {
+ private:
+  AbstractSocketImplPtr socket_impl;
+  FileDescriptor socketFD;
+  bool eof;
+  //bool closing;
+  //FileDescriptor fd;
 
-public:
-    //SocketInputStream(){}
-    SocketInputStream(const AbstractSocketImplPtr& impl) : socket_impl(impl), eof(false)
-    {
-        init();
-    }
-    ~SocketInputStream(){}
+ public:
+  //SocketInputStream(){}
+  SocketInputStream(const AbstractSocketImplPtr &impl) : socket_impl(impl), eof(false) {
+    init();
+  }
+  ~SocketInputStream() {}
 
-    int read();
+  int read();
 
-    int read(char* b, int len);
+  int read(char *b, int len);
 
-    int read(char* b, int buf_size, int off, int len);
+  int read(char *b, int buf_size, int off, int len);
 
-    void close();
+  void close();
 
-protected:
-    int read(char* b, int byte_size, int off, int length, int timeout);
+ protected:
+  int read(char *b, int byte_size, int off, int length, int timeout);
 
-private:
-    void init();
-    int socketRead0(FileDescriptor& fd, int buf_size, char* b, int off, int len, int timeout);
+ private:
+  void init();
+  int socketRead0(FileDescriptor &fd, int buf_size, char *b, int off, int len, int timeout);
 
 };
 
-}}//end of namespace woodycxx::net
+}
+}//end of namespace woodycxx::net
 
 #endif

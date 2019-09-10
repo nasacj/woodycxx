@@ -14,20 +14,20 @@ This software is distributed without any warranty.
 
 #include "Exception.h"
 
-namespace woodycxx { namespace base {
+namespace woodycxx {
+namespace base {
 
-class RuntimeException : public Exception
-{
-public:
-    RuntimeException(const string& errMsg) : Exception(errMsg)
-	{
-		exception_name = "RuntimeException: ";
-    }
+class RuntimeException : public Exception {
+ public:
+  RuntimeException(const string &errMsg) : Exception(errMsg) {
+    exception_name = "RuntimeException: ";
+  }
 
-    virtual ~RuntimeException() {}
+  virtual ~RuntimeException() {}
 
 };
 
-}} //end of namespace woodycxx::base
+}
+} //end of namespace woodycxx::base
 
 #endif

@@ -13,26 +13,22 @@
 
 using namespace std;
 
-struct Foo
-{
-    Foo() : x(0) {}
-	Foo( int _x ) : x(_x) {}
-	~Foo() { std::cout << "Destructing a Foo with x=" << x << "\n"; }
-	int x;
-	/* ... */
+struct Foo {
+  Foo() : x(0) {}
+  Foo(int _x) : x(_x) {}
+  ~Foo() { std::cout << "Destructing a Foo with x=" << x << "\n"; }
+  int x;
+  /* ... */
 };
 
 typedef woodycxx::smart_prt::shared_array<Foo> FooArray;
 
-void test()
-{
-	FooArray(new Foo[10]);
+void test() {
+  FooArray(new Foo[10]);
 }
 
-
-int main()
-{
-	test();
-	return 0;
+int main() {
+  test();
+  return 0;
 }
 

@@ -23,7 +23,8 @@
 using namespace std;
 using namespace woodycxx::io;
 
-namespace woodycxx { namespace net {
+namespace woodycxx {
+namespace net {
 
 class SocketInputStream;
 class SocketOutputStream;
@@ -32,138 +33,128 @@ class SocketOutputStream;
 typedef weak_ptr<InputStream> InputStreamWeakPtr;
 typedef weak_ptr<OutputStream> OutputStreamWeakPtr;
 
-class AbstractSocketImpl : public AbstractSocket
-{
-private:
+class AbstractSocketImpl : public AbstractSocket {
+ private:
 
-    enum CONNECTION_RESET_STATE {CONNECTION_NOT_RESET, CONNECTION_RESET_PENDING, CONNECTION_RESET};
-    int resetState;
-    int timeout;    // timeout in millisec
+  enum CONNECTION_RESET_STATE { CONNECTION_NOT_RESET, CONNECTION_RESET_PENDING, CONNECTION_RESET };
+  int resetState;
+  int timeout;    // timeout in millisec
 
-    bool shut_rd;
-    bool shut_wr;
-    bool closePending;
-    bool closed;
-    bool connected;
+  bool shut_rd;
+  bool shut_wr;
+  bool closePending;
+  bool closed;
+  bool connected;
 
-    //InputStreamPtr    inputStreamPtr;
-    //OutputStreamPtr   outputStreamPtr;
-    InputStreamWeakPtr   wkInputStreamPtr;
-    OutputStreamWeakPtr  wkOutputStreamPtr;
+  //InputStreamPtr    inputStreamPtr;
+  //OutputStreamPtr   outputStreamPtr;
+  InputStreamWeakPtr wkInputStreamPtr;
+  OutputStreamWeakPtr wkOutputStreamPtr;
 
-    InetSocketAddress address;
-    FileDescriptor fileHandler;
+  InetSocketAddress address;
+  FileDescriptor fileHandler;
 
-public:
-    AbstractSocketImpl( const InetSocketAddress& addr) : shut_rd(false), shut_wr(false), closePending(false), closed(false), connected(false), address(addr) {}
-    AbstractSocketImpl( const string& ip, int port): shut_rd(false), shut_wr(false), closePending(false), closed(false), connected(false), address(ip, port) {}
-    virtual ~AbstractSocketImpl() {}
+ public:
+  AbstractSocketImpl(const InetSocketAddress &addr)
+      : shut_rd(false), shut_wr(false), closePending(false), closed(false), connected(false), address(addr) {}
+  AbstractSocketImpl(const string &ip, int port)
+      : shut_rd(false), shut_wr(false), closePending(false), closed(false), connected(false), address(ip, port) {}
+  virtual ~AbstractSocketImpl() {}
 
-    std::shared_ptr<AbstractSocketImpl> shared_from_this()
+  std::shared_ptr<AbstractSocketImpl> shared_from_this() {
+    return std::static_pointer_cast<AbstractSocketImpl>(AbstractSocket::shared_from_this());
+  }
+
+  static AbstractSocketImplPtr createSocket(InetSocketAddress &address) {
+    return make_shared<AbstractSocketImpl>(address);
+  }
+
+  virtual int connect(const string &host, int port);
+
+  virtual int connect(const InetSocketAddress &address);
+
+  virtual int connect();
+
+  virtual void bind(const InetSocketAddress &host);
+
+  virtual void listen(int backlog);
+
+  virtual void accept(const AbstractSocket &s);
+
+  virtual InputStreamPtr getInputStream();
+
+  virtual OutputStreamPtr getOutputStream();
+
+  virtual int available();
+
+  virtual void close();
+
+  virtual void closeRead();
+
+  virtual void closeWrite();
+
+  InetSocketAddress getInetSoecktAddress() { return this->address; }
+
+  FileDescriptor getFileDescriptor() { return this->fileHandler; }
+
+  string getIpString();
+
+  uint16_t getPortString();
+
+  string getIpPortString();
+
+  virtual bool isClosed() {
+    return closed;
+  }
+
+  bool isCloseRead() { return shut_rd; }
+
+  bool isCloseWrite() { return shut_wr; }
+
+  bool isConnectionReset() {
+    //TODO synchronized
+    return (resetState == CONNECTION_RESET);
+  }
+
+  bool isConnectionResetPending() {
+    return (resetState == CONNECTION_RESET_PENDING);
+  }
+
+  void setConnectionReset() {
+    resetState = CONNECTION_RESET;
+
+  }
+
+  void setConnectionResetPending() {
+    if (resetState == CONNECTION_NOT_RESET)
+      resetState = CONNECTION_RESET_PENDING;
+
+  }
+
+  int getTimeout() {
+    return timeout;
+  }
+
+  bool isClosedOrPending() {
+    /*
+     * Lock on fdLock to ensure that we wait if a
+     * close is in progress.
+     */
+    if (closePending)
+      //if (closePending || (fd == null))
     {
-        return std::static_pointer_cast<AbstractSocketImpl>(AbstractSocket::shared_from_this());
+      return true;
+    } else {
+      return false;
     }
-
-	static AbstractSocketImplPtr createSocket(InetSocketAddress& address)
-	{
-		return make_shared<AbstractSocketImpl>(address);
-	}
-
-    virtual int connect(const string& host, int port);
-
-    virtual int connect(const InetSocketAddress& address);
-
-    virtual int connect();
-
-    virtual void bind(const InetSocketAddress& host);
-
-    virtual void listen(int backlog);
-
-    virtual void accept(const AbstractSocket& s);
-
-    virtual InputStreamPtr getInputStream();
-
-    virtual OutputStreamPtr getOutputStream();
-
-    virtual int available();
-
-    virtual void close();
-
-	virtual void closeRead();
-
-	virtual void closeWrite();
-
-    InetSocketAddress getInetSoecktAddress() { return this->address; }
-
-    FileDescriptor getFileDescriptor() { return this->fileHandler; }
-
-    string getIpString();
-
-    uint16_t getPortString();
-
-    string getIpPortString();
-
-    virtual bool isClosed()
-    {
-        return closed;
-    }
-
-	bool isCloseRead() { return shut_rd; }
-
-	bool isCloseWrite() { return shut_wr; }
-
-    bool isConnectionReset()
-    {
-        //TODO synchronized
-        return (resetState == CONNECTION_RESET);
-    }
-
-    bool isConnectionResetPending()
-    {
-        return (resetState == CONNECTION_RESET_PENDING);
-    }
-
-    void setConnectionReset()
-    {
-        resetState = CONNECTION_RESET;
-
-    }
-
-    void setConnectionResetPending()
-    {
-        if (resetState == CONNECTION_NOT_RESET)
-            resetState = CONNECTION_RESET_PENDING;
-
-    }
-
-    int getTimeout()
-    {
-        return timeout;
-    }
-
-    bool isClosedOrPending()
-    {
-        /*
-         * Lock on fdLock to ensure that we wait if a
-         * close is in progress.
-         */
-        if (closePending)
-        //if (closePending || (fd == null))
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-
+  }
 
 };
 
 typedef shared_ptr<AbstractSocketImpl> AbstractSocketImplPtr;
 
-}}//end of namspace woodycxx::net
+}
+}//end of namspace woodycxx::net
 
 
 #endif
