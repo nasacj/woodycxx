@@ -14,4 +14,4 @@ jobs:
     - name: cmake
       run: cd cmake-build-release && cmake -DCMAKE_BUILD_TYPE="Release" .. && ls -alht .
     - name: make build
-      run: pwd && ls -alht . && make && ls -alht .
+      run: cd cmake-build-release && pwd && ls -alht . && make && ls -alht .
