@@ -103,7 +103,7 @@ list<InetAddress> InetAddress::getAllByName(const string &host) {
   hints.ai_socktype = SOCK_STREAM;
   hints.ai_protocol = IPPROTO_TCP;
 
-  int dwRetval = ::getaddrinfo(host.c_str(), "", &hints, &result);
+  int dwRetval = ::getaddrinfo(host.c_str(), NULL, &hints, &result);
   if (dwRetval != 0) {
     throw UnknownHostException(dwRetval);
   } else {

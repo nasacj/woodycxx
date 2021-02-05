@@ -14,7 +14,8 @@
 #include "ByteBuffer.h"
 #include <base/Types.h>
 #include <cstddef> //for std::size_t
-#include <boost/noncopyable.hpp>
+//#include <boost/noncopyable.hpp>
+#include <base/noncopyable.h>
 //#include <boost/shared_ptr.hpp>
 #include <memory>
 
@@ -33,7 +34,7 @@ namespace io {
  * that writes one byte of output.
  *
 **/
-class OutputStream : boost::noncopyable {
+class OutputStream : woodycxx::noncopyable {
  public:
 
   /**

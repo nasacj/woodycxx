@@ -4,6 +4,7 @@
 # exclude patterns (uncomment them if you want to use them):
 # *.[oa]
 # *~
+.vscode
 aclocal.m4
 config
 config.log
@@ -20,6 +21,8 @@ Makefile
 Makefile.in
 *.[oa]
 *.exe
+*.cmake
+runUnitTests
 Test_ByteBuffer
 Test_InputStreamImpl
 Test_InetSocketAddress
@@ -43,3 +46,4 @@ CMakeCache.txt
 CMakeFiles
 cmake_install.cmake
 *.cbp
+Testing

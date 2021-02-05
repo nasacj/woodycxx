@@ -19,6 +19,11 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 #endif
+#ifdef __FreeBSD__
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#endif
 
 namespace woodycxx {
 namespace net {
